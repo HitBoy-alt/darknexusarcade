@@ -17,42 +17,51 @@ particlesJS("particles-js", {
   retina_detect: true,
 });
 
-// Main tabs and content
+// Elements
 const mainTabs = document.querySelectorAll('#main-tabs .tab-btn');
 const mainTabContents = document.querySelectorAll('#tab-contents > div');
 const dynamicTabBar = document.getElementById('dynamic-tab-bar');
 const dynamicTabContents = document.getElementById('dynamic-tab-contents');
 
-let dynamicTabs = []; // Array to track dynamic tabs
+let dynamicTabs = [];
 
-// Switch main tabs
-mainTabs.forEach(btn => {
-  btn.addEventListener('click', () => {
-    mainTabs.forEach(b => b.classList.remove('active'));
-    mainTabContents.forEach(c => c.classList.remove('active'));
+// Helper: deactivate main tabs & contents
+function deactivateMainTabs() {
+  mainTabs.forEach(b => b.classList.remove('active'));
+  mainTabContents.forEach(c => c.classList.remove('active'));
+}
 
-    btn.classList.add('active');
-    const tabId = btn.dataset.tab;
-    document.getElementById(tabId).classList.add('active');
-
-    // Hide all dynamic tabs on main tab switch
-    deactivateDynamicTabs();
-  });
-});
-
-// Deactivate all dynamic tabs
+// Helper: deactivate dynamic tabs & contents
 function deactivateDynamicTabs() {
   dynamicTabBar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
   dynamicTabContents.querySelectorAll('div').forEach(c => c.classList.remove('active'));
 }
 
-// Activate a dynamic tab by id
+// Main tab click handler
+mainTabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    deactivateDynamicTabs();
+    deactivateMainTabs();
+    btn.classList.add('active');
+    const tabId = btn.dataset.tab;
+    document.getElementById(tabId).classList.add('active');
+  });
+});
+
+// Activate dynamic tab by id
 function activateDynamicTab(id) {
-  dynamicTabBar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.id === id));
-  dynamicTabContents.querySelectorAll('div').forEach(c => c.classList.toggle('active', c.dataset.id === id));
+  deactivateMainTabs();
+  deactivateDynamicTabs();
+
+  const btn = dynamicTabBar.querySelector(`button[data-id="${id}"]`);
+  const content = dynamicTabContents.querySelector(`div[data-id="${id}"]`);
+  if (btn && content) {
+    btn.classList.add('active');
+    content.classList.add('active');
+  }
 }
 
-// Add a new dynamic tab (or activate if already exists)
+// Add new dynamic tab or activate existing
 function addDynamicTab(url, title) {
   // Check if already open
   const existing = dynamicTabs.find(t => t.url === url);
@@ -63,7 +72,7 @@ function addDynamicTab(url, title) {
 
   const id = 'dyn-tab-' + (dynamicTabs.length + 1);
 
-  // Create tab button
+  // Create button
   const btn = document.createElement('button');
   btn.textContent = title;
   btn.dataset.id = id;
@@ -84,7 +93,7 @@ function addDynamicTab(url, title) {
 
   dynamicTabBar.appendChild(btn);
 
-  // Create content container
+  // Create content container with iframe
   const tabContent = document.createElement('div');
   tabContent.dataset.id = id;
   tabContent.classList.add('tab-content');
@@ -96,14 +105,11 @@ function addDynamicTab(url, title) {
   dynamicTabContents.appendChild(tabContent);
 
   dynamicTabs.push({ id, url, title });
-  activateDynamicTab(id);
 
-  // Deselect main tabs
-  mainTabs.forEach(b => b.classList.remove('active'));
-  mainTabContents.forEach(c => c.classList.remove('active'));
+  activateDynamicTab(id);
 }
 
-// Remove a dynamic tab by id
+// Remove dynamic tab by id
 function removeDynamicTab(id) {
   const index = dynamicTabs.findIndex(t => t.id === id);
   if (index === -1) return;
@@ -120,14 +126,15 @@ function removeDynamicTab(id) {
   if (dynamicTabs.length > 0) {
     activateDynamicTab(dynamicTabs[dynamicTabs.length - 1].id);
   } else {
-    mainTabs.forEach(b => b.classList.remove('active'));
-    mainTabContents.forEach(c => c.classList.remove('active'));
-    document.getElementById('settings').classList.add('active');
+    deactivateDynamicTabs();
+    deactivateMainTabs();
+    // Activate Settings tab as fallback
     document.querySelector('#main-tabs .tab-btn[data-tab="settings"]').classList.add('active');
+    document.getElementById('settings').classList.add('active');
   }
 }
 
-// Hook click events on apps/games/os items to open dynamic tabs
+// Hook click events on app/game/os items to open dynamic tabs
 document.querySelectorAll('.app-item, .game-item, .os-item').forEach(item => {
   item.addEventListener('click', () => {
     const url = item.dataset.url;
