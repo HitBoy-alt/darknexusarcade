@@ -5,493 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HitBoys-world</title>
 
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
-
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0d0d0d, #1a0033, #000033);
-      color: #ccc;
-      overflow: hidden;
-    }
-
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-    }
-
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      background: rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-    }
-
-    nav {
-      background: #240066cc;
-      padding: 10px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      user-select: none;
-    }
-
-    nav button {
-      background: #2d0066;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 6px;
-      color: #ccc;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    nav button:hover,
-    nav button.active {
-      background: #8000ff;
-      color: #fff;
-    }
-
-    .tab-content {
-      flex-grow: 1;
-      padding: 20px;
-      overflow-y: auto;
-      display: none;
-      text-align: center;
-    }
-    .tab-content.active {
-      display: block;
-    }
-
-    h1 {
-      color: #c77dff;
-      margin-bottom: 10px;
-    }
-
-    .app-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 20px;
-      justify-items: center;
-      margin-top: 20px;
-    }
-
-    .app-item {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: transform 0.2s ease;
-      cursor: pointer;
-    }
-    .app-item:hover {
-      transform: scale(1.05);
-      color: #d7a9ff;
-    }
-
-    .app-item img {
-      width: 80px;
-      height: 80px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px #8000ff80;
-      margin-bottom: 8px;
-      object-fit: contain;
-      background: #240066cc;
-      padding: 10px;
-    }
-
-    iframe {
-      margin-top: 20px;
-      width: 100%;
-      height: 500px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 0 20px #8000ff80;
-    }
-
-    /* Bookmarks input and list */
-    #bookmark-form {
-      margin-bottom: 15px;
-    }
-    #bookmark-form input[type="text"] {
-      padding: 8px;
-      width: 60%;
-      max-width: 400px;
-      border-radius: 6px;
-      border: none;
-      margin-right: 10px;
-    }
-    #bookmark-form button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 6px;
-      background: #8000ff;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #bookmark-form button:hover {
-      background: #a64dff;
-    }
-    #bookmarks-list {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    #bookmarks-list a {
-      display: block;
-      color: #b3b3ff;
-      text-decoration: none;
-      margin: 8px 0;
-      padding: 8px 12px;
-      background: #1a0033;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-    }
-    #bookmarks-list a:hover {
-      background: #8000ff;
-      color: white;
-    }
-
-    /* Bookmarklets */
-    .bookmarklet {
-      display: inline-block;
-      background: #2d0066;
-      padding: 8px 15px;
-      margin: 8px;
-      border-radius: 8px;
-      color: #ccc;
-      text-decoration: none;
-      cursor: grab;
-      user-select: none;
-      font-weight: bold;
-    }
-    .bookmarklet:hover {
-      background: #8000ff;
-      color: white;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #8000ff88;
-      border-radius: 4px;
-    }
-  </style>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
+  <!-- Particles background -->
   <div id="particles-js"></div>
 
   <div class="wrapper">
-    <nav>
-      <button class="tab-btn active" data-tab="home">Home</button>
-      <button class="tab-btn" data-tab="apps">Apps</button>
-      <button class="tab-btn" data-tab="games">Games</button>
-      <button class="tab-btn" data-tab="os">OS's</button>
-      <button class="tab-btn" data-tab="proxies">Proxies</button>
-      <button class="tab-btn" data-tab="browser">Browser</button>
-      <button class="tab-btn" data-tab="bookmarks">Bookmarks</button>
-      <button class="tab-btn" data-tab="bookmarklets">Bookmarklets</button>
-      <button class="tab-btn" data-tab="settings">Settings</button>
+
+    <nav id="main-tabs">
+      <button class="tab-btn active" data-tab="settings">Settings</button>
       <button class="tab-btn" data-tab="credits">Credits</button>
-      <button class="tab-btn" data-tab="partners">Partners</button>
+      <button class="tab-btn" data-tab="games">Games</button>
+      <button class="tab-btn" data-tab="unblocked-os">Unblocked OS's</button>
+      <button class="tab-btn" data-tab="apps">Apps</button>
+      <button class="tab-btn" data-tab="bookmarklets">Bookmarklets</button>
+      <button class="tab-btn" data-tab="browser">Browser</button>
     </nav>
 
-    <!-- Home -->
-    <div id="home" class="tab-content active">
-      <h1>Welcome to HitBoys-world</h1>
-      <p>Made with 💜, 🌌, and particles.</p>
-    </div>
+    <div id="tab-contents">
+      <div id="settings" class="tab-content active">
+        <h2>Settings</h2>
+        <p>Customize your preferences here.</p>
+      </div>
 
-    <!-- Apps with embedded iframe -->
-    <div id="apps" class="tab-content">
-      <h1>Apps</h1>
-      <div class="app-grid">
-        <div class="app-item" data-url="https://heartive-us4.pages.dev">
-          <img src="data:image/png;base64,iVBOR…JmBEpBfvRtQAAAABJRU5ErkJggg==" alt="Heartive" />
-          <span>Heartive</span>
-        </div>
-        <div class="app-item" data-url="https://photopea.com">
-          <img src="https://www.photopea.com/static/icon512.png" alt="Photopea" />
-          <span>Photopea</span>
-        </div>
-        <div class="app-item" data-url="https://app.diagrams.net/">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Draw.io_Logo.svg" alt="Draw.io" />
-          <span>Draw.io</span>
+      <div id="credits" class="tab-content">
+        <h2>Credits</h2>
+        <p>Created by HitBoys-world 💜</p>
+      </div>
+
+      <div id="games" class="tab-content">
+        <h2>Games</h2>
+        <div class="item-list">
+          <div class="game-item" data-url="https://example.com/game1" data-title="Game 1">Game 1</div>
+          <div class="game-item" data-url="https://example.com/game2" data-title="Game 2">Game 2</div>
+          <!-- Add more games here -->
         </div>
       </div>
-      <iframe id="app-iframe" src="" title="App Preview" style="display:none;"></iframe>
-    </div>
 
-    <!-- Games with embedded iframe -->
-    <div id="games" class="tab-content">
-      <h1>Games</h1>
-      <div class="app-grid">
-        <div class="app-item" data-url="https://play2048.co/">
-          <img src="https://play2048.co/favicon.ico" alt="2048" />
-          <span>2048</span>
-        </div>
-        <div class="app-item" data-url="https://retrobowl.me/">
-          <img src="https://retrobowl.me/favicon.ico" alt="Retro Bowl" />
-          <span>Retro Bowl</span>
-        </div>
-        <div class="app-item" data-url="https://krunker.io">
-          <img src="https://krunker.io/img/favicon.png" alt="Krunker" />
-          <span>Krunker</span>
+      <div id="unblocked-os" class="tab-content">
+        <h2>Unblocked OS's</h2>
+        <div class="item-list">
+          <div class="os-item" data-url="https://win11.blueedge.me" data-title="Windows 11">Windows 11</div>
+          <div class="os-item" data-url="https://anura.pro" data-title="Anura OS">Anura OS</div>
+          <div class="os-item" data-url="https://win10.webjeet.me" data-title="Windows 10">Windows 10</div>
+          <div class="os-item" data-url="https://mindows.netlify.app" data-title="Mindows">Mindows</div>
+          <!-- Add more OS links here -->
         </div>
       </div>
-      <iframe id="game-iframe" src="" title="Game Preview" style="display:none;"></iframe>
-    </div>
 
-    <!-- OS's -->
-    <div id="os" class="tab-content">
-      <h1>OS's</h1>
-      <div class="app-grid">
-        <a href="https://win11.blueedge.me" target="_blank" class="app-item">
-          <img src="https://win11.blueedge.me/favicon.ico" alt="Windows 11" />
-          <span>Windows 11</span>
-        </a>
-        <a href="https://anura.pro" target="_blank" class="app-item">
-          <img src="https://anura.pro/favicon.ico" alt="Anura" />
-          <span>Anura OS</span>
-        </a>
-        <a href="https://win10.webjeet.me" target="_blank" class="app-item">
-          <img src="https://win10.webjeet.me/favicon.ico" alt="Windows 10" />
-          <span>Windows 10</span>
-        </a>
-        <a href="https://mindows.netlify.app/" target="_blank" class="app-item">
-          <img src="https://mindows.netlify.app/favicon.ico" alt="Mindows" />
-          <span>Mindows</span>
-        </a>
+      <div id="apps" class="tab-content">
+        <h2>Apps</h2>
+        <div class="item-list">
+          <div class="app-item" data-url="https://heartive-us4.pages.dev" data-title="Heartive">Heartive</div>
+          <div class="app-item" data-url="https://spotify.com" data-title="Spotify">Spotify</div>
+          <!-- Add more apps here -->
+        </div>
+      </div>
+
+      <div id="bookmarklets" class="tab-content">
+        <h2>Bookmarklets</h2>
+        <p>Bookmarklets content goes here.</p>
+      </div>
+
+      <div id="browser" class="tab-content">
+        <h2>Browser</h2>
+        <input id="browser-url" placeholder="Enter URL" />
+        <button id="browser-go">Go</button>
       </div>
     </div>
 
-    <!-- Proxies -->
-    <div id="proxies" class="tab-content">
-      <h1>Proxies</h1>
-      <div class="app-grid">
-        <a href="https://holyubofficial.net" target="_blank" class="app-item">
-          <img src="https://holyubofficial.net/favicon.ico" alt="Holy Unblocker" />
-          <span>Holy Unblocker</span>
-        </a>
-        <a href="https://interstellar.cx" target="_blank" class="app-item">
-          <img src="https://interstellar.cx/favicon.ico" alt="Interstellar" />
-          <span>Interstellar</span>
-        </a>
-        <a href="https://ultraviolet.network" target="_blank" class="app-item">
-          <img src="https://ultraviolet.network/favicon.ico" alt="Ultraviolet" />
-          <span>Ultraviolet</span>
-        </a>
-        <a href="https://incognito.software" target="_blank" class="app-item">
-          <img src="https://incognito.software/favicon.ico" alt="Incognito" />
-          <span>Incognito</span>
-        </a>
-      </div>
-    </div>
+    <!-- Dynamic tabs bar & content -->
+    <div id="dynamic-tab-bar"></div>
+    <div id="dynamic-tab-contents"></div>
 
-    <!-- Browser -->
-    <div id="browser" class="tab-content">
-      <h1>Browser Tools</h1>
-      <div class="app-grid">
-        <a href="https://web.archive.org" target="_blank" class="app-item">
-          <img src="https://web.archive.org/favicon.ico" alt="Archive.org" />
-          <span>Archive.org</span>
-        </a>
-        <a href="https://duckduckgo.com" target="_blank" class="app-item">
-          <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" />
-          <span>DuckDuckGo</span>
-        </a>
-        <a href="https://startpage.com" target="_blank" class="app-item">
-          <img src="https://www.startpage.com/favicon.ico" alt="Startpage" />
-          <span>Startpage</span>
-        </a>
-        <a href="https://whoer.net" target="_blank" class="app-item">
-          <img src="https://whoer.net/favicon.ico" alt="Whoer VPN" />
-          <span>Whoer VPN</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- Bookmarks -->
-    <div id="bookmarks" class="tab-content">
-      <h1>Bookmarks</h1>
-      <form id="bookmark-form">
-        <input type="text" id="bookmark-title" placeholder="Title" required />
-        <input type="text" id="bookmark-url" placeholder="URL (https://)" required />
-        <button type="submit">Add Bookmark</button>
-      </form>
-      <div id="bookmarks-list"></div>
-    </div>
-
-    <!-- Bookmarklets -->
-    <div id="bookmarklets" class="tab-content">
-      <h1>Bookmarklets</h1>
-      <p>Drag these to your bookmarks bar or click to copy:</p>
-      <div>
-        <a href="javascript:(function(){alert('Hello from HitBoys!')})()" class="bookmarklet" draggable="true" title="Say Hello">Say Hello</a>
-        <a href="javascript:(function(){document.body.style.backgroundColor='purple';})()" class="bookmarklet" draggable="true" title="Purple Background">Purple Background</a>
-        <a href="javascript:(function(){window.scrollTo(0,0);})()" class="bookmarklet" draggable="true" title="Scroll to Top">Scroll to Top</a>
-      </div>
-    </div>
-
-    <!-- Settings -->
-    <div id="settings" class="tab-content">
-      <h1>Settings</h1>
-      <p>Customize your experience here (coming soon!)</p>
-    </div>
-
-    <!-- Credits -->
-    <div id="credits" class="tab-content">
-      <h1>Credits</h1>
-      <p>Thanks to all open-source projects and contributors.</p>
-    </div>
-
-    <!-- Partners -->
-    <div id="partners" class="tab-content">
-      <h1>Partners</h1>
-      <p>Our awesome partners and collaborators will be listed here.</p>
-    </div>
   </div>
 
   <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-  <script>
-    // Initialize particles.js background
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 80 },
-        color: { value: "#b19cd9" },
-        shape: {
-          type: "circle",
-          stroke: { width: 0, color: "#000" }
-        },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#9b59b6",
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 3,
-          direction: "none",
-          out_mode: "out"
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" }
-        },
-        modes: {
-          repulse: { distance: 100 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
-
-    // Tabs functionality + save last tab
-    const buttons = document.querySelectorAll('.tab-btn');
-    const tabs = document.querySelectorAll('.tab-content');
-
-    // Load last active tab from localStorage
-    const lastTab = localStorage.getItem('lastActiveTab');
-    if (lastTab) {
-      buttons.forEach(b => b.classList.remove('active'));
-      tabs.forEach(t => t.classList.remove('active'));
-      const activeBtn = [...buttons].find(b => b.dataset.tab === lastTab);
-      const activeTab = document.getElementById(lastTab);
-      if (activeBtn && activeTab) {
-        activeBtn.classList.add('active');
-        activeTab.classList.add('active');
-      }
-    }
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        tabs.forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        const tabId = btn.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
-
-        // Save to localStorage
-        localStorage.setItem('lastActiveTab', tabId);
-      });
-    });
-
-    // Embedded iframe for Apps & Games
-    function setupIframe(tabId, iframeId) {
-      const tab = document.getElementById(tabId);
-      const iframe = document.getElementById(iframeId);
-      const appItems = tab.querySelectorAll('.app-item');
-
-      appItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const url = item.dataset.url;
-          if (iframe.src === url) {
-            iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
-          } else {
-            iframe.src = url;
-            iframe.style.display = 'block';
-          }
-          // Scroll iframe into view
-          iframe.scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-    }
-    setupIframe('apps', 'app-iframe');
-    setupIframe('games', 'game-iframe');
-
-    // Bookmarks - load/save
-    const bookmarkForm = document.getElementById('bookmark-form');
-    const bookmarksList = document.getElementById('bookmarks-list');
-
-    function loadBookmarks() {
-      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-      bookmarksList.innerHTML = '';
-      if (bookmarks.length === 0) {
-        bookmarksList.innerHTML = '<p>No bookmarks yet.</p>';
-        return;
-      }
-      bookmarks.forEach(bm => {
-        const a = document.createElement('a');
-        a.href = bm.url;
-        a.target = "_blank";
-        a.textContent = bm.title;
-        bookmarksList.appendChild(a);
-      });
-    }
-    loadBookmarks();
-
-    bookmarkForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const title = document.getElementById('bookmark-title').value.trim();
-      const url = document.getElementById('bookmark-url').value.trim();
-
-      if (!title || !url) return alert('Please enter both title and URL.');
-      if (!/^https?:\/\//.test(url)) return alert('URL must start with http:// or https://');
-
-      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-      bookmarks.push({ title, url });
-      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-      loadBookmarks();
-      bookmarkForm.reset();
-    });
-  </script>
+  <!-- Your JS -->
+  <script src="script.js"></script>
 </body>
 </html>
