@@ -13,7 +13,7 @@ html, body {
   position: relative;
 }
 
-#wrapper, .wrapper {
+.wrapper {
   position: relative;
   z-index: 1;
   padding: 20px;
