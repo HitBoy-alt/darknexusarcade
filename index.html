@@ -2,89 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dark Nexus Tabs</title>
-  <style>
-    body {
-      background: #0d0d1a;
-      color: #ccc;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-    }
-    nav {
-      background: #1e1e2e;
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-      flex-wrap: wrap;
-    }
-    nav button {
-      background: none;
-      border: none;
-      color: #bb86fc;
-      font-size: 1rem;
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-    }
-    nav button.active {
-      color: #fff;
-      border-bottom: 2px solid #bb86fc;
-    }
-    .tab-content {
-      display: none;
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    .tab-content.active {
-      display: block;
-    }
-  </style>
+  <title>Dark Nexus Arcade</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- NAVIGATION -->
+<header>Dark Nexus Arcade</header>
+
+<!-- Navigation Tabs -->
 <nav>
   <button data-target="home" class="active">Home</button>
   <button data-target="games">Games</button>
   <button data-target="apps">Apps</button>
+  <button data-target="bookmarklets">Bookmarklets</button>
 </nav>
 
-<!-- TAB CONTENT PANELS -->
-<div id="home" class="tab-content active">
-  <h2>Welcome Home</h2>
-  <p>This is the home tab.</p>
-</div>
+<main>
 
-<div id="games" class="tab-content">
-  <h2>Games</h2>
-  <iframe src="https://example.com" width="100%" height="300"></iframe>
-</div>
+  <!-- === CONTENT PANELS === -->
 
-<div id="apps" class="tab-content">
-  <h2>Apps</h2>
-  <iframe src="https://example.com" width="100%" height="300"></iframe>
-</div>
+  <!-- HOME -->
+  <div id="content-home" class="content-panel active">
+    <h2>Welcome to Dark Nexus</h2>
+    <p>Select a section to begin.</p>
+  </div>
 
-<!-- JAVASCRIPT FOR TABS -->
-<script>
-  const buttons = document.querySelectorAll("nav button");
-  const tabs = document.querySelectorAll(".tab-content");
+  <!-- GAMES SECTION LIST -->
+  <div id="content-games" class="content-panel">
+    <h2>Games</h2>
+    <div class="item-grid">
+      <div class="item" data-url="https://example.com/game1">
+        <img src="https://img.icons8.com/color/96/controller.png" />
+        <p>Awesome Game</p>
+      </div>
+      <div class="item" data-url="https://example.com/game2">
+        <img src="https://img.icons8.com/color/96/joystick.png" />
+        <p>Retro Blaster</p>
+      </div>
+    </div>
+  </div>
 
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      // Remove active state from buttons
-      buttons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
+  <!-- APPS SECTION LIST -->
+  <div id="content-apps" class="content-panel">
+    <h2>Apps</h2>
+    <div class="item-grid">
+      <div class="item" data-url="https://example.com/app1">
+        <img src="https://img.icons8.com/color/96/apps.png" />
+        <p>Calculator</p>
+      </div>
+      <div class="item" data-url="https://example.com/app2">
+        <img src="https://img.icons8.com/color/96/settings.png" />
+        <p>Settings Tool</p>
+      </div>
+    </div>
+  </div>
 
-      // Hide all tab contents
-      tabs.forEach(tab => tab.classList.remove("active"));
+  <!-- BOOKMARKLETS SECTION -->
+  <div id="content-bookmarklets" class="content-panel">
+    <h2>Bookmarklets</h2>
+    <div class="item-grid">
+      <div class="item" data-url="https://example.com/bookmarklet1">
+        <img src="https://img.icons8.com/color/96/bookmark.png" />
+        <p>Quick Hack</p>
+      </div>
+    </div>
+  </div>
 
-      // Show the selected tab
-      const targetId = button.dataset.target;
-      document.getElementById(targetId).classList.add("active");
-    });
-  });
-</script>
+  <!-- Viewer Panel -->
+  <div class="browser-window" id="viewer" style="display:none;">
+    <h3>Loading Viewer</h3>
+    <iframe src="about:blank" id="viewerFrame"></iframe>
+  </div>
+
+  <!-- Viewer Count -->
+  <section class="viewer-count">
+    Viewer Count: <span id="viewerCounter">1</span>
+  </section>
+
+</main>
+
+<footer>&copy; 2025 Dark Nexus. All rights reserved.</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
