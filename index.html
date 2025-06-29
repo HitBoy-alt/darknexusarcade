@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dark Nexus Arcade</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d1a;
+      color: #ccc;
+    }
+    header {
+      background: linear-gradient(90deg, #1a0033, #000, #000033);
+      padding: 1rem;
+      text-align: center;
+      color: #bb86fc;
+      font-size: 2rem;
+    }
+    nav {
+      background: #1e1e2e;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.5rem 0;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #bb86fc;
+      margin: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    nav button img {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.5rem;
+      filter: brightness(1.2);
+    }
+    nav button.active {
+      color: #fff;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .browser-window {
+      background: #2c2c3e;
+      border: 2px solid #444;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 6px;
+    }
+    .os-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .os-icons img {
+      width: 50px;
+      height: 50px;
+    }
+    footer {
+      background: #121212;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    .viewer-count {
+      text-align: center;
+      font-weight: bold;
+      color: #bb86fc;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>Dark Nexus Arcade</header>
+
+<nav>
+  <!-- Example: change src of img to your icons -->
+  <button data-target="home" class="active">
+    <img src="https://img.icons8.com/material-rounded/24/home.png" alt="Home" /> Home
+  </button>
+  <button data-target="games">
+    <img src="https://img.icons8.com/material/24/controller.png" alt="Games" /> Games
+  </button>
+  <button data-target="apps">
+    <img src="https://img.icons8.com/material/24/apps.png" alt="Apps" /> Apps
+  </button>
+  <button data-target="partners">
+    <img src="https://img.icons8.com/material/24/conference-call--v1.png" alt="Partners" /> Partners
+  </button>
+  <button data-target="credits">
+    <img src="https://img.icons8.com/material/24/credits.png" alt="Credits" /> Credits
+  </button>
+  <button data-target="bookmarklets">
+    <img src="https://img.icons8.com/material/24/bookmark-ribbon.png" alt="Bookmarklets" /> Bookmarklets
+  </button>
+</nav>
+
+<main>
+  <div id="content-home" class="browser-window content-panel">
+    <h2>Welcome to Dark Nexus Arcade</h2>
+    <iframe src="about:blank" title="Home"></iframe>
+  </div>
+
+  <div id="content-games" class="browser-window content-panel" style="display:none;">
+    <h2>Games</h2>
+    <iframe src="https://example.com/game1" title="Games"></iframe>
+  </div>
+
+  <div id="content-apps" class="browser-window content-panel" style="display:none;">
+    <h2>Apps</h2>
+    <iframe src="https://example.com/app1" title="Apps"></iframe>
+  </div>
+
+  <div id="content-partners" class="browser-window content-panel" style="display:none;">
+    <h2>Partners</h2>
+    <iframe src="https://example.com/partner" title="Partners"></iframe>
+  </div>
+
+  <div id="content-credits" class="browser-window content-panel" style="display:none;">
+    <h2>Credits</h2>
+    <iframe src="https://example.com/credits" title="Credits"></iframe>
+  </div>
+
+  <div id="content-bookmarklets" class="browser-window content-panel" style="display:none;">
+    <h2>Bookmarklets</h2>
+    <iframe src="https://example.com/bookmarklets" title="Bookmarklets"></iframe>
+  </div>
+
+  <section class="os-icons">
+    <img src="https://img.icons8.com/color/48/windows-10.png" alt="Windows" title="Windows" />
+    <img src="https://img.icons8.com/ios-filled/50/mac-os.png" alt="MacOS" title="MacOS" />
+    <img src="https://img.icons8.com/color/48/linux.png" alt="Linux" title="Linux" />
+    <img src="https://img.icons8.com/color/48/android-os.png" alt="Android" title="Android" />
+    <img src="https://img.icons8.com/color/48/apple-ios.png" alt="iOS" title="iOS" />
+  </section>
+
+  <section class="viewer-count">
+    Viewer Count: <span id="viewerCounter">1</span>
+  </section>
+</main>
+
+<footer>&copy; 2025 Dark Nexus. All rights reserved.</footer>
+
+<script>
+  // Tab logic
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.content-panel').forEach(panel => panel.style.display = 'none');
+      const target = document.getElementById('content-' + btn.dataset.target);
+      if (target) target.style.display = 'block';
+    });
+  });
+
+  // Viewer counter (session-based placeholder)
+  if (!sessionStorage.viewerCount) {
+    sessionStorage.viewerCount = Math.floor(Math.random() * 500) + 1;
+  }
+  document.getElementById("viewerCounter").textContent = sessionStorage.viewerCount;
+</script>
+</body>
+</html>
