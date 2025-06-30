@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Nexus Arcade</title>
+    <link rel="icon" type="image/png" href="https://via.placeholder.com/32.png?text=DNA">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-[#162447] p-4 shadow-lg relative">
+        <h1 class="text-3xl font-bold text-[#9d4edd]">Dark Nexus Arcade</h1>
+        <div id="server-status" class="absolute top-4 right-4" title="Server Status">
+            <img id="server-status-image" src="https://via.placeholder.com/24?text=ON" alt="Server Status" class="w-6 h-6">
+        </div>
+        <nav class="mt-4">
+            <ul class="flex flex-wrap gap-2">
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="home">Home</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="games">Games</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="oss">OS's</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="apps">Apps</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="bookmarklets">Bookmarklets</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="credits">Credits</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="partners">Partners</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="suggestions">Suggestions</button></li>
+                <li><button class="tab-button px-4 py-2 rounded" data-tab="settings">Settings</button></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="flex-grow p-4">
+        <section id="home" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Welcome to Dark Nexus Arcade</h2>
+            <p class="mt-2">Explore our collection of games, apps, operating systems, and bookmarklets. Customize your experience with themes and cloaking options.</p>
+        </section>
+        <section id="games" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Games</h2>
+            <div id="games-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+            <div id="game-player" class="hidden mt-4">
+                <h3 id="game-title" class="text-xl font-semibold"></h3>
+                <iframe id="game-frame" class="playable-frame"></iframe>
+                <button id="fullscreen-game" class="mt-2 px-4 py-2 bg-[#9d4edd] text-white rounded hover:bg-[#7b3cb1]">Toggle Full Screen</button>
+                <button id="back-to-games" class="mt-2 px-4 py-2 bg-[#162447] text-[#9d4edd] rounded hover:bg-[#9d4edd] hover:text-white">Back to Games</button>
+            </div>
+        </section>
+        <section id="oss" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Operating Systems</h2>
+            <div id="oss-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+            <div id="os-player" class="hidden mt-4">
+                <h3 id="os-title" class="text-xl font-semibold"></h3>
+                <iframe id="os-frame" class="playable-frame"></iframe>
+                <button id="fullscreen-os" class="mt-2 px-4 py-2 bg-[#9d4edd] text-white rounded hover:bg-[#7b3cb1]">Toggle Full Screen</button>
+                <button id="back-to-oss" class="mt-2 px-4 py-2 bg-[#162447] text-[#9d4edd] rounded hover:bg-[#9d4edd] hover:text-white">Back to OSs</button>
+            </div>
+        </section>
+        <section id="apps" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Apps</h2>
+            <div id="apps-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+            <div id="app-player" class="hidden mt-4">
+                <h3 id="app-title" class="text-xl font-semibold"></h3>
+                <iframe id="app-frame" class="playable-frame"></iframe>
+                <button id="fullscreen-app" class="mt-2 px-4 py-2 bg-[#9d4edd] text-white rounded hover:bg-[#7b3cb1]">Toggle Full Screen</button>
+                <button id="back-to-apps" class="mt-2 px-4 py-2 bg-[#162447] text-[#9d4edd] rounded hover:bg-[#9d4edd] hover:text-white">Back to Apps</button>
+            </div>
+        </section>
+        <section id="bookmarklets" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Bookmarklets</h2>
+            <div id="bookmarklets-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+        </section>
+        <section id="credits" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Credits</h2>
+            <ul id="credits-list" class="mt-4 list-disc list-inside"></ul>
+        </section>
+        <section id="partners" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Partners</h2>
+            <div id="partners-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+        </section>
+        <section id="suggestions" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Suggestions</h2>
+            <ul id="suggestions-list" class="mt-4 list-disc list-inside">
+                <li>Add more multiplayer games</li>
+                <li>Include a chat feature for users</li>
+                <li>Support for custom themes</li>
+            </ul>
+        </section>
+        <section id="settings" class="content-section">
+            <h2 class="text-2xl font-semibold text-[#9d4edd]">Settings</h2>
+            <div class="mt-4">
+                <h3 class="text-xl font-semibold">Cloak</h3>
+                <input id="cloak-title" type="text" placeholder="New page title" class="mt-2 p-2 bg-[#162447] text-[#e0e0e0] border border-[#9d4edd] rounded">
+                <input id="cloak-favicon" type="text" placeholder="Favicon URL" class="mt-2 p-2 bg-[#162447] text-[#e0e0e0] border border-[#9d4edd] rounded">
+                <button id="apply-cloak" class="mt-2 px-4 py-2 bg-[#9d4edd] text-white rounded hover:bg-[#7b3cb1]">Apply Cloak</button>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-xl font-semibold">Themes</h3>
+                <div id="themes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2"></div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-[#162447] p-4 text-center">
+        <p>© 2025 Dark Nexus Arcade. All rights reserved. | Visitors: <span id="visitor-counter" class="visitor-counter">0</span></p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
