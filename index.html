@@ -4,55 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Nexus Arcade</title>
-    <link rel="icon" type="image/png" href="https://via.placeholder.com/32.png?text=DNA">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="min-h-screen flex flex-col bg-[#1a1a2e] text-[#e0e0e0]">
-    <header class="bg-[#162447] p-4 shadow-lg relative">
-        <h1 class="text-3xl font-bold text-[#9d4edd]">Dark Nexus Arcade</h1>
-        <div id="server-status" class="absolute top-4 right-4" title="Server Status">
-            <img id="server-status-image" src="https://via.placeholder.com/24/00FF00?text=ON" alt="Server Status" class="w-6 h-6">
-        </div>
-        <nav class="mt-4">
-            <ul class="flex flex-wrap gap-2">
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="home">Home</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="games">Games</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="oss">OS's</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="apps">Apps</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="bookmarklets">Bookmarklets</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="credits">Credits</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="partners">Partners</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="suggestions">Suggestions</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="discord">Discord</button></li>
-                <li><button class="tab-button px-4 py-2 rounded" data-tab="settings">Settings</button></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="flex-grow p-4">
-        <section id="home" class="content-section">
-            <h2 class="text-2xl font-semibold text-[#9d4edd]">Welcome to Dark Nexus Arcade</h2>
-            <p class="mt-2">Explore our collection of games, apps, operating systems, bookmarklets, and join our Discord community.</p>
-            <div class="mt-4">
-                <div class="flex gap-2">
-                    <input id="browser-url" type="text" placeholder="Enter URL (e.g., https://example.com)" class="p-2 bg-[#162447] text-[#e0e0e0] border border-[#9d4edd] rounded w-full">
-                    <button id="browser-go" class="px-4 py-2 bg-[#9d4edd] text-white rounded hover:bg-[#7b3cb1]">Go</button>
-                </div>
-                <iframe id="browser-frame" src="https://example.com" class="mt-2 w-full h-[500px] border border-[#9d4edd] rounded"></iframe>
-                <div id="browser-feedback" class="mt-2 text-sm"></div>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dark Nexus Arcade</h1>
+            <div class="tab-container">
+                <button class="tab-btn active" data-tab="home"><i class="fas fa-home"></i> Home</button>
+                <button class="tab-btn" data-tab="games"><i class="fas fa-gamepad"></i> Games</button>
+                <button class="tab-btn" data-tab="apps"><i class="fas fa-mobile-alt"></i> Apps</button>
+                <button class="tab-btn" data-tab="oss"><i class="fas fa-desktop"></i> OS's</button>
+                <button class="tab-btn" data-tab="proxies"><i class="fas fa-shield-alt"></i> Proxies</button>
+                <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> Settings</button>
+                <button class="tab-btn" data-tab="bookmarklets"><i class="fas fa-bookmark"></i> Bookmarklets</button>
+                <button class="tab-btn" data-tab="credits"><i class="fas fa-award"></i> Credits</button>
+                <button class="tab-btn" data-tab="partners"><i class="fas fa-handshake"></i> Partners</button>
+                <button class="tab-btn" data-tab="suggestions"><i class="fas fa-lightbulb"></i> Suggestions</button>
+                <button class="tab-btn" data-tab="discord"><i class="fab fa-discord"></i> Discord</button>
             </div>
-        </section>
-        
-        <section id="games" class="content-section">
-            <h2 class="text-2xl font-semibold text-[#9d4edd]">Games</h2>
-            <div id="games-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
-        </section>
-        
-        <!-- Other sections remain the same structure -->
-        
-    </main>
-    <footer class="bg-[#162447] p-4 text-center">
-        <p>© 2025 Dark Nexus Arcade. All rights reserved. | Visitors: <span id="visitor-counter" class="visitor-counter">0</span></p>
-    </footer>
+        </header>
+
+        <main>
+            <div id="home" class="tab-content active">
+                <div class="browser-window">
+                    <div class="browser-header">
+                        <div class="browser-controls">
+                            <span class="control close"></span>
+                            <span class="control minimize"></span>
+                            <span class="control expand"></span>
+                        </div>
+                        <div class="browser-url-bar">
+                            <span class="security-icon"><i class="fas fa-lock"></i></span>
+                            <span class="url">https://darknexusarcade.com</span>
+                            <span class="refresh"><i class="fas fa-redo"></i></span>
+                        </div>
+                    </div>
+                    <div class="browser-content">
+                        <h2>Welcome to Dark Nexus Arcade</h2>
+                        <p>Your gateway to unblocked entertainment and utilities.</p>
+                        <div class="featured-content">
+                            <div class="featured-item">
+                                <img src="https://via.placeholder.com/150" alt="Featured Game">
+                                <h3>Featured Game</h3>
+                            </div>
+                            <div class="featured-item">
+                                <img src="https://via.placeholder.com/150" alt="Featured App">
+                                <h3>Featured App</h3>
+                            </div>
+                            <div class="featured-item">
+                                <img src="https://via.placeholder.com/150" alt="Featured Tool">
+                                <h3>Featured Tool</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="games" class="tab-content">
+                <h2>Games</h2>
+                <div class="item-grid" id="games-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="apps" class="tab-content">
+                <h2>Apps</h2>
+                <div class="item-grid" id="apps-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="oss" class="tab-content">
+                <h2>Operating Systems</h2>
+                <div class="item-grid" id="oss-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="proxies" class="tab-content">
+                <h2>Proxies</h2>
+                <div class="item-grid" id="proxies-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="settings" class="tab-content">
+                <h2>Settings</h2>
+                <div class="settings-container">
+                    <div class="setting-item">
+                        <h3>Tab Cloaker</h3>
+                        <div class="cloaker-controls">
+                            <input type="text" id="cloak-title" placeholder="Tab Title">
+                            <input type="text" id="cloak-icon" placeholder="Icon URL (optional)">
+                            <button id="apply-cloak">Apply Cloak</button>
+                            <button id="reset-cloak">Reset Cloak</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <h3>Theme</h3>
+                        <select id="theme-selector">
+                            <option value="default">Default (Purple/Blue/Black)</option>
+                            <option value="dark">Dark Mode</option>
+                            <option value="light">Light Mode</option>
+                            <option value="red">Red Theme</option>
+                            <option value="green">Green Theme</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <h3>Background</h3>
+                        <input type="color" id="bg-color" value="#0a0a1a">
+                        <button id="apply-bg">Apply Background</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bookmarklets" class="tab-content">
+                <h2>Bookmarklets</h2>
+                <div class="bookmarklets-container">
+                    <div class="bookmarklet-item">
+                        <h3>Inspect Element</h3>
+                        <p>javascript:(function(){document.body.contentEditable='true'; document.designMode='on'; void 0})();</p>
+                        <button class="copy-btn" data-code="javascript:(function(){document.body.contentEditable='true'; document.designMode='on'; void 0})();">Copy</button>
+                    </div>
+                    <div class="bookmarklet-item">
+                        <h3>Dark Mode</h3>
+                        <p>javascript:(function(){document.body.style.filter='invert(1) hue-rotate(180deg)';})();</p>
+                        <button class="copy-btn" data-code="javascript:(function(){document.body.style.filter='invert(1) hue-rotate(180deg)';})();">Copy</button>
+                    </div>
+                    <div class="bookmarklet-item">
+                        <h3>Unblock Websites</h3>
+                        <p>javascript:(function(){window.location.href='https://google.com/search?q='+encodeURIComponent('site:'+window.location.hostname);})();</p>
+                        <button class="copy-btn" data-code="javascript:(function(){window.location.href='https://google.com/search?q='+encodeURIComponent('site:'+window.location.hostname);})();">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="credits" class="tab-content">
+                <h2>Credits</h2>
+                <div class="item-grid" id="credits-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="partners" class="tab-content">
+                <h2>Partners</h2>
+                <div class="item-grid" id="partners-grid">
+                    <!-- Content will be loaded from JavaScript -->
+                </div>
+            </div>
+
+            <div id="suggestions" class="tab-content">
+                <h2>Suggestions</h2>
+                <div class="suggestions-container">
+                    <textarea id="suggestion-input" placeholder="Have a suggestion for a game, app, or feature? Let us know!"></textarea>
+                    <button id="submit-suggestion">Submit Suggestion</button>
+                </div>
+            </div>
+
+            <div id="discord" class="tab-content">
+                <h2>Discord Server</h2>
+                <div class="discord-container">
+                    <div class="discord-embed">
+                        <div class="discord-header">
+                            <div class="discord-icon">
+                                <i class="fab fa-discord"></i>
+                            </div>
+                            <div class="discord-info">
+                                <h3>Dark Nexus Arcade</h3>
+                                <p>Official Discord Server</p>
+                            </div>
+                        </div>
+                        <div class="discord-body">
+                            <p>Join our Discord community to get the latest updates, request games, and chat with other users!</p>
+                            <div class="discord-stats">
+                                <span><i class="fas fa-users"></i> 1,234 Members</span>
+                                <span><i class="fas fa-comments"></i> 567 Online</span>
+                            </div>
+                            <button id="join-discord">Join Server</button>
+                        </div>
+                    </div>
+                    <div class="discord-cloaker">
+                        <h3>Discord Cloaker</h3>
+                        <p>Use this to make Discord look like something else:</p>
+                        <select id="discord-cloak-select">
+                            <option value="google">Google Docs</option>
+                            <option value="drive">Google Drive</option>
+                            <option value="classroom">Google Classroom</option>
+                            <option value="slides">Google Slides</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <button id="apply-discord-cloak">Apply Cloak</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Dark Nexus Arcade | All Rights Reserved</p>
+            <div class="footer-links">
+                <a href="#" id="privacy-policy">Privacy Policy</a>
+                <a href="#" id="terms-of-service">Terms of Service</a>
+                <a href="#" id="contact-us">Contact Us</a>
+            </div>
+        </footer>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
