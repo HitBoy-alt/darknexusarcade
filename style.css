@@ -36,15 +36,6 @@ body {
     border: none;
     background-color: #000;
 }
-.theme-option {
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #162447;
-}
-.theme-option:hover {
-    background-color: #9d4edd;
-}
 .visitor-counter {
     color: #9d4edd;
     font-weight: bold;
