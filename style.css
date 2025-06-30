@@ -50,3 +50,9 @@ body {
     border: 1px solid #9d4edd;
     border-radius: 50%;
 }
+#cloak-feedback.success {
+    color: #00FF00;
+}
+#cloak-feedback.error {
+    color: #FF0000;
+}
