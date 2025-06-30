@@ -37,6 +37,7 @@ body {
     height: 128px;
     object-fit: cover;
     border-radius: 4px;
+    cursor: pointer;
 }
 .item-card.text-only {
     background-color: #162447;
@@ -45,12 +46,6 @@ body {
     justify-content: center;
     text-align: center;
     min-height: 128px;
-}
-.playable-frame {
-    width: 100%;
-    height: 500px;
-    border: none;
-    background-color: #000;
 }
 .visitor-counter {
     color: #9d4edd;
