@@ -1,32 +1,47 @@
-// Data
+// Data (edit here to add new content)
 const contentData = {
+    // Games: Add new games with name, url, and image
     games: [
         { name: "Sample Game 1", url: "https://example.com/game1", image: "https://via.placeholder.com/150?text=Game1" },
         { name: "Sample Game 2", url: "https://example.com/game2", image: "https://via.placeholder.com/150?text=Game2" }
+        // Add new game: { name: "New Game", url: "https://example.com/newgame", image: "https://via.placeholder.com/150?text=NewGame" }
     ],
+    // OSs: Add new operating systems with name, url, and image
     oss: [
         { name: "Sample OS 1", url: "https://example.com/os1", image: "https://via.placeholder.com/150?text=OS1" },
         { name: "Sample OS 2", url: "https://example.com/os2", image: "https://via.placeholder.com/150?text=OS2" }
+        // Add new OS: { name: "New OS", url: "https://example.com/newos", image: "https://via.placeholder.com/150?text=NewOS" }
     ],
+    // Apps: Add new apps with name, url, and image
     apps: [
         { name: "Sample App 1", url: "https://example.com/app1", image: "https://via.placeholder.com/150?text=App1" },
         { name: "Sample App 2", url: "https://example.com/app2", image: "https://via.placeholder.com/150?text=App2" }
+        // Add new app: { name: "New App", url: "https://example.com/newapp", image: "https://via.placeholder.com/150?text=NewApp" }
     ],
+    // Bookmarklets: Add new bookmarklets with name and code
     bookmarklets: [
         { name: "Dark Mode Toggle", code: "javascript:(function(){document.body.style.filter='invert(1) hue-rotate(180deg)';})();" },
         { name: "Highlight Text", code: "javascript:(function(){let s=window.getSelection();s.anchorNode.parentElement.style.backgroundColor='yellow';})();" }
+        // Add new bookmarklet: { name: "New Bookmarklet", code: "javascript:(function(){/* code here */})();" }
     ],
+    // Credits: Add new credits with name and role
     credits: [
         { name: "John Doe", role: "Developer" },
         { name: "Jane Smith", role: "Designer" }
+        // Add new credit: { name: "New Person", role: "New Role" }
     ],
+    // Partners: Add new partners with name, url, and image
     partners: [
         { name: "Partner Site 1", url: "https://example.com", image: "https://via.placeholder.com/150?text=Partner1" },
         { name: "Partner Site 2", url: "https://example.com", image: "https://via.placeholder.com/150?text=Partner2" }
+        // Add new partner: { name: "New Partner", url: "https://example.com/newpartner", image: "https://via.placeholder.com/150?text=NewPartner" }
     ],
-    themes: [
-        { name: "Dark Purple", bg: "#1a1a2e", accent: "#9d4edd", text: "#e0e0e0" },
-        { name: "Midnight Blue", bg: "#0a0c2e", accent: "#4e6edd", text: "#d0d0ff" }
+    // Suggestions: Add new suggestions with text
+    suggestions: [
+        { text: "Add more multiplayer games" },
+        { text: "Include a chat feature for users" },
+        { text: "Support for custom themes" }
+        // Add new suggestion: { text: "New suggestion text" }
     ]
 };
 
@@ -34,10 +49,12 @@ const contentData = {
 function initVisitorCounter() {
     try {
         const visitorCounter = document.getElementById('visitor-counter');
+        if (!visitorCounter) throw new Error('Visitor counter element not found');
         let visitorCount = localStorage.getItem('visitorCount') || 0;
         visitorCount = parseInt(visitorCount) + 1;
         localStorage.setItem('visitorCount', visitorCount);
         visitorCounter.textContent = visitorCount;
+        console.log('Visitor counter initialized:', visitorCount);
     } catch (error) {
         console.error('Visitor counter initialization failed:', error);
     }
@@ -47,14 +64,69 @@ function initVisitorCounter() {
 function initServerStatus() {
     try {
         const statusImage = document.getElementById('server-status-image');
+        if (!statusImage) throw new Error('Server status image not found');
         const isOnline = Math.random() > 0.3; // Simulated status (replace with API call)
         statusImage.src = isOnline
             ? 'https://via.placeholder.com/24/00FF00?text=ON'
             : 'https://via.placeholder.com/24/FF0000?text=OFF';
         statusImage.alt = isOnline ? 'Server Online' : 'Server Offline';
         statusImage.title = isOnline ? 'Server Online' : 'Server Offline';
+        console.log('Server status initialized:', isOnline ? 'Online' : 'Offline');
     } catch (error) {
         console.error('Server status initialization failed:', error);
+    }
+}
+
+// Initialize browser on Home page
+function initBrowser() {
+    try {
+        const urlInput = document.getElementById('browser-url');
+        const goButton = document.getElementById('browser-go');
+        const browserFrame = document.getElementById('browser-frame');
+        const feedback = document.getElementById('browser-feedback');
+        if (!urlInput || !goButton || !browserFrame || !feedback) {
+            throw new Error('Browser elements not found');
+        }
+
+        goButton.addEventListener('click', () => {
+            const url = urlInput.value.trim();
+            feedback.textContent = '';
+            feedback.className = '';
+
+            if (!url) {
+                feedback.textContent = 'Please enter a URL';
+                feedback.className = 'error';
+                console.error('No URL entered for browser');
+                return;
+            }
+
+            const urlPattern = /^(https?:\/\/)[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
+            if (!urlPattern.test(url)) {
+                feedback.textContent = 'Invalid URL (must start with http:// or https://)';
+                feedback.className = 'error';
+                console.error('Invalid URL:', url);
+                return;
+            }
+
+            browserFrame.src = url;
+            feedback.textContent = 'Loading URL...';
+            feedback.className = 'success';
+            console.log('Browser loading URL:', url);
+
+            browserFrame.onload = () => {
+                feedback.textContent = 'URL loaded successfully';
+                feedback.className = 'success';
+                console.log('Browser URL loaded:', url);
+            };
+            browserFrame.onerror = () => {
+                feedback.textContent = 'Failed to load URL';
+                feedback.className = 'error';
+                console.error('Failed to load URL:', url);
+            };
+        });
+        console.log('Browser initialized');
+    } catch (error) {
+        console.error('Browser initialization failed:', error);
     }
 }
 
@@ -68,67 +140,48 @@ function renderItems(containerId, items, type) {
             const div = document.createElement('div');
             div.className = 'item-card p-4 rounded';
             if (type === 'bookmarklet') {
+                div.className += ' text-only';
                 div.innerHTML = `<h3 class="text-lg font-semibold">${item.name}</h3><a href="${item.code}" class="text-[#9d4edd] hover:underline">Drag to Bookmarks</a>`;
+            } else if (type === 'credit') {
+                div.className += ' text-only';
+                div.innerHTML = `<h3 class="text-lg font-semibold">${item.name}</h3><p>${item.role}</p>`;
+            } else if (type === 'suggestion') {
+                div.className += ' text-only';
+                div.innerHTML = `<p class="text-base">${item.text}</p>`;
             } else {
-                div.innerHTML = `<img src="${item.image}" alt="${item.name}" class="w-full h-32 object-cover rounded"><h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
-                if (type !== 'credit') {
-                    div.addEventListener('click', () => openPlayer(type, item));
+                const img = document.createElement('img');
+                img.src = item.image || 'https://via.placeholder.com/150?text=No+Image';
+                img.alt = item.name;
+                img.className = 'w-full h-32 object-cover rounded';
+                if (type === 'game' || type === 'os' || type === 'app' || type === 'partner') {
+                    img.addEventListener('click', () => openPlayer(type, item));
                 }
+                div.appendChild(img);
+                div.innerHTML += `<h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
             }
             container.appendChild(div);
         });
+        console.log(`Rendered items for ${containerId}:`, items.length);
     } catch (error) {
         console.error(`Failed to render items for ${containerId}:`, error);
     }
 }
 
-// Open game/app/os player
+// Open game/app/os/partner in new tab
 function openPlayer(type, item) {
     try {
-        const player = document.getElementById(`${type}-player`);
-        const list = document.getElementById(`${type}s-list`);
-        const title = document.getElementById(`${type}-title`);
-        const frame = document.getElementById(`${type}-frame`);
-        if (!player || !list || !title || !frame) throw new Error(`Player elements for ${type} not found`);
-        player.classList.remove('hidden');
-        list.classList.add('hidden');
-        title.textContent = item.name;
-        frame.src = item.url;
+        if (!item.url) throw new Error(`No URL provided for ${type}: ${item.name}`);
+        const newWindow = window.open(item.url, '_blank');
+        if (newWindow) {
+            newWindow.focus();
+            newWindow.moveTo(0, 0);
+            newWindow.resizeTo(screen.width, screen.height);
+            console.log(`Opened ${type} in new tab:`, item.url);
+        } else {
+            console.error('Failed to open new window. Pop-up blocker may be enabled.');
+        }
     } catch (error) {
         console.error(`Failed to open player for ${type}:`, error);
-    }
-}
-
-// Setup back button for player
-function setupBackButton(type) {
-    try {
-        const button = document.getElementById(`back-to-${type}s`);
-        if (!button) throw new Error(`Back button for ${type} not found`);
-        button.addEventListener('click', () => {
-            document.getElementById(`${type}s-list`).classList.remove('hidden');
-            document.getElementById(`${type}-player`).classList.add('hidden');
-            document.getElementById(`${type}-frame`).src = '';
-        });
-    } catch (error) {
-        console.error(`Failed to setup back button for ${type}:`, error);
-    }
-}
-
-// Setup fullscreen toggle
-function setupFullscreen(type) {
-    try {
-        const button = document.getElementById(`fullscreen-${type}`);
-        const frame = document.getElementById(`${type}-frame`);
-        if (!button || !frame) throw new Error(`Fullscreen elements for ${type} not found`);
-        button.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                frame.requestFullscreen().catch(err => console.error(`Fullscreen error for ${type}:`, err));
-            } else {
-                document.exitFullscreen();
-            }
-        });
-    } catch (error) {
-        console.error(`Failed to setup fullscreen for ${type}:`, error);
     }
 }
 
@@ -137,34 +190,62 @@ function initTabs() {
     try {
         const tabs = document.querySelectorAll('.tab-button');
         const sections = document.querySelectorAll('.content-section');
+        console.log('Initializing tabs:', tabs.length, 'sections:', sections.length);
+
+        // Remove existing listeners to prevent duplicates
         tabs.forEach(tab => {
+            const newTab = tab.cloneNode(true);
+            tab.parentNode.replaceChild(newTab, tab);
+        });
+
+        const newTabs = document.querySelectorAll('.tab-button');
+        newTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.dataset.tab;
+                console.log('Tab clicked:', tabId);
                 if (!tabId) {
                     console.error('Tab missing data-tab attribute:', tab);
+                    alert('Tab navigation error: Missing data-tab attribute');
                     return;
                 }
-                tabs.forEach(t => t.classList.remove('active'));
+
+                // Clear all active classes
+                newTabs.forEach(t => t.classList.remove('active'));
                 sections.forEach(s => s.classList.remove('active'));
+
+                // Set active tab and section
                 tab.classList.add('active');
                 const section = document.getElementById(tabId);
                 if (section) {
                     section.classList.add('active');
+                    console.log(`Activated section: ${tabId}`);
                 } else {
                     console.error(`Section ${tabId} not found`);
+                    alert(`Tab navigation error: Section ${tabId} not found`);
+                    // Fallback to Home
+                    const homeSection = document.getElementById('home');
+                    if (homeSection) {
+                        homeSection.classList.add('active');
+                        document.querySelector('.tab-button[data-tab="home"]').classList.add('active');
+                        console.log('Fallback to Home section');
+                    }
                 }
             });
         });
+
         // Set Home as default
         const homeTab = document.querySelector('.tab-button[data-tab="home"]');
         if (homeTab) {
             homeTab.classList.add('active');
             document.getElementById('home').classList.add('active');
+            console.log('Home tab set as default');
         } else {
             console.error('Home tab not found');
+            alert('Tab navigation error: Home tab not found');
         }
     } catch (error) {
         console.error('Tab initialization failed:', error);
+        alert('Tab navigation initialization failed. Check console for details.');
     }
 }
 
@@ -185,11 +266,11 @@ function initCloak() {
                 document.title = title;
                 feedback.textContent = 'Title updated successfully';
                 feedback.className = 'success';
+                console.log('Cloak title updated:', title);
             }
 
             // Update favicon
             if (favicon) {
-                // Validate favicon URL
                 const validImageExtensions = ['.png', '.jpg', '.jpeg', '.ico', '.gif'];
                 const isValidUrl = validImageExtensions.some(ext => favicon.toLowerCase().endsWith(ext));
                 if (!isValidUrl) {
@@ -212,6 +293,7 @@ function initCloak() {
                             ? `${feedback.textContent} | Favicon updated successfully`
                             : 'Favicon updated successfully';
                         feedback.className = 'success';
+                        console.log('Cloak favicon updated:', faviconUrl);
                     };
                     img.onerror = () => {
                         faviconLink.href = 'https://via.placeholder.com/32.png?text=DNA'; // Fallback favicon
@@ -232,62 +314,36 @@ function initCloak() {
             } else if (!title) {
                 feedback.textContent = 'Please enter a title or favicon URL';
                 feedback.className = 'error';
+                console.error('No title or favicon entered for cloak');
             }
         });
+        console.log('Cloak initialized');
     } catch (error) {
         console.error('Cloak initialization failed:', error);
-    }
-}
-
-// Initialize theme toggle
-function initTheme() {
-    try {
-        let currentThemeIndex = 0; // Start with Dark Purple
-        const toggleTheme = document.getElementById('toggle-theme');
-        if (!toggleTheme) throw new Error('Toggle theme button not found');
-        toggleTheme.addEventListener('click', () => {
-            currentThemeIndex = (currentThemeIndex + 1) % contentData.themes.length;
-            const theme = contentData.themes[currentThemeIndex];
-            document.body.style.backgroundColor = theme.bg;
-            document.body.style.color = theme.text;
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.style.color = theme.accent;
-            });
-            document.querySelectorAll('.item-card').forEach(card => {
-                card.style.borderColor = theme.accent;
-            });
-            document.getElementById('server-status-image').style.borderColor = theme.accent;
-        });
-    } catch (error) {
-        console.error('Theme initialization failed:', error);
     }
 }
 
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
     try {
+        console.log('DOM fully loaded, initializing...');
         initVisitorCounter();
         initServerStatus();
         initTabs();
         initCloak();
-        initTheme();
+        initBrowser();
 
         // Render initial content
         renderItems('games-list', contentData.games, 'game');
         renderItems('oss-list', contentData.oss, 'os');
         renderItems('apps-list', contentData.apps, 'app');
         renderItems('bookmarklets-list', contentData.bookmarklets, 'bookmarklet');
+        renderItems('credits-list', contentData.credits, 'credit');
         renderItems('partners-list', contentData.partners, 'partner');
-        renderItems('credits-list', contentData.credits.map(c => ({ name: `${c.name} - ${c.role}`, image: 'none' })), 'credit');
-
-        // Setup back buttons and fullscreen
-        setupBackButton('game');
-        setupBackButton('os');
-        setupBackButton('app');
-        setupFullscreen('game');
-        setupFullscreen('os');
-        setupFullscreen('app');
+        renderItems('suggestions-list', contentData.suggestions, 'suggestion');
+        console.log('Discord tab ready (WidgetBot loaded via CDN)');
     } catch (error) {
         console.error('Main initialization failed:', error);
+        alert('Page initialization failed. Check console for details.');
     }
 });
