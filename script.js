@@ -1,32 +1,47 @@
-// Data
+// Data (edit here to add new content)
 const contentData = {
+    // Games: Add new games with name, url, and image
     games: [
         { name: "Sample Game 1", url: "https://example.com/game1", image: "https://via.placeholder.com/150?text=Game1" },
         { name: "Sample Game 2", url: "https://example.com/game2", image: "https://via.placeholder.com/150?text=Game2" }
+        // Add new game: { name: "New Game", url: "https://example.com/newgame", image: "https://via.placeholder.com/150?text=NewGame" }
     ],
+    // OSs: Add new operating systems with name, url, and image
     oss: [
         { name: "Sample OS 1", url: "https://example.com/os1", image: "https://via.placeholder.com/150?text=OS1" },
         { name: "Sample OS 2", url: "https://example.com/os2", image: "https://via.placeholder.com/150?text=OS2" }
+        // Add new OS: { name: "New OS", url: "https://example.com/newos", image: "https://via.placeholder.com/150?text=NewOS" }
     ],
+    // Apps: Add new apps with name, url, and image
     apps: [
         { name: "Sample App 1", url: "https://example.com/app1", image: "https://via.placeholder.com/150?text=App1" },
         { name: "Sample App 2", url: "https://example.com/app2", image: "https://via.placeholder.com/150?text=App2" }
+        // Add new app: { name: "New App", url: "https://example.com/newapp", image: "https://via.placeholder.com/150?text=NewApp" }
     ],
+    // Bookmarklets: Add new bookmarklets with name and code
     bookmarklets: [
         { name: "Dark Mode Toggle", code: "javascript:(function(){document.body.style.filter='invert(1) hue-rotate(180deg)';})();" },
         { name: "Highlight Text", code: "javascript:(function(){let s=window.getSelection();s.anchorNode.parentElement.style.backgroundColor='yellow';})();" }
+        // Add new bookmarklet: { name: "New Bookmarklet", code: "javascript:(function(){/* code here */})();" }
     ],
+    // Credits: Add new credits with name and role
     credits: [
         { name: "John Doe", role: "Developer" },
         { name: "Jane Smith", role: "Designer" }
+        // Add new credit: { name: "New Person", role: "New Role" }
     ],
+    // Partners: Add new partners with name, url, and image
     partners: [
         { name: "Partner Site 1", url: "https://example.com", image: "https://via.placeholder.com/150?text=Partner1" },
         { name: "Partner Site 2", url: "https://example.com", image: "https://via.placeholder.com/150?text=Partner2" }
+        // Add new partner: { name: "New Partner", url: "https://example.com/newpartner", image: "https://via.placeholder.com/150?text=NewPartner" }
     ],
-    themes: [
-        { name: "Dark Purple", bg: "#1a1a2e", accent: "#9d4edd", text: "#e0e0e0" },
-        { name: "Midnight Blue", bg: "#0a0c2e", accent: "#4e6edd", text: "#d0d0ff" }
+    // Suggestions: Add new suggestions with text
+    suggestions: [
+        { text: "Add more multiplayer games" },
+        { text: "Include a chat feature for users" },
+        { text: "Support for custom themes" }
+        // Add new suggestion: { text: "New suggestion text" }
     ]
 };
 
@@ -34,6 +49,7 @@ const contentData = {
 function initVisitorCounter() {
     try {
         const visitorCounter = document.getElementById('visitor-counter');
+        if (!visitorCounter) throw new Error('Visitor counter element not found');
         let visitorCount = localStorage.getItem('visitorCount') || 0;
         visitorCount = parseInt(visitorCount) + 1;
         localStorage.setItem('visitorCount', visitorCount);
@@ -47,6 +63,7 @@ function initVisitorCounter() {
 function initServerStatus() {
     try {
         const statusImage = document.getElementById('server-status-image');
+        if (!statusImage) throw new Error('Server status image not found');
         const isOnline = Math.random() > 0.3; // Simulated status (replace with API call)
         statusImage.src = isOnline
             ? 'https://via.placeholder.com/24/00FF00?text=ON'
@@ -68,11 +85,20 @@ function renderItems(containerId, items, type) {
             const div = document.createElement('div');
             div.className = 'item-card p-4 rounded';
             if (type === 'bookmarklet') {
+                div.className += ' text-only';
                 div.innerHTML = `<h3 class="text-lg font-semibold">${item.name}</h3><a href="${item.code}" class="text-[#9d4edd] hover:underline">Drag to Bookmarks</a>`;
+            } else if (type === 'credit') {
+                div.className += ' text-only';
+                div.innerHTML = `<h3 class="text-lg font-semibold">${item.name}</h3><p>${item.role}</p>`;
+            } else if (type === 'suggestion') {
+                div.className += ' text-only';
+                div.innerHTML = `<p class="text-base">${item.text}</p>`;
             } else {
-                div.innerHTML = `<img src="${item.image}" alt="${item.name}" class="w-full h-32 object-cover rounded"><h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
-                if (type !== 'credit') {
+                div.innerHTML = `<img src="${item.image || 'https://via.placeholder.com/150?text=No+Image'}" alt="${item.name}" class="w-full h-32 object-cover rounded"><h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
+                if (type === 'game' || type === 'os' || type === 'app') {
                     div.addEventListener('click', () => openPlayer(type, item));
+                } else if (type === 'partner') {
+                    div.addEventListener('click', () => window.open(item.url, '_blank'));
                 }
             }
             container.appendChild(div);
@@ -189,7 +215,6 @@ function initCloak() {
 
             // Update favicon
             if (favicon) {
-                // Validate favicon URL
                 const validImageExtensions = ['.png', '.jpg', '.jpeg', '.ico', '.gif'];
                 const isValidUrl = validImageExtensions.some(ext => favicon.toLowerCase().endsWith(ext));
                 if (!isValidUrl) {
@@ -239,30 +264,6 @@ function initCloak() {
     }
 }
 
-// Initialize theme toggle
-function initTheme() {
-    try {
-        let currentThemeIndex = 0; // Start with Dark Purple
-        const toggleTheme = document.getElementById('toggle-theme');
-        if (!toggleTheme) throw new Error('Toggle theme button not found');
-        toggleTheme.addEventListener('click', () => {
-            currentThemeIndex = (currentThemeIndex + 1) % contentData.themes.length;
-            const theme = contentData.themes[currentThemeIndex];
-            document.body.style.backgroundColor = theme.bg;
-            document.body.style.color = theme.text;
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.style.color = theme.accent;
-            });
-            document.querySelectorAll('.item-card').forEach(card => {
-                card.style.borderColor = theme.accent;
-            });
-            document.getElementById('server-status-image').style.borderColor = theme.accent;
-        });
-    } catch (error) {
-        console.error('Theme initialization failed:', error);
-    }
-}
-
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
     try {
@@ -270,23 +271,15 @@ document.addEventListener('DOMContentLoaded', () => {
         initServerStatus();
         initTabs();
         initCloak();
-        initTheme();
 
         // Render initial content
         renderItems('games-list', contentData.games, 'game');
         renderItems('oss-list', contentData.oss, 'os');
         renderItems('apps-list', contentData.apps, 'app');
         renderItems('bookmarklets-list', contentData.bookmarklets, 'bookmarklet');
+        renderItems('credits-list', contentData.credits, 'credit');
         renderItems('partners-list', contentData.partners, 'partner');
-        renderItems('credits-list', contentData.credits.map(c => ({ name: `${c.name} - ${c.role}`, image: 'none' })), 'credit');
-
-        // Setup back buttons and fullscreen
-        setupBackButton('game');
-        setupBackButton('os');
-        setupBackButton('app');
-        setupFullscreen('game');
-        setupFullscreen('os');
-        setupFullscreen('app');
+        renderItems('suggestions-list', contentData.suggestions, 'suggestion');
     } catch (error) {
         console.error('Main initialization failed:', error);
     }
