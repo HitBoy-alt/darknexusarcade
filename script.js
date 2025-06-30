@@ -94,12 +94,15 @@ function renderItems(containerId, items, type) {
                 div.className += ' text-only';
                 div.innerHTML = `<p class="text-base">${item.text}</p>`;
             } else {
-                div.innerHTML = `<img src="${item.image || 'https://via.placeholder.com/150?text=No+Image'}" alt="${item.name}" class="w-full h-32 object-cover rounded"><h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
-                if (type === 'game' || type === 'os' || type === 'app') {
-                    div.addEventListener('click', () => openPlayer(type, item));
-                } else if (type === 'partner') {
-                    div.addEventListener('click', () => window.open(item.url, '_blank'));
+                const img = document.createElement('img');
+                img.src = item.image || 'https://via.placeholder.com/150?text=No+Image';
+                img.alt = item.name;
+                img.className = 'w-full h-32 object-cover rounded';
+                if (type === 'game' || type === 'os' || type === 'app' || type === 'partner') {
+                    img.addEventListener('click', () => openPlayer(type, item));
                 }
+                div.appendChild(img);
+                div.innerHTML += `<h3 class="text-lg font-semibold mt-2">${item.name}</h3>`;
             }
             container.appendChild(div);
         });
@@ -108,53 +111,22 @@ function renderItems(containerId, items, type) {
     }
 }
 
-// Open game/app/os player
+// Open game/app/os/partner in new tab
 function openPlayer(type, item) {
     try {
-        const player = document.getElementById(`${type}-player`);
-        const list = document.getElementById(`${type}s-list`);
-        const title = document.getElementById(`${type}-title`);
-        const frame = document.getElementById(`${type}-frame`);
-        if (!player || !list || !title || !frame) throw new Error(`Player elements for ${type} not found`);
-        player.classList.remove('hidden');
-        list.classList.add('hidden');
-        title.textContent = item.name;
-        frame.src = item.url;
+        if (!item.url) throw new Error(`No URL provided for ${type}: ${item.name}`);
+        // Open in new tab with maximized window
+        const newWindow = window.open(item.url, '_blank');
+        if (newWindow) {
+            newWindow.focus();
+            // Attempt to maximize the window (browser-dependent)
+            newWindow.moveTo(0, 0);
+            newWindow.resizeTo(screen.width, screen.height);
+        } else {
+            console.error('Failed to open new window. Pop-up blocker may be enabled.');
+        }
     } catch (error) {
         console.error(`Failed to open player for ${type}:`, error);
-    }
-}
-
-// Setup back button for player
-function setupBackButton(type) {
-    try {
-        const button = document.getElementById(`back-to-${type}s`);
-        if (!button) throw new Error(`Back button for ${type} not found`);
-        button.addEventListener('click', () => {
-            document.getElementById(`${type}s-list`).classList.remove('hidden');
-            document.getElementById(`${type}-player`).classList.add('hidden');
-            document.getElementById(`${type}-frame`).src = '';
-        });
-    } catch (error) {
-        console.error(`Failed to setup back button for ${type}:`, error);
-    }
-}
-
-// Setup fullscreen toggle
-function setupFullscreen(type) {
-    try {
-        const button = document.getElementById(`fullscreen-${type}`);
-        const frame = document.getElementById(`${type}-frame`);
-        if (!button || !frame) throw new Error(`Fullscreen elements for ${type} not found`);
-        button.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                frame.requestFullscreen().catch(err => console.error(`Fullscreen error for ${type}:`, err));
-            } else {
-                document.exitFullscreen();
-            }
-        });
-    } catch (error) {
-        console.error(`Failed to setup fullscreen for ${type}:`, error);
     }
 }
 
@@ -178,6 +150,9 @@ function initTabs() {
                     section.classList.add('active');
                 } else {
                     console.error(`Section ${tabId} not found`);
+                    // Fallback to Home
+                    const homeSection = document.getElementById('home');
+                    if (homeSection) homeSection.classList.add('active');
                 }
             });
         });
