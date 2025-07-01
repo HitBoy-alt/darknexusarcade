@@ -38,65 +38,7 @@ h2 {
     font-weight: 600;
 }
 
-.search-container {
-    display: flex;
-    margin-bottom: 20px;
-    max-width: 500px;
-}
-
-#app-search {
-    flex: 1;
-    padding: 12px 15px;
-    border: 1px solid var(--medium-gray);
-    border-radius: 8px 0 0 8px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-#app-search:focus {
-    border-color: var(--primary-color);
-}
-
-#search-btn {
-    padding: 0 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#search-btn:hover {
-    background-color: #3367d6;
-}
-
-.category-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 25px;
-}
-
-.category-btn {
-    padding: 8px 16px;
-    background-color: var(--light-gray);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
-}
-
-.category-btn:hover {
-    background-color: var(--medium-gray);
-}
-
-.category-btn.active {
-    background-color: var(--primary-color);
-    color: white;
-}
+/* Removed .search-container, #app-search, #search-btn — not used */
 
 .apps-grid {
     display: grid;
@@ -141,11 +83,11 @@ h2 {
     .apps-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
-    
+
     .app-icon {
         font-size: 32px;
     }
-    
+
     .app-name {
         font-size: 14px;
     }
