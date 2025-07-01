@@ -29,11 +29,11 @@ const appsData = [
         url: "https://netflix.com"
     },
     {
-        name: "Google Docs",
+        name: "Heartives",
         icon: "https://www.google.com/s2/favicons?domain=docs.google.com&sz=128",
         category: "productivity",
         description: "Create and edit documents online",
-        url: "https://docs.google.com"
+        url: "https://heartive-us4.pages.dev"
     },
     {
         name: "Google Drive",
