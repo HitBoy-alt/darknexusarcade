@@ -3,46 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dark Nexus Arcade - Unblocked games and apps">
     <title>Dark Nexus Arcade</title>
-    <link rel="stylesheet" href="styles/dark-theme.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dark-theme.css">
     <link rel="icon" href="assets/icons/favicon.ico">
 </head>
 <body>
-    <header>
-        <h1>Dark Nexus Arcade</h1>
-        <nav>
-            <a href="index.html" class="active">Home</a>
-            <a href="tabs/games.html">Games</a>
-            <a href="tabs/apps.html">Apps</a>
-            <a href="tabs/proxies.html">Proxies</a>
-            <a href="tabs/oss.html">OS's</a>
-            <a href="tabs/credits.html">Credits</a>
-            <a href="tabs/partners.html">Partners</a>
-            <a href="tabs/discord.html">Discord</a>
-            <a href="tabs/settings.html">Settings</a>
-            <a href="tabs/suggestions.html">Suggestions</a>
-            <a href="tabs/bookmarklets.html">Bookmarklets</a>
-        </nav>
+    <header class="site-header">
+        <div class="header-content">
+            <h1>Dark Nexus Arcade</h1>
+            <nav aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+                    <li><a href="tabs/games.html" class="nav-link">Games</a></li>
+                    <li><a href="tabs/apps.html" class="nav-link">Apps</a></li>
+                    <li><a href="tabs/proxies.html" class="nav-link">Proxies</a></li>
+                    <li><a href="tabs/oss.html" class="nav-link">OS's</a></li>
+                    <li><a href="tabs/credits.html" class="nav-link">Credits</a></li>
+                    <li><a href="tabs/partners.html" class="nav-link">Partners</a></li>
+                    <li><a href="tabs/discord.html" class="nav-link">Discord</a></li>
+                    <li><a href="tabs/settings.html" class="nav-link">Settings</a></li>
+                    <li><a href="tabs/suggestions.html" class="nav-link">Suggestions</a></li>
+                    <li><a href="tabs/bookmarklets.html" class="nav-link">Bookmarklets</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="browser-container">
-            <h2>Unblocked Browser</h2>
+    <main class="main-content">
+        <section class="browser-section" aria-labelledby="browser-heading">
+            <h2 id="browser-heading">Unblocked Browser</h2>
             <div class="browser-controls">
-                <input type="text" id="url-input" placeholder="Enter URL...">
-                <button id="go-button">Go</button>
-                <button id="new-tab-button">New Tab</button>
+                <label for="url-input" class="sr-only">Enter URL</label>
+                <input type="url" id="url-input" placeholder="https://example.com" aria-label="Website URL">
+                <button id="go-button" class="action-button">Go</button>
+                <button id="new-tab-button" class="action-button secondary">New Tab</button>
             </div>
-            <iframe id="browser-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+            <iframe id="browser-frame" title="Web Browser" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 Dark Nexus Arcade | All Rights Reserved</p>
+    <footer class="site-footer">
+        <p>&copy; <span id="current-year"></span> Dark Nexus Arcade | All Rights Reserved</p>
     </footer>
 
-    <script src="scripts/main.js"></script>
-    <script src="scripts/embed.js"></script>
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/browser.js" defer></script>
 </body>
 </html>
