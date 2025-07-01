@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating Systems Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Operating Systems Hub</h1>
+            <p>Explore and compare different operating systems</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search OS...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-type="all">All</button>
+            <button class="filter-btn" data-type="desktop">Desktop</button>
+            <button class="filter-btn" data-type="mobile">Mobile</button>
+            <button class="filter-btn" data-type="server">Server</button>
+        </div>
+
+        <div class="os-grid" id="os-container">
+            <!-- OS cards will be loaded here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
