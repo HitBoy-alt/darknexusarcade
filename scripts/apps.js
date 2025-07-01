@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Sample app data
+document.addEventListener('DOMContentLoaded', function () {
+    // App data
     const apps = [
         { name: "Facebook", icon: "fab fa-facebook" },
         { name: "Twitter", icon: "fab fa-twitter" },
@@ -19,53 +19,26 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     const appsGrid = document.getElementById('apps-grid');
-    const searchInput = document.getElementById('app-search');
-    const searchBtn = document.getElementById('search-btn');
 
-    let currentSearchTerm = '';
-
-    // Render apps (search-only filtering)
     function renderApps() {
         appsGrid.innerHTML = '';
 
-        const filteredApps = apps.filter(app =>
-            app.name.toLowerCase().includes(currentSearchTerm.toLowerCase())
-        );
-
-        if (filteredApps.length === 0) {
-            appsGrid.innerHTML = '<p class="no-results">No apps found matching your search.</p>';
-            return;
-        }
-
-        filteredApps.forEach(app => {
+        apps.forEach(app => {
             const appCard = document.createElement('div');
             appCard.className = 'app-card';
-            appCard.dataset.name = app.name;
 
             appCard.innerHTML = `
                 <div class="app-icon"><i class="${app.icon}"></i></div>
                 <div class="app-name">${app.name}</div>
             `;
 
-            appCard.addEventListener('click', function() {
+            appCard.addEventListener('click', function () {
                 alert(`Opening ${app.name}`);
             });
 
             appsGrid.appendChild(appCard);
         });
     }
-
-    function handleSearch() {
-        currentSearchTerm = searchInput.value.trim();
-        renderApps();
-    }
-
-    searchBtn.addEventListener('click', handleSearch);
-    searchInput.addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    });
 
     renderApps();
 });
