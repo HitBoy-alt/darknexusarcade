@@ -1,25 +1,44 @@
 dark-nexus-arcade/
-├── index.html            # Home page with unblocked browser
+├── index.html
 ├── tabs/
-│   ├── games.html        # Games page
-│   ├── apps.html         # Apps page
-│   ├── proxies.html      # Proxies page
-│   ├── oss.html          # OS emulators page
-│   ├── credits.html      # Credits page
-│   ├── partners.html     # Partners page
-│   ├── discord.html      # Discord page
-│   ├── settings.html     # Settings page
-│   ├── suggestions.html  # Suggestions page
-│   └── bookmarklets.html # Bookmarklets page
+│   ├── games.html
+│   ├── apps.html
+│   ├── proxies.html
+│   ├── oss.html
+│   ├── credits.html
+│   ├── partners.html
+│   ├── discord.html
+│   ├── settings.html
+│   ├── suggestions.html
+│   └── bookmarklets.html
 ├── styles/
-│   ├── main.css          # Main stylesheet
-│   ├── grid.css          # Grid layout styles
-│   └── dark-theme.css    # Dark theme styles (purple/black/blue)
+│   ├── main.css
+│   ├── grid.css
+│   ├── dark-theme.css
+│   └── settings.css
 ├── scripts/
-│   ├── main.js           # Main JavaScript
-│   ├── embed.js          # Embed handling
-│   ├── tabcloaker.js     # Tab cloaking functionality
-│   └── clipboard.js      # Copy functionality
+│   ├── main.js
+│   ├── embed.js
+│   ├── tabcloaker.js
+│   ├── clipboard.js
+│   ├── settings.js
+│   └── browser.js
 └── assets/
-    ├── images/           # All images/logos
-    └── icons/            # Favicons and tab icons
+    ├── images/
+    │   ├── game1.png
+    │   ├── game2.png
+    │   ├── app1.png
+    │   ├── app2.png
+    │   ├── proxy1.png
+    │   ├── proxy2.png
+    │   ├── os1.png
+    │   ├── os2.png
+    │   ├── credit1.png
+    │   ├── partner1.png
+    │   └── logo.png
+    └── icons/
+        ├── favicon.ico
+        ├── favicon-16x16.png
+        ├── favicon-32x32.png
+        ├── apple-touch-icon.png
+        └── site.webmanifest
