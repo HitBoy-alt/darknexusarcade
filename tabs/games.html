@@ -1,138 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>App Search</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    #app-search {
-      padding: 8px;
-      width: 200px;
-    }
-
-    #search-btn {
-      padding: 8px 12px;
-    }
-
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .app-card {
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-      cursor: pointer;
-    }
-
-    .app-card:hover {
-      transform: scale(1.05);
-    }
-
-    .app-icon {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-
-    .no-results {
-      text-align: center;
-      margin-top: 20px;
-      color: #777;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Games Hub</h1>
+            <p>Discover and play your favorite games</p>
+        </header>
 
-  <input type="text" id="app-search" placeholder="Search for an app..." />
-  <button id="search-btn">Search</button>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search games...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
 
-  <div id="apps-grid" class="apps-grid"></div>
+        <div class="games-grid" id="games-container">
+            <!-- Games will be loaded here by JavaScript -->
+        </div>
+    </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const apps = [
-        { name: "Facebook", icon: "fab fa-facebook" },
-        { name: "Twitter", icon: "fab fa-twitter" },
-        { name: "Instagram", icon: "fab fa-instagram" },
-        { name: "YouTube", icon: "fab fa-youtube" },
-        { name: "Netflix", icon: "fab fa-netflix" },
-        { name: "Spotify", icon: "fab fa-spotify" },
-        { name: "Trello", icon: "fab fa-trello" },
-        { name: "Slack", icon: "fab fa-slack" },
-        { name: "Google Drive", icon: "fab fa-google-drive" },
-        { name: "Duolingo", icon: "fas fa-language" },
-        { name: "Coursera", icon: "fas fa-graduation-cap" },
-        { name: "Khan Academy", icon: "fas fa-book-open" },
-        { name: "WhatsApp", icon: "fab fa-whatsapp" },
-        { name: "Zoom", icon: "fas fa-video" },
-        { name: "Dropbox", icon: "fab fa-dropbox" }
-      ];
-
-      const appsGrid = document.getElementById('apps-grid');
-      const searchInput = document.getElementById('app-search');
-      const searchBtn = document.getElementById('search-btn');
-
-      let currentSearchTerm = '';
-
-      function renderApps() {
-        appsGrid.innerHTML = '';
-
-        const filteredApps = apps.filter(app =>
-          app.name.toLowerCase().includes(currentSearchTerm.toLowerCase())
-        );
-
-        if (filteredApps.length === 0) {
-          appsGrid.innerHTML = '<p class="no-results">No apps found matching your search.</p>';
-          return;
-        }
-
-        filteredApps.forEach(app => {
-          const appCard = document.createElement('div');
-          appCard.className = 'app-card';
-
-          appCard.innerHTML = `
-            <div class="app-icon"><i class="${app.icon}"></i></div>
-            <div class="app-name">${app.name}</div>
-          `;
-
-          appCard.addEventListener('click', function() {
-            alert(\`Opening ${app.name}\`);
-          });
-
-          appsGrid.appendChild(appCard);
-        });
-      }
-
-      function handleSearch() {
-        currentSearchTerm = searchInput.value.trim();
-        renderApps();
-      }
-
-      searchBtn.addEventListener('click', handleSearch);
-      searchInput.addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') {
-          handleSearch();
-        }
-      });
-
-      renderApps(); // Initial load
-    });
-  </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
