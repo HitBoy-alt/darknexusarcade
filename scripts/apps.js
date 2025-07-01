@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     apps.forEach(app => {
       const appCard = document.createElement('div');
-      appCard.className = 'app-card';
+      appCard.className = 'app-card flex flex-col items-center p-4 bg-gray-900/50 rounded-xl cursor-pointer';
 
       appCard.innerHTML = `
         <div class="app-icon"><i class="${app.icon}"></i></div>
