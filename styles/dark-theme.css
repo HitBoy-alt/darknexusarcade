@@ -1,0 +1,21 @@
+:root {
+  --primary: #6a0dad;     /* Purple */
+  --secondary: #0a0a1a;   /* Dark blue-black */
+  --accent: #0f1a2a;      /* Dark blue */
+  --text: #e0e0e0;        /* Light gray text */
+}
+
+body {
+  background-color: var(--secondary);
+  color: var(--text);
+  font-family: 'Arial', sans-serif;
+}
+
+header, footer {
+  background-color: var(--primary);
+}
+
+.card {
+  background-color: var(--accent);
+  border: 1px solid var(--primary);
+}
