@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apps</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Apps Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="apps" class="tab-content">
         <h2>Apps</h2>
         <div class="search-container">
-            <input type="text" id="app-search" placeholder="Search apps...">
-            <button id="search-btn"><i class="fas fa-search"></i></button>
+            <input type="text" id="app-search" placeholder="Search apps..." aria-label="Search apps">
+            <button id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
         </div>
         <div class="category-filter">
             <button class="category-btn active" data-category="all">All</button>
@@ -21,32 +22,10 @@
             <button class="category-btn" data-category="education">Education</button>
         </div>
         <div class="apps-grid" id="apps-grid">
-            <!-- Example app cards (would normally be loaded dynamically) -->
-            <div class="app-card" data-categories="social" data-name="Facebook">
-                <div class="app-icon"><i class="fab fa-facebook"></i></div>
-                <div class="app-name">Facebook</div>
-            </div>
-            <div class="app-card" data-categories="entertainment" data-name="YouTube">
-                <div class="app-icon"><i class="fab fa-youtube"></i></div>
-                <div class="app-name">YouTube</div>
-            </div>
-            <div class="app-card" data-categories="productivity" data-name="Trello">
-                <div class="app-icon"><i class="fab fa-trello"></i></div>
-                <div class="app-name">Trello</div>
-            </div>
-            <div class="app-card" data-categories="education" data-name="Duolingo">
-                <div class="app-icon"><i class="fas fa-language"></i></div>
-                <div class="app-name">Duolingo</div>
-            </div>
-            <div class="app-card" data-categories="social" data-name="Twitter">
-                <div class="app-icon"><i class="fab fa-twitter"></i></div>
-                <div class="app-name">Twitter</div>
-            </div>
-            <div class="app-card" data-categories="productivity" data-name="Slack">
-                <div class="app-icon"><i class="fab fa-slack"></i></div>
-                <div class="app-name">Slack</div>
-            </div>
+            <!-- Apps will be loaded dynamically from JavaScript -->
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
