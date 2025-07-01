@@ -1,94 +1,42 @@
-:root {
-    --primary-color: #4285f4;
-    --secondary-color: #34a853;
-    --accent-color: #ea4335;
-    --light-gray: #f5f5f5;
-    --medium-gray: #e0e0e0;
-    --dark-gray: #757575;
-    --text-color: #333;
-    --white: #ffffff;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-    background-color: var(--light-gray);
-    padding: 20px;
-    color: var(--text-color);
-}
-
-.tab-content {
-    background-color: var(--white);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-h2 {
-    margin-bottom: 25px;
-    color: var(--text-color);
-    font-size: 28px;
-    font-weight: 600;
-}
-
-/* Removed .search-container, #app-search, #search-btn — not used */
-
-.apps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
+  background: linear-gradient(135deg, #1a1033 0%, #0a0e2b 100%);
+  min-height: 100vh;
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
 }
 
 .app-card {
-    background-color: var(--white);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid var(--medium-gray);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .app-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
 }
 
 .app-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-    color: var(--primary-color);
+  background: linear-gradient(135deg, #6b46c1 0%, #4c2889 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0.5rem;
+}
+
+.app-icon i {
+  font-size: 2rem;
+  color: #e9d5ff;
 }
 
 .app-name {
-    font-weight: 500;
-    font-size: 16px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .apps-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-}
-
-@media (max-width: 480px) {
-    .apps-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-
-    .app-icon {
-        font-size: 32px;
-    }
-
-    .app-name {
-        font-size: 14px;
-    }
+  font-size: 0.9rem;
+  text-align: center;
+  color: #d8b4fe;
 }
