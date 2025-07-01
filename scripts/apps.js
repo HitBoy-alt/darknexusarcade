@@ -1,160 +1,150 @@
-// Apps data
-const appsData = [
-    {
-        name: "YouTube",
-        icon: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128",
-        category: "entertainment",
-        description: "Watch and share videos",
-        url: "https://youtube.com"
-    },
-    {
-        name: "Discord",
-        icon: "https://www.google.com/s2/favicons?domain=discord.com&sz=128",
-        category: "social",
-        description: "Voice, video, and text communication",
-        url: "https://discord.com"
-    },
-    {
-        name: "Spotify",
-        icon: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
-        category: "entertainment",
-        description: "Music streaming service",
-        url: "https://spotify.com"
-    },
-    {
-        name: "Netflix",
-        icon: "https://www.google.com/s2/favicons?domain=netflix.com&sz=128",
-        category: "entertainment",
-        description: "Stream TV shows and movies",
-        url: "https://netflix.com"
-    },
-    {
-        name: "Heartives",
-        icon: "https://www.google.com/s2/favicons?domain=docs.google.com&sz=128",
-        category: "productivity",
-        description: "Create and edit documents online",
-        url: "https://heartive-us4.pages.dev"
-    },
-    {
-        name: "Google Drive",
-        icon: "https://www.google.com/s2/favicons?domain=drive.google.com&sz=128",
-        category: "productivity",
-        description: "Cloud storage and file sharing",
-        url: "https://drive.google.com"
-    },
-    {
-        name: "Reddit",
-        icon: "https://www.google.com/s2/favicons?domain=reddit.com&sz=128",
-        category: "social",
-        description: "Social news aggregation and discussion",
-        url: "https://reddit.com"
-    },
-    {
-        name: "Twitch",
-        icon: "https://www.google.com/s2/favicons?domain=twitch.tv&sz=128",
-        category: "entertainment",
-        description: "Live streaming platform",
-        url: "https://twitch.tv"
-    },
-    {
-        name: "Khan Academy",
-        icon: "https://www.google.com/s2/favicons?domain=khanacademy.org&sz=128",
-        category: "education",
-        description: "Free online courses and lessons",
-        url: "https://khanacademy.org"
-    },
-    {
-        name: "Duolingo",
-        icon: "https://www.google.com/s2/favicons?domain=duolingo.com&sz=128",
-        category: "education",
-        description: "Language learning platform",
-        url: "https://duolingo.com"
-    },
-    {
-        name: "Trello",
-        icon: "https://www.google.com/s2/favicons?domain=trello.com&sz=128",
-        category: "productivity",
-        description: "Project management tool",
-        url: "https://trello.com"
-    },
-    {
-        name: "Zoom",
-        icon: "https://www.google.com/s2/favicons?domain=zoom.us&sz=128",
-        category: "social",
-        description: "Video conferencing software",
-        url: "https://zoom.us"
-    }
-];
-
-// Initialize apps tab
 document.addEventListener('DOMContentLoaded', function() {
-    populateAppsGrid();
-    setupSearch();
-    setupCategoryFilters();
-});
+    // Sample app data
+    const apps = [
+        {
+            name: "Facebook",
+            icon: "fab fa-facebook",
+            categories: ["social"]
+        },
+        {
+            name: "Twitter",
+            icon: "fab fa-twitter",
+            categories: ["social"]
+        },
+        {
+            name: "Instagram",
+            icon: "fab fa-instagram",
+            categories: ["social"]
+        },
+        {
+            name: "YouTube",
+            icon: "fab fa-youtube",
+            categories: ["entertainment", "social"]
+        },
+        {
+            name: "Netflix",
+            icon: "fab fa-netflix",
+            categories: ["entertainment"]
+        },
+        {
+            name: "Spotify",
+            icon: "fab fa-spotify",
+            categories: ["entertainment"]
+        },
+        {
+            name: "Trello",
+            icon: "fab fa-trello",
+            categories: ["productivity"]
+        },
+        {
+            name: "Slack",
+            icon: "fab fa-slack",
+            categories: ["productivity"]
+        },
+        {
+            name: "Google Drive",
+            icon: "fab fa-google-drive",
+            categories: ["productivity"]
+        },
+        {
+            name: "Duolingo",
+            icon: "fas fa-language",
+            categories: ["education"]
+        },
+        {
+            name: "Coursera",
+            icon: "fas fa-graduation-cap",
+            categories: ["education"]
+        },
+        {
+            name: "Khan Academy",
+            icon: "fas fa-book-open",
+            categories: ["education"]
+        },
+        {
+            name: "WhatsApp",
+            icon: "fab fa-whatsapp",
+            categories: ["social"]
+        },
+        {
+            name: "Zoom",
+            icon: "fas fa-video",
+            categories: ["productivity"]
+        },
+        {
+            name: "Dropbox",
+            icon: "fab fa-dropbox",
+            categories: ["productivity"]
+        }
+    ];
 
-// Populate apps grid
-function populateAppsGrid(filteredApps = appsData) {
-    const container = document.getElementById('apps-grid');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    filteredApps.forEach(app => {
-        const appCard = document.createElement('div');
-        appCard.className = 'app-card';
-        appCard.setAttribute('data-category', app.category);
-        appCard.innerHTML = `
-            <img src="${app.icon}" alt="${app.name}" class="app-icon">
-            <h3 class="app-name">${app.name}</h3>
-            <span class="app-category">${app.category}</span>
-            <p class="app-description">${app.description}</p>
-            <a href="${app.url}" target="_blank" class="launch-btn">Launch</a>
-        `;
-        container.appendChild(appCard);
-    });
-}
-
-// Setup search functionality
-function setupSearch() {
+    const appsGrid = document.getElementById('apps-grid');
     const searchInput = document.getElementById('app-search');
     const searchBtn = document.getElementById('search-btn');
-    
-    const handleSearch = () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredApps = appsData.filter(app => 
-            app.name.toLowerCase().includes(searchTerm) || 
-            app.description.toLowerCase().includes(searchTerm) ||
-            app.category.toLowerCase().includes(searchTerm)
-        );
-        populateAppsGrid(filteredApps);
-    };
-    
-    searchInput.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') handleSearch();
-    });
-    
-    searchBtn.addEventListener('click', handleSearch);
-}
+    const categoryButtons = document.querySelectorAll('.category-btn');
 
-// Setup category filters
-function setupCategoryFilters() {
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active button
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+
+    // Initialize the app grid
+    function renderApps() {
+        appsGrid.innerHTML = '';
+        
+        const filteredApps = apps.filter(app => {
+            const matchesCategory = currentCategory === 'all' || app.categories.includes(currentCategory);
+            const matchesSearch = app.name.toLowerCase().includes(currentSearchTerm.toLowerCase());
+            return matchesCategory && matchesSearch;
+        });
+
+        if (filteredApps.length === 0) {
+            appsGrid.innerHTML = '<p class="no-results">No apps found matching your criteria.</p>';
+            return;
+        }
+
+        filteredApps.forEach(app => {
+            const appCard = document.createElement('div');
+            appCard.className = 'app-card';
+            appCard.dataset.categories = app.categories.join(' ');
+            appCard.dataset.name = app.name;
             
-            // Filter apps
-            const category = btn.getAttribute('data-category');
-            if (category === 'all') {
-                populateAppsGrid(appsData);
-            } else {
-                const filteredApps = appsData.filter(app => app.category === category);
-                populateAppsGrid(filteredApps);
-            }
+            appCard.innerHTML = `
+                <div class="app-icon"><i class="${app.icon}"></i></div>
+                <div class="app-name">${app.name}</div>
+            `;
+            
+            // Add click event to each app card
+            appCard.addEventListener('click', function() {
+                alert(`Opening ${app.name}`);
+                // In a real app, you would navigate to the app or open it
+            });
+            
+            appsGrid.appendChild(appCard);
+        });
+    }
+
+    // Search functionality
+    function handleSearch() {
+        currentSearchTerm = searchInput.value.trim();
+        renderApps();
+    }
+
+    searchBtn.addEventListener('click', handleSearch);
+    searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+
+    // Category filter functionality
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentCategory = this.dataset.category;
+            renderApps();
         });
     });
-}
+
+    // Initial render
+    renderApps();
+});
