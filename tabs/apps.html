@@ -3,44 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apps Dashboard</title>
+  <title>Apps</title>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #1a1033 0%, #0a0e2b 100%);
-      min-height: 100vh;
-      color: #e2e8f0;
-      font-family: 'Inter', sans-serif;
-    }
-    .app-card {
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-    .app-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-    }
-    .app-icon {
-      background: linear-gradient(135deg, #6b46c1 0%, #4c2889 100%);
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 60px;
-      height: 60px;
-      margin-bottom: 0.5rem;
-    }
-    .app-icon i {
-      font-size: 2rem;
-      color: #e9d5ff;
-    }
-    .app-name {
-      font-size: 0.9rem;
-      text-align: center;
-      color: #d8b4fe;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container mx-auto px-4 py-8">
@@ -50,56 +16,6 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // App data
-      const apps = [
-        { name: "Facebook", icon: "fab fa-facebook" },
-        { name: "Twitter", icon: "fab fa-twitter" },
-        { name: "Instagram", icon: "fab fa-instagram" },
-        { name: "YouTube", icon: "fab fa-youtube" },
-        { name: "Netflix", icon: "fab fa-netflix" },
-        { name: "Spotify", icon: "fab fa-spotify" },
-        { name: "Trello", icon: "fab fa-trello" },
-        { name: "Slack", icon: "fab fa-slack" },
-        { name: "Google Drive", icon: "fab fa-google-drive" },
-        { name: "Duolingo", icon: "fas fa-language" },
-        { name: "Coursera", icon: "fas fa-graduation-cap" },
-        { name: "Khan Academy", icon: "fas fa-book-open" },
-        { name: "WhatsApp", icon: "fab fa-whatsapp" },
-        { name: "Zoom", icon: "fas fa-video" },
-        { name: "Dropbox", icon: "fab fa-dropbox" }
-      ];
-
-      const appsGrid = document.getElementById('apps-grid');
-
-      if (!appsGrid) {
-        console.error("Element with id 'apps-grid' not found.");
-        return;
-      }
-
-      function renderApps() {
-        appsGrid.innerHTML = '';
-
-        apps.forEach(app => {
-          const appCard = document.createElement('div');
-          appCard.className = 'app-card flex flex-col items-center p-4 bg-gray-900/50 rounded-xl cursor-pointer';
-
-          appCard.innerHTML = `
-            <div class="app-icon"><i class="${app.icon}"></i></div>
-            <div class="app-name">${app.name}</div>
-          `;
-
-          appCard.addEventListener('click', () => {
-            alert(`Opening ${app.name}`);
-          });
-
-          appsGrid.appendChild(appCard);
-        });
-      }
-
-      renderApps();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
