@@ -1,27 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // App data
+  // App data with name, image, and embed URL
   const apps = [
-    { name: "Facebook", icon: "fab fa-facebook" },
-    { name: "Twitter", icon: "fab fa-twitter" },
-    { name: "Instagram", icon: "fab fa-instagram" },
-    { name: "YouTube", icon: "fab fa-youtube" },
-    { name: "Netflix", icon: "fab fa-netflix" },
-    { name: "Spotify", icon: "fab fa-spotify" },
-    { name: "Trello", icon: "fab fa-trello" },
-    { name: "Slack", icon: "fab fa-slack" },
-    { name: "Google Drive", icon: "fab fa-google-drive" },
-    { name: "Duolingo", icon: "fas fa-language" },
-    { name: "Coursera", icon: "fas fa-graduation-cap" },
-    { name: "Khan Academy", icon: "fas fa-book-open" },
-    { name: "WhatsApp", icon: "fab fa-whatsapp" },
-    { name: "Zoom", icon: "fas fa-video" },
-    { name: "Dropbox", icon: "fab fa-dropbox" }
+    { name: "Facebook", image: "https://images.unsplash.com/photo-1611162617210-7d673bf0f Crawford?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Twitter", image: "https://images.unsplash.com/photo-1611162616305-7d0f2b2b4a3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Instagram", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e275?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "YouTube", image: "https://images.unsplash.com/photo-1611162618071-8a343e90f43b?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Netflix", image: "https://images.unsplash.com/photo-1611162618786-5b21e879e276?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Spotify", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e277?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Trello", image: "https://images.unsplash.com/photo-1611162617210-7d673bf0f Crawford?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Slack", image: "https://images.unsplash.com/photo-1611162616305-7d0f2b2b4a3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Google Drive", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e275?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Duolingo", image: "https://images.unsplash.com/photo-1611162618071-8a343e90f43b?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Coursera", image: "https://images.unsplash.com/photo-1611162618786-5b21e879e276?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Khan Academy", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e277?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "WhatsApp", image: "https://images.unsplash.com/photo-1611162617210-7d673bf0f Crawford?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Zoom", image: "https://images.unsplash.com/photo-1611162616305-7d0f2b2b4a3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Dropbox", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e275?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", useFallbackIcon: true, embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "LinkedIn", image: "https://images.unsplash.com/photo-1611162618071-8a343e90f43b?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "GitHub", image: "https://images.unsplash.com/photo-1611162618786-5b21e879e276?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+    { name: "Notion", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e277?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
   ];
 
   const appsGrid = document.getElementById('apps-grid');
+  const appModal = document.getElementById('app-modal');
+  const appIframe = document.getElementById('app-iframe');
+  const closeModal = document.getElementById('close-modal');
+  const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-  if (!appsGrid) {
-    console.error("Element with id 'apps-grid' not found. Ensure the HTML contains a div with id 'apps-grid'.");
+  if (!appsGrid || !appModal || !appIframe || !closeModal || !fullscreenBtn) {
+    console.error("Required elements not found. Ensure HTML contains 'apps-grid', 'app-modal', 'app-iframe', 'close-modal', 'close-modal', and 'fullscreen-btn'.");
     return;
   }
 
@@ -33,20 +40,5 @@ document.addEventListener('DOMContentLoaded', () => {
         appCard.className = 'app-card flex flex-col items-center p-4 bg-gray-900/50 rounded-xl cursor-pointer';
 
         appCard.innerHTML = `
-          <div class="app-icon"><i class="${app.icon}"></i></div>
-          <div class="app-name">${app.name}</div>
-        `;
-
-        appCard.addEventListener('click', () => {
-          alert(`Opening ${app.name}`);
-        });
-
-        appsGrid.appendChild(appCard);
-      });
-    } catch (error) {
-      console.error('Error rendering apps:', error);
-    }
-  }
-
-  renderApps();
-});
+          <div class="app-icon"><img src="${app.image}" alt="${app.name} icon" onerror="this.src='https://via.placeholder.com/64';"></div>
+          <div class="app-name">${appwaiting for source file...
