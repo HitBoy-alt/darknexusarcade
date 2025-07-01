@@ -21,28 +21,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const appsGrid = document.getElementById('apps-grid');
 
   if (!appsGrid) {
-    console.error("Element with id 'apps-grid' not found.");
+    console.error("Element with id 'apps-grid' not found. Ensure the HTML contains a div with id 'apps-grid'.");
     return;
   }
 
   function renderApps() {
     appsGrid.innerHTML = '';
+    try {
+      apps.forEach(app => {
+        const appCard = document.createElement('div');
+        appCard.className = 'app-card flex flex-col items-center p-4 bg-gray-900/50 rounded-xl cursor-pointer';
 
-    apps.forEach(app => {
-      const appCard = document.createElement('div');
-      appCard.className = 'app-card flex flex-col items-center p-4 bg-gray-900/50 rounded-xl cursor-pointer';
+        appCard.innerHTML = `
+          <div class="app-icon"><i class="${app.icon}"></i></div>
+          <div class="app-name">${app.name}</div>
+        `;
 
-      appCard.innerHTML = `
-        <div class="app-icon"><i class="${app.icon}"></i></div>
-        <div class="app-name">${app.name}</div>
-      `;
+        appCard.addEventListener('click', () => {
+          alert(`Opening ${app.name}`);
+        });
 
-      appCard.addEventListener('click', () => {
-        alert(`Opening ${app.name}`);
+        appsGrid.appendChild(appCard);
       });
-
-      appsGrid.appendChild(appCard);
-    });
+    } catch (error) {
+      console.error('Error rendering apps:', error);
+    }
   }
 
   renderApps();
