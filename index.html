@@ -21,8 +21,32 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/grid.css">
 
-    <!-- Inline CSS to make the browser section horizontal -->
+    <!-- Inline CSS to make navigation and browser layout horizontal -->
     <style>
+        /* Navigation - horizontal */
+        .nav-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-grid li a {
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            color: inherit;
+        }
+
+        .nav-grid li a.active {
+            font-weight: bold;
+            border-bottom: 2px solid #00ffcc;
+        }
+
+        /* Browser player layout */
         .browser-grid {
             display: flex;
             flex-direction: row;
@@ -55,6 +79,7 @@
             border: 1px solid #333;
         }
 
+        /* Responsive layout for small screens */
         @media (max-width: 768px) {
             .browser-grid {
                 flex-direction: column;
@@ -68,7 +93,11 @@
             }
 
             .browser-btn, .url-input {
-                flex: 1;
+                flex: 1 1 auto;
+            }
+
+            .nav-grid {
+                justify-content: center;
             }
         }
     </style>
