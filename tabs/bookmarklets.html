@@ -24,6 +24,7 @@
                     javascript:(function(){document.body.style.filter='invert(1)';})();
                     <span class="copy-notice">Click to copy</span>
                 </div>
+                <a class="bookmark-link" draggable="true" href="javascript:(function(){document.body.style.filter='invert(1)';})();">Drag to Bookmark Bar</a>
                 <p>Turns any page dark mode</p>
             </div>
             
@@ -33,9 +34,19 @@
                     javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})();
                     <span class="copy-notice">Click to copy</span>
                 </div>
+                <a class="bookmark-link" draggable="true" href="javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})();">Drag to Bookmark Bar</a>
                 <p>Unblocks censored words</p>
             </div>
-            <!-- Add more bookmarklets here -->
+
+            <div class="bookmarklet-card">
+                <h3>Sniper</h3>
+                <div class="code-display" onclick="copyToClipboard(this)">
+                    javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
+                    <span class="copy-notice">Click to copy</span>
+                </div>
+                <a class="bookmark-link" draggable="true" href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}">Drag to Bookmark Bar</a>
+                <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
+            </div>
         </div>
     </main>
 
