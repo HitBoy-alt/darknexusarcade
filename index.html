@@ -20,6 +20,58 @@
     <link rel="stylesheet" href="styles/dark-theme.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/grid.css">
+
+    <!-- Inline CSS to make the browser section horizontal -->
+    <style>
+        .browser-grid {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .browser-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 250px;
+        }
+
+        .url-input {
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .browser-btn {
+            padding: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .browser-iframe {
+            flex-grow: 1;
+            height: 500px;
+            border: 1px solid #333;
+        }
+
+        @media (max-width: 768px) {
+            .browser-grid {
+                flex-direction: column;
+            }
+
+            .browser-controls {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .browser-btn, .url-input {
+                flex: 1;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
