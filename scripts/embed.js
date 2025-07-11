@@ -1,7 +1,7 @@
 // Open embedded content in new tab
 function openEmbed(url, title = '') {
     const newWindow = window.open('', '_blank');
-    
+
     const html = `
         <!DOCTYPE html>
         <html>
@@ -27,11 +27,12 @@ function openEmbed(url, title = '') {
                 }
                 .controls {
                     position: fixed;
-                    top: 10px;
+                    top: 40px;
                     right: 10px;
                     z-index: 1000;
                     display: flex;
                     gap: 8px;
+                    transition: width 0.3s ease, padding 0.3s ease;
                 }
                 .control-btn {
                     background: #6a0dad;
@@ -52,11 +53,30 @@ function openEmbed(url, title = '') {
             <div id="embed-container">
                 <iframe src="${url}" allowfullscreen></iframe>
                 <div class="controls">
+                    <button class="control-btn" onclick="toggleMinimize(this)">&lt;</button>
                     <button class="control-btn" onclick="toggleFullscreen()">Fullscreen</button>
                     <button class="control-btn" onclick="window.close()">Close</button>
                 </div>
             </div>
             <script>
+                let minimized = false;
+                function toggleMinimize(button) {
+                    const controls = document.querySelector('.controls');
+                    if (!minimized) {
+                        // Shrink the controls to just the '<' button
+                        controls.style.width = '30px';
+                        controls.style.padding = '5px';
+                        button.textContent = '>';
+                        minimized = true;
+                    } else {
+                        // Restore the controls to their original size
+                        controls.style.width = 'auto';
+                        controls.style.padding = '8px 12px';
+                        button.textContent = '<';
+                        minimized = false;
+                    }
+                }
+
                 function toggleFullscreen() {
                     const elem = document.querySelector('iframe');
                     if (!document.fullscreenElement) {
@@ -71,7 +91,7 @@ function openEmbed(url, title = '') {
         </body>
         </html>
     `;
-    
+
     newWindow.document.write(html);
     newWindow.document.close();
 }
