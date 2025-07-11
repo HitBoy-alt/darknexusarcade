@@ -4,16 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bookmarklets | Dark Nexus Arcade</title>
-  <link rel="stylesheet" href="../styles/dark-theme.css" />
-  <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
-    /* Optional override to prevent dark mode if it was being applied automatically */
     body {
-      filter: none !important;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
     }
 
-    /* Bubble-style bookmarklet link */
+    h1 {
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    .bookmarklets-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2em;
+    }
+
+    .bookmarklet-card {
+      background-color: #1c1c1c;
+      padding: 1.5em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .code-display {
+      background-color: #2a2a2a;
+      color: #00ffae;
+      padding: 0.75em;
+      border-radius: 5px;
+      font-family: monospace;
+      cursor: pointer;
+      margin-bottom: 0.5em;
+      position: relative;
+    }
+
+    .copy-notice {
+      font-size: 0.8em;
+      color: #aaa;
+      display: block;
+      margin-top: 4px;
+    }
+
     .bubble-link {
       display: inline-block;
       background-color: #4a90e2;
@@ -36,60 +74,69 @@
     .bubble-link:active {
       cursor: grabbing;
     }
+
+    footer {
+      text-align: center;
+      margin-top: 4em;
+      padding: 1em;
+      color: #666;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Dark Nexus Arcade - Bookmarklets</h1>
-    <nav>
-      <!-- Same navigation as index.html -->
-    </nav>
-  </header>
 
-  <main>
-    <div class="bookmarklets-container">
-      <!-- Dark Mode Toggle -->
-      <div class="bookmarklet-card">
-        <h3>Dark Mode Toggle</h3>
-        <div class="code-display" onclick="copyToClipboard(this)">
-          javascript:(function(){document.body.style.filter='invert(1)';})(); 
-          <span class="copy-notice">Click to copy</span>
-        </div>
-        <a class="bubble-link" draggable="true" href="javascript:(function(){document.body.style.filter='invert(1)';})();"
-           onclick="event.preventDefault()">Drag to Bookmark Bar</a>
-        <p>Turns any page dark mode</p>
-      </div>
+  <h1>Dark Nexus Arcade - Bookmarklets</h1>
 
-      <!-- Word Unblocker -->
-      <div class="bookmarklet-card">
-        <h3>Word Unblocker</h3>
-        <div class="code-display" onclick="copyToClipboard(this)">
-          javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})(); 
-          <span class="copy-notice">Click to copy</span>
-        </div>
-        <a class="bubble-link" draggable="true" href="javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})();"
-           onclick="event.preventDefault()">Drag to Bookmark Bar</a>
-        <p>Unblocks censored words</p>
-      </div>
+  <div class="bookmarklets-container">
 
-      <!-- Sniper -->
-      <div class="bookmarklet-card">
-        <h3>Sniper</h3>
-        <div class="code-display" onclick="copyToClipboard(this)">
-          javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
-          <span class="copy-notice">Click to copy</span>
-        </div>
-        <a class="bubble-link" draggable="true" href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}"
-           onclick="event.preventDefault()">Drag to Bookmark Bar</a>
-        <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
+    <!-- Word Unblocker -->
+    <div class="bookmarklet-card">
+      <h3>Word Unblocker</h3>
+      <div class="code-display" onclick="copyToClipboard(this)">
+        javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})(); 
+        <span class="copy-notice">Click to copy</span>
       </div>
+      <a class="bubble-link" draggable="true" 
+         href="javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})();"
+         onclick="event.preventDefault()">Drag to Bookmark Bar</a>
+      <p>Unblocks censored words</p>
     </div>
-  </main>
+
+    <!-- Sniper -->
+    <div class="bookmarklet-card">
+      <h3>Sniper</h3>
+      <div class="code-display" onclick="copyToClipboard(this)">
+        javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
+        <span class="copy-notice">Click to copy</span>
+      </div>
+      <a class="bubble-link" draggable="true" 
+         href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}"
+         onclick="event.preventDefault()">Drag to Bookmark Bar</a>
+      <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
+    </div>
+
+  </div>
 
   <footer>
-    <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+    &copy; 2025 Dark Nexus Arcade | All Rights Reserved
   </footer>
 
-  <script src="../scripts/clipboard.js"></script>
+  <!-- Clipboard Copy Script -->
+  <script>
+    function copyToClipboard(el) {
+      const code = el.textContent.trim();
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      el.querySelector(".copy-notice").textContent = "Copied!";
+      setTimeout(() => {
+        el.querySelector(".copy-notice").textContent = "Click to copy";
+      }, 2000);
+    }
+  </script>
+
 </body>
 </html>
