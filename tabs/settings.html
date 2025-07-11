@@ -8,10 +8,21 @@
   <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; background: #121212; color: #eee; }
-    h1, h3 { margin-bottom: 0.5rem; }
-    .settings-container { max-width: 400px; }
-    .setting-option { margin-bottom: 2rem; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #121212;
+      color: #eee;
+    }
+    h1, h3 {
+      margin-bottom: 0.5rem;
+    }
+    .settings-container {
+      max-width: 400px;
+    }
+    .setting-option {
+      margin-bottom: 2rem;
+    }
     select, input[type="text"], button {
       width: 100%;
       padding: 0.5rem;
@@ -21,9 +32,12 @@
       color: #eee;
       border-radius: 4px;
     }
-    input[type="text"] { display: none; }
-    button { cursor: pointer; }
-    
+    input[type="text"] {
+      display: none;
+    }
+    button {
+      cursor: pointer;
+    }
     /* Navigation styling */
     nav {
       background-color: #111;
@@ -66,7 +80,7 @@
 <main>
   <div class="settings-container">
     <div class="setting-option">
-      <h3>Tab Cloaking</h3> doesnt work
+      <h3>Tab Cloaking</h3>
       <select id="cloak-option" aria-label="Tab Cloaking Options">
         <option value="none">Disabled</option>
         <option value="google">Google Docs</option>
@@ -95,7 +109,7 @@
 
 <script>
   function showToast(message, type = 'info') {
-    alert(message); // Simple alert; replace with custom toast if desired
+    alert(message); // Replace with custom toast if desired
   }
 
   function doApplyCloak(mode, customTitle = '') {
@@ -120,20 +134,19 @@
         icon = '../assets/icons/favicon.ico'; // Adjust path if needed
     }
 
-    // Update the page title
     document.title = title;
 
-    // Remove any existing favicons to force update
+    // Remove existing favicons
     document.querySelectorAll("link[rel*='icon']").forEach(el => el.remove());
 
-    // Create and append the new favicon link
+    // Add new favicon
     const link = document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = icon;
     document.head.appendChild(link);
 
-    // Save the current cloak settings
+    // Save settings
     const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     settings.tabCloak = mode;
     if (mode === 'custom') {
@@ -175,13 +188,15 @@
       }
     });
 
-    // Load and apply saved settings on page load
+    // Load saved settings
     const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     if (settings.tabCloak) {
       cloakSelect.value = settings.tabCloak;
       if (settings.tabCloak === 'custom' && settings.customCloak) {
         customInput.value = settings.customCloak;
         customInput.style.display = 'block';
+      } else {
+        customInput.style.display = 'none';
       }
       doApplyCloak(settings.tabCloak, settings.customCloak || '');
     } else {
