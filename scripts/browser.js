@@ -46,26 +46,23 @@ class NexusBrowser {
     const button = document.createElement('button');
     button.id = `${type}-button`;
     button.className = `nav-button ${type}`;
-    button.innerHTML = type === 'back' ? '&larr;' : 
+    button.innerHTML = type === 'back' ? '&larr;' :
                       type === 'forward' ? '&rarr;' : '&#x21bb;';
     document.querySelector('.browser-controls').prepend(button);
     return button;
   }
 
   initEvents() {
-    // Navigation buttons
     this.goButton.addEventListener('click', () => this.navigate());
     this.newTabButton.addEventListener('click', () => this.addTab());
     this.backButton.addEventListener('click', () => this.goBack());
     this.forwardButton.addEventListener('click', () => this.goForward());
     this.refreshButton.addEventListener('click', () => this.refresh());
-    
-    // URL input
+
     this.urlInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') this.navigate();
     });
 
-    // Browser frame events
     this.browserFrame.addEventListener('load', () => {
       try {
         const url = this.browserFrame.contentWindow.location.href;
@@ -81,21 +78,15 @@ class NexusBrowser {
 
   navigate(url = this.urlInput.value.trim()) {
     if (!url) return;
-    
-    // Add protocol if missing
+
     if (!/^https?:\/\//i.test(url)) {
       url = 'https://' + url;
     }
 
     try {
-      // Validate URL
       new URL(url);
-      
-      // Update current tab
       this.tabs[this.currentTab].url = url;
       this.browserFrame.src = url;
-      
-      // Save to session
       this.saveSession();
     } catch (e) {
       console.error('Invalid URL:', e);
@@ -111,11 +102,15 @@ class NexusBrowser {
     });
     this.switchTab(this.tabs.length - 1);
     this.renderTabs();
+    if (url) {
+      this.urlInput.value = url;
+      this.navigate(url);
+    }
   }
 
   switchTab(index) {
     if (index < 0 || index >= this.tabs.length) return;
-    
+
     this.currentTab = index;
     this.browserFrame.src = this.tabs[index].url;
     this.urlInput.value = this.tabs[index].url;
@@ -124,8 +119,8 @@ class NexusBrowser {
   }
 
   closeTab(index) {
-    if (this.tabs.length <= 1) return; // Don't close last tab
-    
+    if (this.tabs.length <= 1) return;
+
     this.tabs.splice(index, 1);
     if (this.currentTab >= index) {
       this.currentTab = Math.max(0, this.currentTab - 1);
@@ -135,14 +130,14 @@ class NexusBrowser {
 
   renderTabs() {
     this.tabsContainer.innerHTML = '';
-    
+
     this.tabs.forEach((tab, index) => {
       const tabEl = document.createElement('div');
       tabEl.className = `tab ${index === this.currentTab ? 'active' : ''}`;
       tabEl.textContent = tab.url ? new URL(tab.url).hostname : 'New Tab';
-      
+
       tabEl.addEventListener('click', () => this.switchTab(index));
-      
+
       const closeBtn = document.createElement('span');
       closeBtn.className = 'close-tab';
       closeBtn.innerHTML = '&times;';
@@ -150,7 +145,7 @@ class NexusBrowser {
         e.stopPropagation();
         this.closeTab(index);
       });
-      
+
       tabEl.appendChild(closeBtn);
       this.tabsContainer.appendChild(tabEl);
     });
@@ -158,15 +153,13 @@ class NexusBrowser {
 
   addToHistory(url) {
     const tab = this.tabs[this.currentTab];
-    
-    // Don't add duplicate consecutive URLs
+
     if (tab.history[tab.historyIndex] === url) return;
-    
-    // Truncate forward history if navigating to new page
+
     if (tab.historyIndex < tab.history.length - 1) {
       tab.history = tab.history.slice(0, tab.historyIndex + 1);
     }
-    
+
     tab.history.push(url);
     tab.historyIndex = tab.history.length - 1;
     this.saveSession();
@@ -211,10 +204,10 @@ class NexusBrowser {
     const errorEl = document.createElement('div');
     errorEl.className = 'browser-error';
     errorEl.textContent = message;
-    
+
     const controls = document.querySelector('.browser-controls');
     controls.appendChild(errorEl);
-    
+
     setTimeout(() => {
       errorEl.remove();
     }, 3000);
@@ -242,10 +235,13 @@ class NexusBrowser {
   }
 }
 
-// Initialize the browser when DOM is loaded
+// Load the browser on page ready and open default URL
 document.addEventListener('DOMContentLoaded', () => {
   const browser = new NexusBrowser();
-  
-  // Make browser instance globally available if needed
+
+  // Open the desired site on launch
+  browser.urlInput.value = 'https://mathtutors.global.ssl.fastly.net/4ppz/google.html';
+  browser.navigate();
+
   window.nexusBrowser = browser;
 });
