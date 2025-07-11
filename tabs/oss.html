@@ -51,12 +51,12 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
             font-weight: bold;
         }
 
         .grid-item button:hover {
-            background-color: #303f9f; /* Slightly lighter blue on hover */
+            background-color: #303f9f;
             transform: scale(1.05);
         }
 
@@ -117,45 +117,44 @@
         <div class="grid-container">
             <div class="grid-item">
                 <img src="../assets/images/os1.png" alt="anuraos" />
-                <h3>anuraos</h3>
-                <button type="button" onclick="openEmbed('https://anura.pro')">Boot</button>
+                <h3>AnuraOS</h3>
+                <button onclick="openEmbed('https://anura.pro')">Boot</button>
             </div>
             <div class="grid-item">
                 <img src="../assets/images/os2.png" alt="mindows" />
-                <h3>mindows</h3>
-                <button type="button" onclick="openEmbed('https://mindows.netlify.app/')">Boot</button>
+                <h3>Mindows</h3>
+                <button onclick="openEmbed('https://mindows.netlify.app/')">Boot</button>
             </div>
             <div class="grid-item">
                 <img src="../assets/images/os3.png" alt="Windows10" />
-                <h3>windows10</h3>
-                <button type="button" onclick="openEmbed('https://win10.webjeet.me')">Boot</button>
+                <h3>Windows 10</h3>
+                <button onclick="openEmbed('https://win10.webjeet.me')">Boot</button>
             </div>
             <div class="grid-item">
                 <img src="../assets/images/os4.png" alt="Windows11" />
-                <h3>windows11</h3>
-                <button type="button" onclick="openEmbed('https://win11.blueedge.me')">Boot</button>
+                <h3>Windows 11</h3>
+                <button onclick="openEmbed('https://win11.blueedge.me')">Boot</button>
             </div>
-<div class="grid-item">
+            <div class="grid-item">
                 <img src="../assets/images/os5.png" alt="os hub" />
-                <h3>os hub</h3> 
-                <button type="button" onclick="openEmbed('https://www.onworks.net')">Boot</button> may include ads or not work would do seperate but cant
-                i was going to add linux and stuff
-    <div class="grid-item">
+                <h3>OS Hub</h3>
+                <button onclick="openEmbed('https://www.onworks.net')">Boot</button>
+                <p style="font-size: 0.85rem; color: gray; text-align: center;">May include ads or not work</p>
+            </div>
+            <div class="grid-item">
                 <img src="../assets/images/os6.png" alt="distrosea" />
-                <h3>distrosea</h3>
-                <button type="button" onclick="openEmbed('https://distrosea.com')">Boot</button>
+                <h3>DistroSea</h3>
+                <button onclick="openEmbed('https://distrosea.com')">Boot</button>
             </div>
-    <div class="grid-item">
+            <div class="grid-item">
                 <img src="../assets/images/os7.png" alt="webos" />
-                <h3>webos</h3>
-                <button type="button" onclick="openEmbed('https://webos.js.org')">Boot</button>
-        </div> 
-                   <div class="grid-item">
-                <img src="../assets/images/os8.png" alt="copy" />
-                <h3>copy</h3>
-                <button type="button" onclick="openEmbed('https://copy.sh/v86/')">Boot</button> linux
+                <h3>WebOS</h3>
+                <button onclick="openEmbed('https://webos.js.org')">Boot</button>
             </div>
-
+            <div class="grid-item">
+                <img src="../assets/images/os8.png" alt="copy" />
+                <h3>Copy.sh (Linux)</h3>
+                <button onclick="openEmbed('https://copy.sh/v86/')">Boot</button>
             </div>
         </div>
     </main>
@@ -167,4 +166,3 @@
     <script src="../scripts/embed.js"></script>
 </body>
 </html>
-
