@@ -1,28 +1,40 @@
 // Open embedded content in new tab
 function openEmbed(url, title = '') {
-    // Escape HTML to prevent XSS
-    const escapeHTML = str => str.replace(/[&<>'"]/g, 
+    // Improved HTML escaping to prevent XSS
+    const escapeHTML = str => str.replace(/[&<>"'`]/g, 
         tag => ({
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
-            "'": '&#39;',
-            '"': '&quot;'
-        }[tag]));
-    
+            '"': '&quot;',
+            "'": '&#x27;',
+            '`': '&#x60;'
+        }[tag] || tag));
+
+    // Validate URL
+    try {
+        new URL(url);
+    } catch {
+        console.error('Invalid URL:', url);
+        alert('Invalid URL provided');
+        return;
+    }
+
     const safeUrl = escapeHTML(url);
     const safeTitle = escapeHTML(title || 'Dark Nexus Arcade - Embedded Content');
 
     try {
         const newWindow = window.open('', '_blank');
         if (!newWindow) {
-            throw newError('Popup window was blocked. Please allow popups for this site.');
+            throw new Error('Popup window was blocked. Please allow popups for this site.');
         }
 
         const html = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${safeTitle}</title>
     <style>
         body, html {
@@ -41,6 +53,7 @@ function openEmbed(url, title = '') {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
         .controls {
             position: fixed;
@@ -82,11 +95,15 @@ function openEmbed(url, title = '') {
             background: #5a0b9d;
             transform: scale(1.05);
         }
+        .control-btn:focus {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
     <div id="embed-container">
-        <iframe src="${safeUrl}" allowfullscreen></iframe>
+        <iframe src="${safeUrl}" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
         <div class="controls">
             <button class="control-btn minimize-btn" onclick="toggleMinimize()">←</button>
             <button class="control-btn" onclick="toggleFullscreen()">Fullscreen</button>
@@ -99,18 +116,14 @@ function openEmbed(url, title = '') {
             const minimizeBtn = controls.querySelector('.minimize-btn');
             
             controls.classList.toggle('minimized');
-            
-            if (controls.classList.contains('minimized')) {
-                minimizeBtn.textContent = '→';
-            } else {
-                minimizeBtn.textContent = '←';
-            }
+            minimizeBtn.textContent = controls.classList.contains('minimized') ? '→' : '←';
         }
 
         function toggleFullscreen() {
-            const elem = document.querySelector('iframe');
+            const elem = document.querySelector('#embed-container');
             if (!document.fullscreenElement) {
                 elem.requestFullscreen().catch(err => {
+                    console.error('Fullscreen failed:', err);
                     alert('Fullscreen failed: ' + err.message);
                 });
             } else {
@@ -118,15 +131,26 @@ function openEmbed(url, title = '') {
             }
         }
 
+        // Handle fullscreen change events
+        document.addEventListener('fullscreenchange', () => {
+            const fullscreenBtn = document.querySelector('.control-btn:not(.minimize-btn)');
+            fullscreenBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+
         // Close window with Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+            if (e.key === 'Escape' && !e.defaultPrevented) {
                 if (document.fullscreenElement) {
                     document.exitFullscreen();
                 } else {
                     window.close();
                 }
             }
+        });
+
+        // Prevent right-click on iframe
+        document.querySelector('iframe').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
         });
     </script>
 </body>
@@ -142,11 +166,11 @@ function openEmbed(url, title = '') {
 }
 
 // Add click handlers to all embed buttons
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-embed]').forEach(button => {
-        button.addEventListener('click', function() {
-            const url = this.getAttribute('data-embed');
-            const title = this.getAttribute('data-title') || '';
+        button.addEventListener('click', () => {
+            const url = button.dataset.embed;
+            const title = button.dataset.title || '';
             openEmbed(url, title);
         });
     });
