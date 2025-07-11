@@ -31,9 +31,14 @@
     }
     .discord-container iframe {
       border-radius: 8px;
+      width: 90%;
+      max-width: 1000px;
+      height: 600px;
+      border: none;
     }
     .discord-container h2 {
       color: #bf94ff;
+      margin-bottom: 1em;
     }
     .discord-container a {
       color: #00ffcc;
@@ -69,31 +74,24 @@
   <main>
     <div class="discord-container">
       <h2>Join Our Discord Community</h2>
-      <!-- Widget will appear as a floating button -->
-      <div class="fallback-link">
-        <p>
-          Can't see the widget? 
-          <a href="https://discord.gg/rcRh3rNKt4" target="_blank" rel="noopener noreferrer">
-            Click here to join
-          </a>
-        </p>
-      </div>
+
+      <!-- Inline Discord Embed -->
+      <iframe
+        src="https://e.widgetbot.io/channels/1192147953230553229/1192149827073609908"
+        allow="clipboard-write; fullscreen"
+      ></iframe>
+
+      <p class="fallback-link">
+        Can't see the chat?
+        <a href="https://discord.gg/rcRh3rNKt4" target="_blank" rel="noopener noreferrer">
+          Click here to join our Discord directly
+        </a>
+      </p>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
-
-  <!-- WidgetBot Script -->
-  <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer></script>
-  <script>
-    window.addEventListener('load', () => {
-      new Crate({
-        server: '1192147953230553229', // HitBoy's Gaming Community
-        channel: '1192149827073609908' // #chat
-      });
-    });
-  </script>
 </body>
 </html>
