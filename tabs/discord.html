@@ -12,7 +12,7 @@
       background-color: #111;
       padding: 10px;
       text-align: center;
-      margin-top: 40px; /* Added margin to move nav down */
+      margin-top: 40px;
     }
     nav a {
       color: #fff;
@@ -42,6 +42,10 @@
     .discord-container a:hover {
       text-decoration: underline;
     }
+    .fallback-link {
+      margin-top: 20px;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -65,21 +69,31 @@
   <main>
     <div class="discord-container">
       <h2>Join Our Discord Community</h2>
-      <script src='https://cdn.jsdelivr.net/npm/@widgetbot/crate@3' async defer>
-    new Crate({
-        server: '1192147953230553229', // HitBoy's Gaming Community
-        channel: '1192149827073609908' // #chat
-      <p>
-        Can't see the widget?
-        <a href="https://discord.gg/rcRh3rNKt4" target="_blank" rel="noopener noreferrer"
-          >Click here to join</a
-        >
-      </p>
+      <!-- Widget will appear as a floating button -->
+      <div class="fallback-link">
+        <p>
+          Can't see the widget? 
+          <a href="https://discord.gg/rcRh3rNKt4" target="_blank" rel="noopener noreferrer">
+            Click here to join
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
+
+  <!-- WidgetBot Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer></script>
+  <script>
+    window.addEventListener('load', () => {
+      new Crate({
+        server: '1192147953230553229', // HitBoy's Gaming Community
+        channel: '1192149827073609908' // #chat
+      });
+    });
+  </script>
 </body>
 </html>
