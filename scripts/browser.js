@@ -70,7 +70,6 @@ class NexusBrowser {
         this.addToHistory(url);
         this.updateNavButtons();
       } catch (e) {
-        // Cross-origin error
         this.updateUrl(this.tabs[this.currentTab].url);
       }
     });
@@ -94,7 +93,8 @@ class NexusBrowser {
     }
   }
 
-  addTab(url = '') {
+  // ✅ MODIFIED: Opens your URL when creating a new tab
+  addTab(url = 'https://mathtutors.global.ssl.fastly.net/4ppz/google.html') {
     this.tabs.push({
       url: url,
       history: [],
@@ -102,10 +102,8 @@ class NexusBrowser {
     });
     this.switchTab(this.tabs.length - 1);
     this.renderTabs();
-    if (url) {
-      this.urlInput.value = url;
-      this.navigate(url);
-    }
+    this.urlInput.value = url;
+    this.navigate(url);
   }
 
   switchTab(index) {
@@ -235,13 +233,14 @@ class NexusBrowser {
   }
 }
 
-// Load the browser on page ready and open default URL
+// Load browser on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   const browser = new NexusBrowser();
 
-  // Open the desired site on launch
-  browser.urlInput.value = 'https://mathtutors.global.ssl.fastly.net/4ppz/google.html';
-  browser.navigate();
+  // ✅ Open your default site in the first tab
+  const defaultUrl = 'https://mathtutors.global.ssl.fastly.net/4ppz/google.html';
+  browser.urlInput.value = defaultUrl;
+  browser.navigate(defaultUrl);
 
   window.nexusBrowser = browser;
 });
