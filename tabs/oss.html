@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>OS Emulators | Dark Nexus Arcade</title>
-    <link rel="stylesheet" href="../styles/dark-theme.css">
+    <link rel="stylesheet" href="../styles/dark-theme.css" />
     <style>
         /* Grid CSS */
         .grid-container {
@@ -72,38 +72,70 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Navigation styling */
+        nav {
+            background-color: #111;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00ffcc;
+        }
     </style>
-    <link rel="icon" href="../assets/icons/favicon.ico">
+    <link rel="icon" href="../assets/icons/favicon.ico" />
 </head>
 <body>
     <header>
         <h1>Dark Nexus Arcade - OS Emulators</h1>
         <nav>
-            <!-- Same navigation as index.html -->
+            <a href="../tabs/index.html">Home</a>
+            <a href="../tabs/games.html">Games</a>
+            <a href="../tabs/apps.html">Apps</a>
+            <a href="../tabs/proxies.html">Proxies</a>
+            <a href="../tabs/os.html">OS's</a>
+            <a href="../tabs/credits.html">Credits</a>
+            <a href="../tabs/partners.html">Partners</a>
+            <a href="../tabs/discord.html">Discord</a>
+            <a href="../tabs/settings.html">Settings</a>
+            <a href="../tabs/suggestions.html">Suggestions</a>
+            <a href="../tabs/bookmarklets.html">Bookmarklets</a>
         </nav>
     </header>
 
     <main>
         <div class="grid-container">
             <div class="grid-item">
-                <img src="../assets/images/os1.png" alt="anuraos">
+                <img src="../assets/images/os1.png" alt="anuraos" />
                 <h3>anuraos</h3>
-                <button onclick="openEmbed('https://anura.pro')">Boot</button>
+                <button type="button" onclick="openEmbed('https://anura.pro')">Boot</button>
             </div>
             <div class="grid-item">
-                <img src="../assets/images/os2.png" alt="mindows">
+                <img src="../assets/images/os2.png" alt="mindows" />
                 <h3>mindows</h3>
-                <button onclick="openEmbed('https://mindows.netlify.app/')">Boot</button>
+                <button type="button" onclick="openEmbed('https://mindows.netlify.app/')">Boot</button>
             </div>
             <div class="grid-item">
-                <img src="../assets/images/os3.png" alt="Windows10">
+                <img src="../assets/images/os3.png" alt="Windows10" />
                 <h3>windows10</h3>
-                <button onclick="openEmbed('https://win10.webjeet.me')">Boot</button>
+                <button type="button" onclick="openEmbed('https://win10.webjeet.me')">Boot</button>
             </div>
-<div class="grid-item">
-                <img src="../assets/images/os4.png" alt="Windows11">
+            <div class="grid-item">
+                <img src="../assets/images/os4.png" alt="Windows11" />
                 <h3>windows11</h3>
-                <button onclick="openEmbed('https://windowsxi.netlify.app')">Boot</button> update coming soon
+                <button type="button" onclick="openEmbed('https://windowsxi.netlify.app')">Boot</button>
+                <p>update coming soon</p>
+            </div>
         </div>
     </main>
 
@@ -114,3 +146,4 @@
     <script src="../scripts/embed.js"></script>
 </body>
 </html>
+
