@@ -17,7 +17,7 @@
       background-color: #111;
       padding: 10px;
       text-align: center;
-      margin-top: 20px; /* Added margin to move nav down */
+      margin-top: 20px;
     }
 
     nav a {
@@ -128,29 +128,29 @@
 
   <div class="bookmarklets-container">
 
-   
+    <!-- Mini YouTube Player -->
     <div class="bookmarklet-card">
       <h3>miniyoutubeplayerv2</h3>
       <div class="code-display" onclick="copyToClipboard(this)">
-        javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})(); 
+        javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();
         <span class="copy-notice">Click to copy</span>
       </div>
       <a class="bubble-link" draggable="true" 
-         href="javascript:document.querySelector('video')?.requestPictureInPicture().catch(()=>alert("❗ Go to a YouTube video page, then press this bookmarklet:\n\njavascript:document.querySelector('video')?.requestPictureInPicture().catch(e=>alert('PiP error: '+e));"));');})();"
-         onclick="event.preventDefault()">miniyoutubeplayerv2</a>
-      <p>make a better youtube miniplayer</p>
+         href="javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();">
+         miniyoutubeplayerv2</a>
+      <p>Open the current YouTube video in Picture-in-Picture mode.</p>
     </div>
 
     <!-- Sniper -->
     <div class="bookmarklet-card">
       <h3>Sniper</h3>
       <div class="code-display" onclick="copyToClipboard(this)">
-        javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
+        javascript:for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
         <span class="copy-notice">Click to copy</span>
       </div>
       <a class="bubble-link" draggable="true" 
-         href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}"
-         onclick="event.preventDefault()">Sniper</a>
+         href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}">
+         Sniper</a>
       <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
     </div>
 
