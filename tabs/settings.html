@@ -66,7 +66,7 @@
 
 <script>
   function showToast(message, type = 'info') {
-    alert(message); // Simple alert, replace if you want fancy toast
+    alert(message); // Simple alert; replace with custom toast if desired
   }
 
   function doApplyCloak(mode, customTitle = '') {
@@ -91,20 +91,20 @@
         icon = '../assets/icons/favicon.ico'; // Adjust path if needed
     }
 
-    // Update document title
+    // Update the page title
     document.title = title;
 
-    // Remove old favicons to force update
+    // Remove any existing favicons to force update
     document.querySelectorAll("link[rel*='icon']").forEach(el => el.remove());
 
-    // Create and append new favicon link
+    // Create and append the new favicon link
     const link = document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = icon;
     document.head.appendChild(link);
 
-    // Save settings
+    // Save the current cloak settings
     const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     settings.tabCloak = mode;
     if (mode === 'custom') {
@@ -146,7 +146,7 @@
       }
     });
 
-    // Load saved settings
+    // Load and apply saved settings on page load
     const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     if (settings.tabCloak) {
       cloakSelect.value = settings.tabCloak;
@@ -155,10 +155,11 @@
         customInput.style.display = 'block';
       }
       doApplyCloak(settings.tabCloak, settings.customCloak || '');
+    } else {
+      customInput.style.display = 'none';
     }
   });
 </script>
 
 </body>
 </html>
-
