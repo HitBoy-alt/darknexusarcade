@@ -1,32 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suggestions | Dark Nexus Arcade</title>
-    <link rel="stylesheet" href="../styles/dark-theme.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="icon" href="../assets/icons/favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suggestions | Dark Nexus Arcade</title>
+  <link rel="stylesheet" href="../styles/dark-theme.css" />
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="icon" href="../assets/icons/favicon.ico" />
+  <style>
+    /* Absolute nav styles */
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      padding: 10px 0;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00ffcc;
+    }
+
+    /* Add padding to body so content isn't hidden behind the fixed nav */
+    body {
+      padding-top: 50px; /* Adjust this height based on nav height */
+      position: relative;
+      min-height: 100vh;
+    }
+
+    header h1 {
+      margin-top: 0;
+      padding-top: 10px;
+    }
+
+    /* Optional: if header overlaps nav */
+    header {
+      position: relative;
+      z-index: 900;
+      padding-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Dark Nexus Arcade - Suggestions</h1>
-        <nav>
-            <!-- Same navigation as index.html -->
-        </nav>
-    </header>
+  <nav>
+    <a href="../tabs/index.html">Home</a>
+    <a href="../tabs/games.html">Games</a>
+    <a href="../tabs/apps.html">Apps</a>
+    <a href="../tabs/proxies.html">Proxies</a>
+    <a href="../tabs/os.html">OS's</a>
+    <a href="../tabs/credits.html">Credits</a>
+    <a href="../tabs/partners.html">Partners</a>
+    <a href="../tabs/discord.html">Discord</a>
+    <a href="../tabs/settings.html">Settings</a>
+    <a href="../tabs/suggestions.html">Suggestions</a>
+    <a href="../tabs/bookmarklets.html">Bookmarklets</a>
+  </nav>
 
-    <main>
-        <div class="suggestions-container">
-            <h2>Have a suggestion for our site?</h2>
-            <p>Use the form below to suggest new games, features, or report issues.</p>
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGmnB9SeEuaHexyZIQAZui63HcSY7zmrnBcVNRXoehyf7PBQ/viewform?embedded=true"
-                    width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-        </div>
-    </main>
+  <header>
+    <h1>Dark Nexus Arcade - Suggestions</h1>
+  </header>
 
-    <footer>
-        <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-    </footer>
+  <main>
+    <div class="suggestions-container">
+      <h2>Have a suggestion for our site?</h2>
+      <p>Use the form below to suggest new games, features, or report issues.</p>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGmnB9SeEuaHexyZIQAZui63HcSY7zmrnBcVNRXoehyf7PBQ/viewform?embedded=true"
+              width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+  </footer>
 </body>
 </html>
