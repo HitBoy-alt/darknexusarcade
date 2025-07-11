@@ -8,12 +8,19 @@
   <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
-    /* Just simple styling for demo */
     body { font-family: Arial, sans-serif; margin: 2rem; background: #121212; color: #eee; }
     h1, h3 { margin-bottom: 0.5rem; }
     .settings-container { max-width: 400px; }
     .setting-option { margin-bottom: 2rem; }
-    select, input[type="text"], button { width: 100%; padding: 0.5rem; margin-top: 0.5rem; background: #222; border: 1px solid #555; color: #eee; border-radius: 4px; }
+    select, input[type="text"], button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      background: #222;
+      border: 1px solid #555;
+      color: #eee;
+      border-radius: 4px;
+    }
     input[type="text"] { display: none; }
     button { cursor: pointer; }
   </style>
@@ -59,16 +66,10 @@
 
 <script>
   function showToast(message, type = 'info') {
-    alert(message); // Replace with a nicer toast if you want
+    alert(message); // Simple alert, replace if you want fancy toast
   }
 
-  function applyCloak(mode, customTitle = '') {
-    // If mode not provided, read from DOM (called by button)
-    if (!mode) {
-      mode = document.getElementById('cloak-option').value;
-      customTitle = document.getElementById('custom-cloak-title').value;
-    }
-
+  function doApplyCloak(mode, customTitle = '') {
     let title = '';
     let icon = '';
 
@@ -87,22 +88,23 @@
         break;
       default:
         title = 'Dark Nexus Arcade';
-        icon = '../assets/icons/favicon.ico'; // Adjust path as needed
+        icon = '../assets/icons/favicon.ico'; // Adjust path if needed
     }
 
-    // Update tab title
+    // Update document title
     document.title = title;
 
-    // Update favicon — remove old ones first to force refresh
+    // Remove old favicons to force update
     document.querySelectorAll("link[rel*='icon']").forEach(el => el.remove());
 
+    // Create and append new favicon link
     const link = document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = icon;
     document.head.appendChild(link);
 
-    // Save settings locally
+    // Save settings
     const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     settings.tabCloak = mode;
     if (mode === 'custom') {
@@ -115,6 +117,12 @@
     showToast(`Tab cloaked as "${title}"`, 'success');
   }
 
+  function applyCloak() {
+    const mode = document.getElementById('cloak-option').value;
+    const customTitle = document.getElementById('custom-cloak-title').value;
+    doApplyCloak(mode, customTitle);
+  }
+
   function resetSettings() {
     localStorage.removeItem('dna_settings');
     const cloakSelect = document.getElementById('cloak-option');
@@ -122,7 +130,7 @@
     cloakSelect.value = 'none';
     customInput.value = '';
     customInput.style.display = 'none';
-    applyCloak('none');
+    doApplyCloak('none');
     showToast('Settings reset to default.', 'success');
   }
 
@@ -130,7 +138,6 @@
     const cloakSelect = document.getElementById('cloak-option');
     const customInput = document.getElementById('custom-cloak-title');
 
-    // Show or hide custom input based on select value
     cloakSelect.addEventListener('change', () => {
       if (cloakSelect.value === 'custom') {
         customInput.style.display = 'block';
@@ -147,10 +154,11 @@
         customInput.value = settings.customCloak;
         customInput.style.display = 'block';
       }
-      applyCloak(settings.tabCloak, settings.customCloak || '');
+      doApplyCloak(settings.tabCloak, settings.customCloak || '');
     }
   });
 </script>
 
 </body>
 </html>
+
