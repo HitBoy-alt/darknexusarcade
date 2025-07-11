@@ -199,6 +199,33 @@
   <script src="scripts/main.js" defer></script>
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
-  </script>
+  </script> <!-- Visitor counter -->
+<div style="text-align: center; margin: 20px 0; font-family: Arial, sans-serif;">
+    Visitors: <span id="visitorCounter">0</span>
+</div>
+
+<script>
+    // Simple visitor counter
+    (function() {
+        // Try to use localStorage first
+        if (typeof(Storage) !== "undefined") {
+            let count = localStorage.getItem('pageVisits');
+            count = count ? parseInt(count) + 1 : 1;
+            localStorage.setItem('pageVisits', count);
+            document.getElementById('visitorCounter').textContent = count;
+        } 
+        // Fallback to sessionStorage if localStorage isn't available
+        else if (typeof(sessionStorage) !== "undefined") {
+            let count = sessionStorage.getItem('pageVisits');
+            count = count ? parseInt(count) + 1 : 1;
+            sessionStorage.setItem('pageVisits', count);
+            document.getElementById('visitorCounter').textContent = count;
+        }
+        // If no storage available, just show a static number
+        else {
+            document.getElementById('visitorCounter').textContent = '100+';
+        }
+    })();
+</script>
 </body>
 </html>
