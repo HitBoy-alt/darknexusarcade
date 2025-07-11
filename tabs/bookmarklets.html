@@ -9,13 +9,14 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
     }
 
     h1 {
       text-align: center;
       padding: 1em 0;
+      color: #bf94ff;
     }
 
     .bookmarklets-container {
@@ -28,21 +29,24 @@
     }
 
     .bookmarklet-card {
-      background-color: #1c1c1c;
+      background-color: #131313;
       padding: 1.5em;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(98, 0, 255, 0.2);
     }
 
     .code-display {
-      background-color: #2a2a2a;
-      color: #00ffae;
+      background-color: #1a1a2e;
+      color: #bf94ff;
       padding: 0.75em;
       border-radius: 5px;
       font-family: monospace;
       cursor: pointer;
       margin-bottom: 0.5em;
       position: relative;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .copy-notice {
@@ -54,7 +58,7 @@
 
     .bubble-link {
       display: inline-block;
-      background-color: #4a90e2;
+      background-color: #2c3e50;
       color: white;
       padding: 0.4em 1em;
       border-radius: 9999px;
@@ -68,7 +72,7 @@
     }
 
     .bubble-link:hover {
-      background-color: #357ABD;
+      background-color: #34495e;
     }
 
     .bubble-link:active {
@@ -79,7 +83,7 @@
       text-align: center;
       margin-top: 4em;
       padding: 1em;
-      color: #666;
+      color: #777;
     }
   </style>
 </head>
@@ -121,7 +125,6 @@
     &copy; 2025 Dark Nexus Arcade | All Rights Reserved
   </footer>
 
-  <!-- Clipboard Copy Script -->
   <script>
     function copyToClipboard(el) {
       const code = el.textContent.trim();
