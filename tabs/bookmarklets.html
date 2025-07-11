@@ -128,16 +128,16 @@
 
   <div class="bookmarklets-container">
 
-    <!-- Word Unblocker -->
+   
     <div class="bookmarklet-card">
-      <h3>Word Unblocker</h3>
+      <h3>miniyoutubeplayerv2</h3>
       <div class="code-display" onclick="copyToClipboard(this)">
         javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})(); 
         <span class="copy-notice">Click to copy</span>
       </div>
       <a class="bubble-link" draggable="true" 
-         href="javascript:(function(){document.body.innerHTML=document.body.innerHTML.replace(/blockedword/gi,'unblocked');})();"
-         onclick="event.preventDefault()">Drag to Bookmark Bar</a>
+         href="javascript:document.querySelector('video')?.requestPictureInPicture().catch(()=>alert("❗ Go to a YouTube video page, then press this bookmarklet:\n\njavascript:document.querySelector('video')?.requestPictureInPicture().catch(e=>alert('PiP error: '+e));"));');})();"
+         onclick="event.preventDefault()">miniyoutubeplayerv2</a>
       <p>Unblocks censored words</p>
     </div>
 
@@ -150,7 +150,7 @@
       </div>
       <a class="bubble-link" draggable="true" 
          href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}"
-         onclick="event.preventDefault()">Drag to Bookmark Bar</a>
+         onclick="event.preventDefault()">Sniper</a>
       <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
     </div>
 
