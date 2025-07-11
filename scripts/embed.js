@@ -32,7 +32,7 @@ function openEmbed(url, title = '') {
                     z-index: 1000;
                     display: flex;
                     gap: 8px;
-                    transition: width 0.3s ease, padding 0.3s ease;
+                    transition: padding 0.3s ease;
                 }
                 .control-btn {
                     background: #6a0dad;
@@ -62,16 +62,21 @@ function openEmbed(url, title = '') {
                 let minimized = false;
                 function toggleMinimize(button) {
                     const controls = document.querySelector('.controls');
+                    const buttons = controls.querySelectorAll('.control-btn');
                     if (!minimized) {
-                        // Shrink the controls to just the '<' button
-                        controls.style.width = '30px';
-                        controls.style.padding = '5px';
+                        // Minimize the buttons but keep the layout intact
+                        buttons.forEach(btn => {
+                            if (btn !== button) {
+                                btn.style.display = 'none'; // Hide fullscreen and close buttons
+                            }
+                        });
                         button.textContent = '>';
                         minimized = true;
                     } else {
-                        // Restore the controls to their original size
-                        controls.style.width = 'auto';
-                        controls.style.padding = '8px 12px';
+                        // Restore the buttons
+                        buttons.forEach(btn => {
+                            btn.style.display = 'inline-block'; // Show fullscreen and close buttons
+                        });
                         button.textContent = '<';
                         minimized = false;
                     }
