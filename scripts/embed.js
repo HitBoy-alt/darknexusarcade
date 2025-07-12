@@ -1,35 +1,4 @@
-// Open embedded content in new tab
-function openEmbed(url, title = '') {
-    // Improved HTML escaping to prevent XSS
-    const escapeHTML = str => str.replace(/[&<>"'`]/g, 
-        tag => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#x27;',
-            '`': '&#x60;'
-        }[tag] || tag));
-
-    // Validate URL
-    try {
-        new URL(url);
-    } catch {
-        console.error('Invalid URL:', url);
-        alert('Invalid URL provided');
-        return;
-    }
-
-    const safeUrl = escapeHTML(url);
-    const safeTitle = escapeHTML(title || 'Dark Nexus Arcade - Embedded Content');
-
-    try {
-        const newWindow = window.open('', '_blank');
-        if (!newWindow) {
-            throw new Error('Popup window was blocked. Please allow popups for this site.');
-        }
-
-        const html = `
+const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,23 +26,15 @@ function openEmbed(url, title = '') {
         }
         .controls {
             position: fixed;
-            top: 40px;
+            top: 120px; /* moved down from 40px */
             right: 10px;
             z-index: 1000;
             display: flex;
             gap: 8px;
-            transition: all 0.3s ease;
             background: rgba(0,0,0,0.7);
             border-radius: 20px;
             padding: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        .controls.minimized {
-            transform: translateX(calc(100% - 40px));
-            padding: 8px 8px 8px 12px;
-        }
-        .controls.minimized .control-btn:not(.minimize-btn) {
-            display: none;
         }
         .control-btn {
             background: #6a0dad;
@@ -85,11 +46,6 @@ function openEmbed(url, title = '') {
             font-size: 14px;
             transition: all 0.2s;
             white-space: nowrap;
-        }
-        .minimize-btn {
-            min-width: 24px;
-            padding: 8px;
-            text-align: center;
         }
         .control-btn:hover {
             background: #5a0b9d;
@@ -105,20 +61,11 @@ function openEmbed(url, title = '') {
     <div id="embed-container">
         <iframe src="${safeUrl}" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
         <div class="controls">
-            <button class="control-btn minimize-btn" onclick="toggleMinimize()">←</button>
             <button class="control-btn" onclick="toggleFullscreen()">Fullscreen</button>
             <button class="control-btn" onclick="window.close()">Close</button>
         </div>
     </div>
     <script>
-        function toggleMinimize() {
-            const controls = document.querySelector('.controls');
-            const minimizeBtn = controls.querySelector('.minimize-btn');
-            
-            controls.classList.toggle('minimized');
-            minimizeBtn.textContent = controls.classList.contains('minimized') ? '→' : '←';
-        }
-
         function toggleFullscreen() {
             const elem = document.querySelector('#embed-container');
             if (!document.fullscreenElement) {
@@ -133,7 +80,7 @@ function openEmbed(url, title = '') {
 
         // Handle fullscreen change events
         document.addEventListener('fullscreenchange', () => {
-            const fullscreenBtn = document.querySelector('.control-btn:not(.minimize-btn)');
+            const fullscreenBtn = document.querySelector('.control-btn');
             fullscreenBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
         });
 
@@ -155,23 +102,4 @@ function openEmbed(url, title = '') {
     </script>
 </body>
 </html>
-        `;
-
-        newWindow.document.write(html);
-        newWindow.document.close();
-    } catch (error) {
-        console.error('Error opening embed:', error);
-        alert('Error opening content: ' + error.message);
-    }
-}
-
-// Add click handlers to all embed buttons
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-embed]').forEach(button => {
-        button.addEventListener('click', () => {
-            const url = button.dataset.embed;
-            const title = button.dataset.title || '';
-            openEmbed(url, title);
-        });
-    });
-});
+`;
