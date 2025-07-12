@@ -205,27 +205,7 @@
 </div>
 
 <script>
-    // Simple visitor counter
-    (function() {
-        // Try to use localStorage first
-        if (typeof(Storage) !== "undefined") {
-            let count = localStorage.getItem('pageVisits');
-            count = count ? parseInt(count) + 1 : 1;
-            localStorage.setItem('pageVisits', count);
-            document.getElementById('visitorCounter').textContent = count;
-        } 
-        // Fallback to sessionStorage if localStorage isn't available
-        else if (typeof(sessionStorage) !== "undefined") {
-            let count = sessionStorage.getItem('pageVisits');
-            count = count ? parseInt(count) + 1 : 1;
-            sessionStorage.setItem('pageVisits', count);
-            document.getElementById('visitorCounter').textContent = count;
-        }
-        // If no storage available, just show a static number
-        else {
-            document.getElementById('visitorCounter').textContent = '100+';
-        }
-    })();
-</script>
+     <a href='https://www.free-counters.org/'>powered by Free-Counters.org</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=3f0a46e6400391828d96e12aa20524bcefd24b82'></script>
+<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1364660/t/10"></script>
 </body>
 </html>
