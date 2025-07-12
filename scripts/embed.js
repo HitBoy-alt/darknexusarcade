@@ -1,4 +1,34 @@
-const html = `
+function openEmbed(url, title = '') {
+    // Improved HTML escaping to prevent XSS
+    const escapeHTML = str => str.replace(/[&<>"'`]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '`': '&#x60;'
+        }[tag] || tag));
+
+    // Validate URL
+    try {
+        new URL(url);
+    } catch {
+        console.error('Invalid URL:', url);
+        alert('Invalid URL provided');
+        return;
+    }
+
+    const safeUrl = escapeHTML(url);
+    const safeTitle = escapeHTML(title || 'Dark Nexus Arcade - Embedded Content');
+
+    try {
+        const newWindow = window.open('', '_blank');
+        if (!newWindow) {
+            throw new Error('Popup window was blocked. Please allow popups for this site.');
+        }
+
+        const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,13 +108,11 @@ const html = `
             }
         }
 
-        // Handle fullscreen change events
         document.addEventListener('fullscreenchange', () => {
             const fullscreenBtn = document.querySelector('.control-btn');
             fullscreenBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
         });
 
-        // Close window with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !e.defaultPrevented) {
                 if (document.fullscreenElement) {
@@ -95,11 +123,18 @@ const html = `
             }
         });
 
-        // Prevent right-click on iframe
         document.querySelector('iframe').addEventListener('contextmenu', (e) => {
             e.preventDefault();
         });
     </script>
 </body>
 </html>
-`;
+        `;
+
+        newWindow.document.write(html);
+        newWindow.document.close();
+    } catch (error) {
+        console.error('Error opening embed:', error);
+        alert('Error opening content: ' + error.message);
+    }
+}
