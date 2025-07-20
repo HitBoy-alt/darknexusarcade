@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Custom Cursor</title>
-  <style>
+(function () {
+  // Create custom cursor element
+  const customCursor = document.createElement('div');
+  customCursor.id = 'custom-cursor';
+  document.body.appendChild(customCursor);
+
+  // Apply styles to the custom cursor
+  const style = document.createElement('style');
+  style.innerHTML = `
     #custom-cursor {
       position: fixed;
       width: 32px;
@@ -13,37 +16,20 @@
       background: url('your-cursor-image.png') no-repeat center center;
       background-size: contain;
     }
-  </style>
-</head>
-<body>
-  <div id="custom-cursor"></div>
+    * {
+      cursor: none !important;
+    }
+  `;
+  document.head.appendChild(style);
 
-  <script>
-    (function () {
-      const cursor = document.getElementById('custom-cursor');
+  // Move custom cursor with the mouse
+  window.addEventListener('mousemove', (e) => {
+    customCursor.style.left = `${e.clientX}px`;
+    customCursor.style.top = `${e.clientY}px`;
+  });
 
-      // Move custom cursor with the mouse
-      window.addEventListener('mousemove', (e) => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-      });
-
-      // Force-hide system cursor
-      function forceHideCursor() {
-        document.body.style.cursor = 'none';
-
-        const style = document.createElement('style');
-        style.innerHTML = `* { cursor: none !important; }`;
-        style.setAttribute('id', 'force-hide-cursor-style');
-        document.head.appendChild(style);
-
-        setInterval(() => {
-          document.body.style.cursor = 'none';
-        }, 10);
-      }
-
-      forceHideCursor();
-    })();
-  </script>
-</body>
-</html>
+  // Force-hide system cursor repeatedly to override other scripts
+  setInterval(() => {
+    document.body.style.cursor = 'none';
+  }, 10);
+})();
