@@ -27,7 +27,7 @@
       margin-bottom: 2rem;
     }
 
-    select, button, input[type="file"] {
+    select, button, input[type="text"] {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -61,6 +61,10 @@
     nav a:hover {
       color: #00ffcc;
     }
+
+    #custom-url-container {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -88,7 +92,7 @@
     <!-- Cursor Style Dropdown -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
-      <select id="cursor-style">
+      <select id="cursor-style" onchange="onCursorSelectChange()">
         <option value="default">Default</option>
         <option value="pointer">Pointer</option>
         <option value="crosshair">Crosshair</option>
@@ -96,15 +100,25 @@
         <option value="text">Text</option>
         <option value="wait">Wait</option>
         <option value="not-allowed">Not Allowed</option>
+        <option value="custom-url">Custom URL</option>
       </select>
-      <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
-    <!-- Custom Cursor Upload -->
+    <!-- Custom URL input for data images -->
+    <div class="setting-option" id="custom-url-container">
+      <h3>Enter Custom Cursor Data URL</h3>
+      <input
+        type="text"
+        id="custom-cursor-url"
+        placeholder="Paste data:image/png;base64,..."
+        autocomplete="off"
+      />
+      <button onclick="applyCustomUrlCursor()">Apply Custom URL Cursor</button>
+    </div>
+
+    <!-- Apply Cursor Button -->
     <div class="setting-option">
-      <h3>Upload Custom Cursor (.cur, .gif, .png)</h3>
-      <input type="file" id="custom-cursor-file" accept=".cur,.gif,.png" />
-      <button onclick="applyCustomCursor()">Apply Custom Cursor</button>
+      <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
     <!-- Reset -->
@@ -121,47 +135,59 @@
 </footer>
 
 <script>
+  function onCursorSelectChange() {
+    const select = document.getElementById('cursor-style');
+    const customContainer = document.getElementById('custom-url-container');
+    if (select.value === 'custom-url') {
+      customContainer.style.display = 'block';
+    } else {
+      customContainer.style.display = 'none';
+    }
+  }
+
   function applyCursor() {
     const select = document.getElementById('cursor-style');
     const selected = select.value;
+
+    if (selected === 'custom-url') {
+      alert('Please enter a valid data URL and click "Apply Custom URL Cursor"');
+      return;
+    }
+
+    // Apply named cursor or default
     document.documentElement.style.cursor = selected === 'default' ? '' : selected;
-    // Save as plain string for named cursors
     localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'named', value: selected }));
     alert(`Cursor applied: ${selected}`);
   }
 
-  function applyCustomCursor() {
-    const fileInput = document.getElementById('custom-cursor-file');
-    const file = fileInput.files[0];
-    if (!file) {
-      alert('Please select a cursor file first!');
-      return;
-    }
-    // Acceptable mime types (note: .cur files often have application/octet-stream or image/x-icon)
-    const allowedTypes = ['image/png', 'image/gif', 'application/octet-stream', 'image/x-icon'];
-    if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.cur')) {
-      alert('Unsupported file type. Please upload .cur, .gif, or .png files.');
+  function applyCustomUrlCursor() {
+    const urlInput = document.getElementById('custom-cursor-url');
+    const url = urlInput.value.trim();
+
+    if (!url.startsWith('data:image/')) {
+      alert('Please enter a valid data image URL starting with "data:image/".');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      // Apply cursor with fallback
-      document.documentElement.style.cursor = `url('${dataUrl}'), auto`;
-      // Save custom cursor dataUrl in localStorage
-      localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'custom', dataUrl }));
-      alert('Custom cursor applied!');
-      // Reset dropdown to default (custom overrides dropdown)
-      document.getElementById('cursor-style').value = 'default';
-    };
-    reader.readAsDataURL(file);
+    // Apply the custom data URL cursor with fallback
+    document.documentElement.style.cursor = `url('${url}'), auto`;
+    localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'custom', dataUrl: url }));
+
+    // Set dropdown back to default so it doesn’t conflict visually
+    const select = document.getElementById('cursor-style');
+    select.value = 'default';
+    document.getElementById('custom-url-container').style.display = 'none';
+    urlInput.value = '';
+
+    alert('Custom data URL cursor applied!');
   }
 
   function resetSettings() {
     localStorage.removeItem('dna_settings_cursor');
-    document.getElementById('cursor-style').value = 'default';
-    document.getElementById('custom-cursor-file').value = '';
+    const select = document.getElementById('cursor-style');
+    select.value = 'default';
+    document.getElementById('custom-url-container').style.display = 'none';
+    document.getElementById('custom-cursor-url').value = '';
     document.documentElement.style.cursor = '';
     alert('Settings reset to default.');
   }
@@ -169,31 +195,43 @@
   window.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('dna_settings_cursor');
     const select = document.getElementById('cursor-style');
+    const customContainer = document.getElementById('custom-url-container');
+    const urlInput = document.getElementById('custom-cursor-url');
+
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         if (parsed.type === 'custom' && parsed.dataUrl) {
           document.documentElement.style.cursor = `url('${parsed.dataUrl}'), auto`;
-          select.value = 'default';
+          select.value = 'custom-url';
+          customContainer.style.display = 'block';
+          urlInput.value = parsed.dataUrl;
         } else if (parsed.type === 'named' && typeof parsed.value === 'string') {
-          if(parsed.value === 'default') {
+          if (parsed.value === 'default') {
             document.documentElement.style.cursor = '';
           } else {
             document.documentElement.style.cursor = parsed.value;
           }
           select.value = parsed.value;
+          customContainer.style.display = 'none';
+          urlInput.value = '';
         } else {
-          // fallback to default cursor
           select.value = 'default';
           document.documentElement.style.cursor = '';
+          customContainer.style.display = 'none';
+          urlInput.value = '';
         }
       } catch {
         select.value = 'default';
         document.documentElement.style.cursor = '';
+        customContainer.style.display = 'none';
+        urlInput.value = '';
       }
     } else {
       select.value = 'default';
       document.documentElement.style.cursor = '';
+      customContainer.style.display = 'none';
+      urlInput.value = '';
     }
   });
 </script>
