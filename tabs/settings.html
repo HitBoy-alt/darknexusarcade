@@ -23,7 +23,7 @@
     .setting-option {
       margin-bottom: 2rem;
     }
-    select, button {
+    select, input[type="text"], button {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -31,6 +31,10 @@
       border: 1px solid #555;
       color: #eee;
       border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="text"] {
+      display: none;
     }
     button {
       cursor: pointer;
@@ -88,7 +92,14 @@
         <option value="text">Text</option>
         <option value="wait">Wait</option>
         <option value="not-allowed">Not Allowed</option>
+        <option value="custom">Custom URL</option>
       </select>
+      <input
+        type="text"
+        id="custom-cursor-url"
+        placeholder="Enter custom cursor image URL"
+        aria-label="Custom Cursor URL"
+      />
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
@@ -111,16 +122,37 @@
 
   function applyCursor() {
     const cursorSelect = document.getElementById('cursor-style');
+    const customInput = document.getElementById('custom-cursor-url');
     const selected = cursorSelect.value;
 
-    document.body.style.cursor = selected;
+    if (selected === 'custom') {
+      const url = customInput.value.trim();
+      if (!url) {
+        showToast('Please enter a custom cursor image URL.', 'error');
+        return;
+      }
+      // Use url() with fallback auto
+      document.body.style.cursor = `url("${url}"), auto`;
 
-    // Save settings
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    settings.cursorStyle = selected;
-    localStorage.setItem('dna_settings', JSON.stringify(settings));
+      // Save settings
+      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+      settings.cursorStyle = 'custom';
+      settings.customCursorURL = url;
+      localStorage.setItem('dna_settings', JSON.stringify(settings));
 
-    showToast(`Cursor set to "${selected}"`, 'success');
+      showToast(`Custom cursor set to "${url}"`, 'success');
+    } else {
+      // Apply standard cursor
+      document.body.style.cursor = selected;
+
+      // Save settings
+      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+      settings.cursorStyle = selected;
+      delete settings.customCursorURL;
+      localStorage.setItem('dna_settings', JSON.stringify(settings));
+
+      showToast(`Cursor set to "${selected}"`, 'success');
+    }
   }
 
   function resetSettings() {
@@ -129,22 +161,44 @@
     // Reset cursor to default
     document.body.style.cursor = 'default';
     document.getElementById('cursor-style').value = 'default';
+    document.getElementById('custom-cursor-url').value = '';
+    document.getElementById('custom-cursor-url').style.display = 'none';
 
     showToast('Settings reset to default.', 'success');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     const cursorSelect = document.getElementById('cursor-style');
+    const customInput = document.getElementById('custom-cursor-url');
+
+    // Show/hide custom input based on dropdown
+    cursorSelect.addEventListener('change', () => {
+      if (cursorSelect.value === 'custom') {
+        customInput.style.display = 'block';
+      } else {
+        customInput.style.display = 'none';
+      }
+    });
 
     // Load saved cursor setting
     try {
       const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
       if (settings.cursorStyle) {
         cursorSelect.value = settings.cursorStyle;
-        document.body.style.cursor = settings.cursorStyle;
+        if (settings.cursorStyle === 'custom' && settings.customCursorURL) {
+          customInput.value = settings.customCursorURL;
+          customInput.style.display = 'block';
+          document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+        } else {
+          customInput.style.display = 'none';
+          document.body.style.cursor = settings.cursorStyle;
+        }
+      } else {
+        customInput.style.display = 'none';
       }
     } catch(e) {
       // silently fail if error
+      customInput.style.display = 'none';
     }
   });
 </script>
