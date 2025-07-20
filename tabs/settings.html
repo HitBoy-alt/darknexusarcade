@@ -4,263 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Settings | Dark Nexus Arcade</title>
+  <link rel="stylesheet" href="../styles/dark-theme.css" />
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
     body {
-      margin: 0;
+      font-family: Arial, sans-serif;
+      margin: 2rem;
       background: #121212;
-      color: white;
-      font-family: system-ui, sans-serif;
+      color: #eee;
+    }
+
+    h1, h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .settings-container {
+      max-width: 500px;
+    }
+
+    .setting-option {
+      margin-bottom: 2rem;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      background: #222;
+      border: 1px solid #555;
+      color: #eee;
+      border-radius: 4px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    nav {
+      background-color: #111;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #00ffcc;
     }
   </style>
 </head>
 <body>
 
+<header>
+  <h1>Dark Nexus Arcade - Settings</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../tabs/games.html">Games</a>
+    <a href="../tabs/apps.html">Apps</a>
+    <a href="../tabs/proxies.html">Proxies</a>
+    <a href="../tabs/oss.html">OS's</a>
+    <a href="../tabs/credits.html">Credits</a>
+    <a href="../tabs/partners.html">Partners</a>
+    <a href="../tabs/discord.html">Discord</a>
+    <a href="../tabs/settings.html">Settings</a>
+    <a href="../tabs/suggestions.html">Suggestions</a>
+    <a href="../tabs/bookmarklets.html">Bookmarklets</a>
+  </nav>
+</header>
+
+<main>
+  <div class="settings-container">
+
+    <!-- Cursor Style -->
+    <div class="setting-option">
+      <h3>Cursor Style</h3>
+      <select id="cursor-style">
+        <option value="default">Default</option>
+        <option value="pointer">Pointer</option>
+        <option value="crosshair">Crosshair</option>
+        <option value="move">Move</option>
+        <option value="text">Text</option>
+        <option value="wait">Wait</option>
+        <option value="not-allowed">Not Allowed</option>
+      </select>
+      <button onclick="applyCursor()">Apply Cursor</button>
+      <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
+    </div>
+
+    <!-- Reset -->
+    <div class="setting-option">
+      <h3>Reset Settings</h3>
+      <button onclick="resetSettings()">Reset to Default</button>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+</footer>
+
 <script>
-(function () {
-  const STORAGE_KEY = 'dna_cursor';
-
-  const cursors = [
-    { name: "default", desc: "Default arrow" },
-    { name: "pointer", desc: "Link pointer" },
-    { name: "crosshair", desc: "Precision selector" },
-    { name: "move", desc: "Move tool" },
-    { name: "text", desc: "Text selector" },
-    { name: "wait", desc: "Loading indicator" },
-    { name: "not-allowed", desc: "Action prohibited" },
-    { name: "grab", desc: "Grab tool" },
-    { name: "grabbing", desc: "Grabbing hand" },
-    { name: "zoom-in", desc: "Zoom in" },
-    { name: "zoom-out", desc: "Zoom out" },
-    { name: "help", desc: "Help icon" },
-    { name: "progress", desc: "Progress indicator" },
-    { name: "cell", desc: "Cell selection" },
-    { name: "alias", desc: "Alias link" },
-    { name: "context-menu", desc: "Context menu" }
-  ];
-
-  let currentCursor = null;
-  let customCursorUrl = null;
-
-  // Load saved cursor
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-  if (saved?.type === 'custom' && saved?.url) {
-    document.documentElement.style.cursor = `url('${saved.url}'), auto`;
-    currentCursor = 'custom';
-    customCursorUrl = saved.url;
-  } else if (saved?.type === 'named') {
-    document.documentElement.style.cursor = saved.value;
-    currentCursor = saved.value;
+  function applyCursor() {
+    const select = document.getElementById('cursor-style');
+    const selected = select.value;
+    document.documentElement.style.cursor = selected;
+    localStorage.setItem('dna_settings_cursor', selected);
+    alert(`Cursor applied: ${selected}`);
   }
 
-  // === UI PANEL ===
-  const panel = document.createElement('div');
-  Object.assign(panel.style, {
-    position: 'fixed',
-    top: '10px',
-    right: '10px',
-    background: 'rgba(0,0,0,0.85)',
-    color: 'white',
-    padding: '15px',
-    borderRadius: '10px',
-    fontFamily: 'system-ui, sans-serif',
-    zIndex: '10000',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-    width: '240px',
-    maxHeight: '80vh',
-    overflowY: 'auto'
-  });
-
-  const title = document.createElement('h3');
-  title.textContent = 'Cursor Styles';
-  Object.assign(title.style, {
-    margin: '0 0 10px 0',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    borderBottom: '1px solid rgba(255,255,255,0.2)',
-    paddingBottom: '8px',
-    cursor: 'move'
-  });
-  panel.appendChild(title);
-
-  const grid = document.createElement('div');
-  grid.style.display = 'grid';
-  grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-  grid.style.gap = '6px';
-  grid.style.marginBottom = '10px';
-
-  cursors.forEach(cursor => {
-    const btn = document.createElement('button');
-    btn.textContent = cursor.desc;
-    Object.assign(btn.style, {
-      padding: '6px 8px',
-      cursor: cursor.name,
-      border: 'none',
-      borderRadius: '4px',
-      background: 'rgba(255,255,255,0.1)',
-      color: 'white',
-      fontSize: '12px',
-      textAlign: 'left'
-    });
-    btn.onmouseenter = () => btn.style.background = 'rgba(255,255,255,0.2)';
-    btn.onmouseleave = () => {
-      if (currentCursor !== cursor.name) {
-        btn.style.background = 'rgba(255,255,255,0.1)';
-      }
-    };
-    btn.onclick = () => {
-      document.documentElement.style.cursor = cursor.name;
-      currentCursor = cursor.name;
-      customCursorUrl = null;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ type: 'named', value: cursor.name }));
-      updateActiveButton();
-    };
-    grid.appendChild(btn);
-  });
-
-  panel.appendChild(grid);
-
-  // === Custom cursor section ===
-  const customSection = document.createElement('div');
-  customSection.style.marginTop = '10px';
-
-  const customLabel = document.createElement('label');
-  customLabel.textContent = 'Custom URL:';
-  customLabel.style.display = 'block';
-  customLabel.style.marginBottom = '5px';
-  customLabel.style.fontSize = '12px';
-  customSection.appendChild(customLabel);
-
-  const customInput = document.createElement('input');
-  Object.assign(customInput.style, {
-    width: '100%',
-    padding: '6px',
-    marginBottom: '6px',
-    background: 'rgba(255,255,255,0.1)',
-    border: '1px solid rgba(255,255,255,0.2)',
-    borderRadius: '4px',
-    color: 'white'
-  });
-  customInput.placeholder = 'https://example.com/cursor.cur';
-  customInput.value = customCursorUrl || '';
-  customSection.appendChild(customInput);
-
-  const customBtn = document.createElement('button');
-  customBtn.textContent = 'Apply Custom';
-  Object.assign(customBtn.style, {
-    width: '100%',
-    padding: '6px',
-    background: 'rgba(100,150,255,0.3)',
-    border: 'none',
-    borderRadius: '4px',
-    color: 'white'
-  });
-  customBtn.onclick = () => {
-    const url = customInput.value.trim();
-    if (!url) return;
-
-    const testEl = document.createElement('div');
-    testEl.style.cssText = `position:absolute; left:-9999px; width:10px; height:10px; cursor: url('${url}'), auto;`;
-    document.body.appendChild(testEl);
-    const computed = getComputedStyle(testEl).cursor;
-    document.body.removeChild(testEl);
-
-    if (computed.includes('url')) {
-      document.documentElement.style.cursor = `url('${url}'), auto`;
-      customCursorUrl = url;
-      currentCursor = 'custom';
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ type: 'custom', url }));
-      updateActiveButton();
-    } else {
-      alert('Failed to load custom cursor. Server may block CORS.');
-    }
-  };
-  customSection.appendChild(customBtn);
-  panel.appendChild(customSection);
-
-  // === Show Cursors button ===
-  const showBtn = document.createElement('button');
-  showBtn.textContent = 'Show Cursors';
-  Object.assign(showBtn.style, {
-    width: '100%',
-    padding: '8px',
-    marginTop: '8px',
-    background: 'rgba(0,255,255,0.2)',
-    border: 'none',
-    borderRadius: '4px',
-    color: 'white',
-    fontWeight: 'bold'
-  });
-  showBtn.onclick = () => window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank');
-  panel.appendChild(showBtn);
-
-  // === Reset ===
-  const resetBtn = document.createElement('button');
-  resetBtn.textContent = 'Reset to Default';
-  Object.assign(resetBtn.style, {
-    width: '100%',
-    padding: '8px',
-    marginTop: '10px',
-    background: 'rgba(255,100,100,0.3)',
-    border: 'none',
-    borderRadius: '4px',
-    color: 'white',
-    fontWeight: 'bold'
-  });
-  resetBtn.onclick = () => {
+  function resetSettings() {
+    localStorage.removeItem('dna_settings_cursor');
+    document.getElementById('cursor-style').value = 'default';
     document.documentElement.style.cursor = '';
-    currentCursor = null;
-    customCursorUrl = null;
-    localStorage.removeItem(STORAGE_KEY);
-    updateActiveButton();
-  };
-  panel.appendChild(resetBtn);
-
-  // === Status ===
-  const status = document.createElement('div');
-  status.style.marginTop = '10px';
-  status.style.fontSize = '11px';
-  status.style.opacity = '0.8';
-  panel.appendChild(status);
-
-  function updateActiveButton() {
-    const buttons = panel.querySelectorAll('button');
-    buttons.forEach(btn => {
-      btn.style.fontWeight = 'normal';
-      btn.style.background = 'rgba(255,255,255,0.1)';
-    });
-
-    if (currentCursor === 'custom') {
-      status.textContent = `Custom: ${customCursorUrl}`;
-    } else if (currentCursor) {
-      const c = cursors.find(c => c.name === currentCursor);
-      status.textContent = `Active: ${c ? c.desc : currentCursor}`;
-    } else {
-      status.textContent = 'Default cursor active';
-    }
+    alert('Settings reset to default.');
   }
 
-  // === Draggable Panel ===
-  let dragging = false, offsetX = 0, offsetY = 0;
-  title.onmousedown = (e) => {
-    dragging = true;
-    offsetX = e.clientX - panel.getBoundingClientRect().left;
-    offsetY = e.clientY - panel.getBoundingClientRect().top;
-    document.body.style.userSelect = 'none';
-  };
-  document.onmousemove = (e) => {
-    if (!dragging) return;
-    panel.style.left = `${e.clientX - offsetX}px`;
-    panel.style.top = `${e.clientY - offsetY}px`;
-    panel.style.right = 'auto';
-  };
-  document.onmouseup = () => {
-    dragging = false;
-    document.body.style.userSelect = '';
-  };
-
-  document.body.appendChild(panel);
-  updateActiveButton();
-})();
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedCursor = localStorage.getItem('dna_settings_cursor');
+    const select = document.getElementById('cursor-style');
+    if (savedCursor) {
+      select.value = savedCursor;
+      document.documentElement.style.cursor = savedCursor;
+    } else {
+      select.value = 'default';
+      document.documentElement.style.cursor = '';
+    }
+  });
 </script>
 
 </body>
