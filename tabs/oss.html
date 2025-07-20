@@ -166,18 +166,50 @@
     <footer>
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
          <script>
-      (function() {
-        try {
-          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-          if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
-            document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
-          } else if (settings.cursorStyle) {
-            document.body.style.cursor = settings.cursorStyle;
-          }
-        } catch(e) {
-          // silently fail if error
+      <script>
+(function () {
+  try {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    const style = settings.cursorStyle;
+    const customURL = settings.customCursorURL;
+
+    if (style === 'custom' && customURL) {
+      // Hide real cursor
+      document.body.style.cursor = 'none';
+
+      // Remove existing if present
+      const oldCursor = document.getElementById('dna-custom-cursor');
+      if (oldCursor) oldCursor.remove();
+
+      // Create the custom cursor image
+      const cursorImg = document.createElement('img');
+      cursorImg.src = customURL;
+      cursorImg.id = 'dna-custom-cursor';
+      cursorImg.style.position = 'fixed';
+      cursorImg.style.pointerEvents = 'none';
+      cursorImg.style.zIndex = '9999';
+      cursorImg.style.width = '32px';
+      cursorImg.style.height = '32px';
+
+      document.body.appendChild(cursorImg);
+
+      // Update position on mouse move
+      document.addEventListener('mousemove', function (e) {
+        const img = document.getElementById('dna-custom-cursor');
+        if (img) {
+          img.style.left = `${e.clientX}px`;
+          img.style.top = `${e.clientY}px`;
         }
-      })();
+      });
+    } else if (style) {
+      document.body.style.cursor = style;
+    }
+  } catch (e) {
+    // Silent fail
+  }
+})();
+</script>
+
     </script>
     </footer>
 <script src="cursor.js"></script>
