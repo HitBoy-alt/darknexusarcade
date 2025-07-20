@@ -35,7 +35,6 @@
     button {
       cursor: pointer;
     }
-    /* Navigation styling */
     nav {
       background-color: #111;
       padding: 10px;
@@ -76,7 +75,6 @@
 
 <main>
   <div class="settings-container">
-
     <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
@@ -90,17 +88,13 @@
         <option value="not-allowed">Not Allowed</option>
         <option value="custom">Custom URL</option>
       </select>
-
       <input type="text" id="custom-cursor-url" placeholder="Enter custom cursor URL or path" style="display:none;" aria-label="Custom Cursor URL" value="https://darknexusarcade.org/assets/cursors/cursor1.png" />
-
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
-    <!-- Show Cursors button -->
+    <!-- Show Cursors -->
     <div class="setting-option">
-      <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">
-        Show Cursors
-      </button>
+      <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
     </div>
 
     <!-- Reset -->
@@ -116,12 +110,10 @@
 </footer>
 
 <script>
-  function showToast(message, type = 'info') {
-    alert(message); // Simple alert for demo, replace with better UI if you want
-  }
-
   const cursorSelect = document.getElementById('cursor-style');
   const customInput = document.getElementById('custom-cursor-url');
+
+  let customCursorImage = null;
 
   cursorSelect.addEventListener('change', () => {
     if (cursorSelect.value === 'custom') {
@@ -133,38 +125,68 @@
   });
 
   function applyCursor() {
-    let cursorValue = cursorSelect.value;
-    if (cursorValue === 'custom') {
-      cursorValue = customInput.value.trim() || 'https://darknexusarcade.org/assets/cursors/cursor1.png';
-      // Apply custom cursor with hotspot and fallback
-      document.body.style.cursor = `url("${cursorValue}") 16 16, auto`;
+    const style = cursorSelect.value;
+    const customURL = customInput.value.trim() || 'https://darknexusarcade.org/assets/cursors/cursor1.png';
+
+    if (style === 'custom') {
+      enableCustomImageCursor(customURL);
     } else {
-      // Apply standard cursor
-      document.body.style.cursor = cursorValue;
+      disableCustomImageCursor();
+      document.body.style.cursor = style;
     }
 
     // Save to localStorage
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    settings.cursorStyle = cursorSelect.value;
-    if (cursorSelect.value === 'custom') {
-      settings.customCursorURL = cursorValue;
-    } else {
-      delete settings.customCursorURL;
-    }
+    const settings = {
+      cursorStyle: style,
+      customCursorURL: customURL
+    };
     localStorage.setItem('dna_settings', JSON.stringify(settings));
-
-    showToast(`Cursor set to "${cursorSelect.value === 'custom' ? cursorValue : cursorValue}"`, 'success');
+    alert(`Cursor set to "${style === 'custom' ? customURL : style}"`);
   }
 
   function resetSettings() {
     localStorage.removeItem('dna_settings');
-
     document.body.style.cursor = 'default';
     cursorSelect.value = 'default';
     customInput.value = 'https://darknexusarcade.org/assets/cursors/cursor1.png';
     customInput.style.display = 'none';
+    disableCustomImageCursor();
+    alert('Settings reset to default.');
+  }
 
-    showToast('Settings reset to default.', 'success');
+  function enableCustomImageCursor(url) {
+    document.body.style.cursor = 'none';
+
+    if (customCursorImage) {
+      customCursorImage.remove();
+    }
+
+    customCursorImage = document.createElement('img');
+    customCursorImage.src = url;
+    customCursorImage.style.position = 'fixed';
+    customCursorImage.style.pointerEvents = 'none';
+    customCursorImage.style.zIndex = '9999';
+    customCursorImage.style.width = '32px';
+    customCursorImage.style.height = '32px';
+    document.body.appendChild(customCursorImage);
+
+    document.addEventListener('mousemove', trackCursor);
+  }
+
+  function disableCustomImageCursor() {
+    document.body.style.cursor = 'default';
+    if (customCursorImage) {
+      customCursorImage.remove();
+      customCursorImage = null;
+    }
+    document.removeEventListener('mousemove', trackCursor);
+  }
+
+  function trackCursor(e) {
+    if (customCursorImage) {
+      customCursorImage.style.left = `${e.clientX}px`;
+      customCursorImage.style.top = `${e.clientY}px`;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -176,17 +198,13 @@
         if (settings.cursorStyle === 'custom' && settings.customCursorURL) {
           customInput.value = settings.customCursorURL;
           customInput.style.display = 'block';
-          document.body.style.cursor = `url("${settings.customCursorURL}") 16 16, auto`;
+          enableCustomImageCursor(settings.customCursorURL);
         } else {
-          customInput.style.display = 'none';
           document.body.style.cursor = settings.cursorStyle;
         }
-      } else {
-        // Set default custom cursor URL if none exists
-        customInput.value = 'https://darknexusarcade.org/assets/cursors/cursor1.png';
       }
     } catch (e) {
-      // silently fail
+      // Do nothing
     }
   });
 </script>
