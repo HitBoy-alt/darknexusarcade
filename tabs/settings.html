@@ -216,7 +216,8 @@
         showToast('Please enter a valid cursor URL.', 'error');
         return;
       }
-      document.body.style.cursor = `url("${url}"), auto`;
+      // Add hotspot coordinates "4 4" for better cursor positioning
+      document.body.style.cursor = `url("${url}") 4 4, auto`;
       settings.cursorStyle = 'custom-url';
       settings.customCursorURL = url;
     } else {
@@ -285,7 +286,7 @@
       if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
         customCursorInput.style.display = 'block';
         customCursorInput.value = settings.customCursorURL;
-        document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+        document.body.style.cursor = `url("${settings.customCursorURL}") 4 4, auto`;
       } else {
         customCursorInput.style.display = 'none';
         document.body.style.cursor = settings.cursorStyle;
@@ -303,7 +304,7 @@
     try {
       const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
       if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
-        document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+        document.body.style.cursor = `url("${settings.customCursorURL}") 4 4, auto`;
       } else if (settings.cursorStyle) {
         document.body.style.cursor = settings.cursorStyle;
       }
