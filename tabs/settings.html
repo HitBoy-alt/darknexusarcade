@@ -27,7 +27,7 @@
       margin-bottom: 2rem;
     }
 
-    select, button {
+    select, button, input[type="file"] {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -35,6 +35,7 @@
       border: 1px solid #555;
       color: #eee;
       border-radius: 4px;
+      box-sizing: border-box;
     }
 
     button {
@@ -84,7 +85,7 @@
 <main>
   <div class="settings-container">
 
-    <!-- Cursor Style -->
+    <!-- Cursor Style Dropdown -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
       <select id="cursor-style">
@@ -97,7 +98,13 @@
         <option value="not-allowed">Not Allowed</option>
       </select>
       <button onclick="applyCursor()">Apply Cursor</button>
-      <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
+    </div>
+
+    <!-- Custom Cursor Upload -->
+    <div class="setting-option">
+      <h3>Upload Custom Cursor (.cur, .gif, .png)</h3>
+      <input type="file" id="custom-cursor-file" accept=".cur,.gif,.png" />
+      <button onclick="applyCustomCursor()">Apply Custom Cursor</button>
     </div>
 
     <!-- Reset -->
@@ -117,24 +124,73 @@
   function applyCursor() {
     const select = document.getElementById('cursor-style');
     const selected = select.value;
-    document.documentElement.style.cursor = selected;
-    localStorage.setItem('dna_settings_cursor', selected);
+    document.documentElement.style.cursor = selected === 'default' ? '' : selected;
+    // Save as plain string for named cursors
+    localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'named', value: selected }));
     alert(`Cursor applied: ${selected}`);
+  }
+
+  function applyCustomCursor() {
+    const fileInput = document.getElementById('custom-cursor-file');
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('Please select a cursor file first!');
+      return;
+    }
+    // Acceptable mime types (note: .cur files often have application/octet-stream or image/x-icon)
+    const allowedTypes = ['image/png', 'image/gif', 'application/octet-stream', 'image/x-icon'];
+    if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.cur')) {
+      alert('Unsupported file type. Please upload .cur, .gif, or .png files.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      // Apply cursor with fallback
+      document.documentElement.style.cursor = `url('${dataUrl}'), auto`;
+      // Save custom cursor dataUrl in localStorage
+      localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'custom', dataUrl }));
+      alert('Custom cursor applied!');
+      // Reset dropdown to default (custom overrides dropdown)
+      document.getElementById('cursor-style').value = 'default';
+    };
+    reader.readAsDataURL(file);
   }
 
   function resetSettings() {
     localStorage.removeItem('dna_settings_cursor');
     document.getElementById('cursor-style').value = 'default';
+    document.getElementById('custom-cursor-file').value = '';
     document.documentElement.style.cursor = '';
     alert('Settings reset to default.');
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    const savedCursor = localStorage.getItem('dna_settings_cursor');
+    const saved = localStorage.getItem('dna_settings_cursor');
     const select = document.getElementById('cursor-style');
-    if (savedCursor) {
-      select.value = savedCursor;
-      document.documentElement.style.cursor = savedCursor;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.type === 'custom' && parsed.dataUrl) {
+          document.documentElement.style.cursor = `url('${parsed.dataUrl}'), auto`;
+          select.value = 'default';
+        } else if (parsed.type === 'named' && typeof parsed.value === 'string') {
+          if(parsed.value === 'default') {
+            document.documentElement.style.cursor = '';
+          } else {
+            document.documentElement.style.cursor = parsed.value;
+          }
+          select.value = parsed.value;
+        } else {
+          // fallback to default cursor
+          select.value = 'default';
+          document.documentElement.style.cursor = '';
+        }
+      } catch {
+        select.value = 'default';
+        document.documentElement.style.cursor = '';
+      }
     } else {
       select.value = 'default';
       document.documentElement.style.cursor = '';
