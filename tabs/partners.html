@@ -85,7 +85,7 @@
                 <h3>control</h3>
                 <a href="https://sites.google.com/view/289n3y387by7y374ny347yrdufhdf3/home" target="_blank" rel="noopener noreferrer">Visit Partner</a>
             </div>
-             <div class="partner-item">
+            <div class="partner-item">
                 <img src="../assets/images/partner2.png" alt="skryptonite" />
                 <h3>skryptonite</h3>
                 <a href="https://mathbrostrustt.a.ssl.fastly.net/home" target="_blank" rel="noopener noreferrer">Visit Partner</a>
@@ -93,54 +93,52 @@
             <!-- Add more partners here -->
         </div>
     </main>
-<script src="cursor.js"></script>
+
+    <script src="cursor.js"></script>
 
     <footer>
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-         <script>
-      <script>
-(function () {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
+        <script>
+            (function () {
+                try {
+                    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+                    const style = settings.cursorStyle;
+                    const customURL = settings.customCursorURL;
 
-    if (style === 'custom' && customURL) {
-      // Hide real cursor
-      document.body.style.cursor = 'none';
+                    if (style === 'custom' && customURL) {
+                        // Hide real cursor
+                        document.body.style.cursor = 'none';
 
-      // Remove any existing custom cursor first
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
+                        // Remove any existing custom cursor first
+                        const existing = document.getElementById('dna-custom-cursor');
+                        if (existing) existing.remove();
 
-      // Add custom image cursor
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      document.body.appendChild(cursorImg);
+                        // Add custom image cursor
+                        const cursorImg = document.createElement('img');
+                        cursorImg.src = customURL;
+                        cursorImg.id = 'dna-custom-cursor';
+                        cursorImg.style.position = 'fixed';
+                        cursorImg.style.pointerEvents = 'none';
+                        cursorImg.style.zIndex = '9999';
+                        cursorImg.style.width = '32px';
+                        cursorImg.style.height = '32px';
+                        document.body.appendChild(cursorImg);
 
-      document.addEventListener('mousemove', function (e) {
-        const img = document.getElementById('dna-custom-cursor');
-        if (img) {
-          img.style.left = `${e.clientX}px`;
-          img.style.top = `${e.clientY}px`;
-        }
-      });
-    } else if (style) {
-      document.body.style.cursor = style;
-    }
-  } catch (e) {
-    // fail silently
-  }
-})();
-</script>
-
-    </script>
+                        document.addEventListener('mousemove', function (e) {
+                            const img = document.getElementById('dna-custom-cursor');
+                            if (img) {
+                                img.style.left = `${e.clientX}px`;
+                                img.style.top = `${e.clientY}px`;
+                            }
+                        });
+                    } else if (style) {
+                        document.body.style.cursor = style;
+                    }
+                } catch (e) {
+                    // fail silently
+                }
+            })();
+        </script>
     </footer>
 </body>
 </html>
