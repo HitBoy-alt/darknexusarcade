@@ -133,7 +133,7 @@
         </select>
         <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
       </div>
-      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur or .png)" />
+      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" />
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
@@ -212,8 +212,8 @@
 
     if (selected === 'custom-url') {
       const url = customInput.value.trim();
-      if (!url) {
-        showToast('Please enter a valid cursor URL.', 'error');
+      if (!url || !url.match(/\.(cur|png|gif)$/i)) {
+        showToast('Please enter a valid cursor URL ending with .cur, .png, or .gif', 'error');
         return;
       }
       document.body.style.cursor = `url("${url}"), auto`;
@@ -275,6 +275,8 @@
         customTitleInput.style.display = 'block';
       }
       doApplyCloak(settings.tabCloak, settings.customCloak || '');
+    } else {
+      customTitleInput.style.display = 'none';
     }
 
     // Load saved cursor
@@ -288,6 +290,9 @@
         customCursorInput.style.display = 'none';
         document.body.style.cursor = settings.cursorStyle;
       }
+    } else {
+      customCursorInput.style.display = 'none';
+      document.body.style.cursor = 'default';
     }
   });
 </script>
