@@ -156,63 +156,59 @@
                 <h3>Copy.sh (Linux)</h3>
                 <button onclick="openEmbed('https://copy.sh/v86/')">Boot</button>
             </div>
-                <div class="grid-item">
+            <div class="grid-item">
                 <img src="../assets/images/os9.png" alt="rice" />
                 <h3>riceos</h3>
                 <button onclick="openEmbed('https://keenwa.x10.mx/home')">Boot</button>
+            </div>
         </div>
     </main>
 
     <footer>
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-         <script>
-      <script>
-(function () {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
+        <script>
+            (function () {
+              try {
+                const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+                const style = settings.cursorStyle;
+                const customURL = settings.customCursorURL;
 
-    if (style === 'custom' && customURL) {
-      // Hide real cursor
-      document.body.style.cursor = 'none';
+                if (style === 'custom' && customURL) {
+                  // Hide real cursor
+                  document.body.style.cursor = 'none';
 
-      // Remove any existing custom cursor first
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
+                  // Remove any existing custom cursor first
+                  const existing = document.getElementById('dna-custom-cursor');
+                  if (existing) existing.remove();
 
-      // Add custom image cursor
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      document.body.appendChild(cursorImg);
+                  // Add custom image cursor
+                  const cursorImg = document.createElement('img');
+                  cursorImg.src = customURL;
+                  cursorImg.id = 'dna-custom-cursor';
+                  cursorImg.style.position = 'fixed';
+                  cursorImg.style.pointerEvents = 'none';
+                  cursorImg.style.zIndex = '9999';
+                  cursorImg.style.width = '32px';
+                  cursorImg.style.height = '32px';
+                  document.body.appendChild(cursorImg);
 
-      document.addEventListener('mousemove', function (e) {
-        const img = document.getElementById('dna-custom-cursor');
-        if (img) {
-          img.style.left = `${e.clientX}px`;
-          img.style.top = `${e.clientY}px`;
-        }
-      });
-    } else if (style) {
-      document.body.style.cursor = style;
-    }
-  } catch (e) {
-    // fail silently
-  }
-})();
-
-</script>
-
-    </script>
+                  document.addEventListener('mousemove', function (e) {
+                    const img = document.getElementById('dna-custom-cursor');
+                    if (img) {
+                      img.style.left = `${e.clientX}px`;
+                      img.style.top = `${e.clientY}px`;
+                    }
+                  });
+                } else if (style) {
+                  document.body.style.cursor = style;
+                }
+              } catch (e) {
+                // fail silently
+              }
+            })();
+        </script>
     </footer>
-<script src="cursor.js"></script>
-
+    <script src="cursor.js"></script>
     <script src="../scripts/embed.js"></script>
 </body>
 </html>
