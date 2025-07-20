@@ -175,6 +175,19 @@
       }, 2000);
     }
   </script>
+   (function() {
+        try {
+          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+          if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
+            document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+          } else if (settings.cursorStyle) {
+            document.body.style.cursor = settings.cursorStyle;
+          }
+        } catch(e) {
+          // silently fail if error
+        }
+      })();
+  </script>
   <script src="cursor.js"></script>
 
 
