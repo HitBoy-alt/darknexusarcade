@@ -100,7 +100,7 @@
                 <h3>now.gg</h3>
                 <button type="button" onclick="openEmbed('https://voidnetwork.space/uv/service/aHR0cHM6Ly9ub3cuZ2cv')">Open</button>           
             </div>
-<div class="grid-item">
+            <div class="grid-item">
                 <img src="../assets/images/websim.png" alt="websim" />
                 <h3>websim</h3>
                 <button type="button" onclick="openEmbed('https://websim.com')">Open</button>           
@@ -137,7 +137,7 @@
                 <img src="../assets/images/objectionlol.png" alt="objectionlol" />
                 <h3>objection.lol</h3>
                 <button type="button" onclick="openEmbed('https://objection.lol')">Open</button>
-
+            </div>
         </div>
     </main>
 
@@ -145,8 +145,24 @@
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
     </footer>
     
-<script src="cursor.js"></script>
+    <script src="cursor.js"></script>
 
     <script src="../scripts/embed.js"></script>
+
+    <!-- Cursor style apply script to persist cursor on page load -->
+    <script>
+      (function() {
+        try {
+          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+          if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
+            document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+          } else if (settings.cursorStyle) {
+            document.body.style.cursor = settings.cursorStyle;
+          }
+        } catch(e) {
+          // silently fail if error
+        }
+      })();
+    </script>
 </body>
 </html>
