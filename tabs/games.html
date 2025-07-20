@@ -8,27 +8,27 @@
   <link rel="stylesheet" href="../styles/grid.css" />
   <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
-<style>
-        /* Basic navigation styling */
-        nav {
-            background-color: #111;
-            padding: 10px;
-            text-align: center;
-        }
+  <style>
+    /* Basic navigation styling */
+    nav {
+      background-color: #111;
+      padding: 10px;
+      text-align: center;
+    }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 12px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
 
-        nav a:hover {
-            color: #00ffcc;
-        }
-    </style>
+    nav a:hover {
+      color: #00ffcc;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -68,8 +68,6 @@
         <button type="button" onclick="openEmbed('https://mathtutors.global.ssl.fastly.net/gsrc/osu/index.html')">Play</button>
         <button type="button" onclick="openEmbed('https://osu-web.com')">Play alt</button>
         <button type="button" onclick="openEmbed('https://webosu-2.github.io')">Play alt1</button>
-
-
       </div>
 
       <div class="grid-item">
@@ -83,7 +81,7 @@
         <img src="../assets/images/buckshot.png" alt="buckshot roulette" />
         <h3>buckshot roulette</h3>
         <button type="button" onclick="openEmbed('https://play.szvy.win/gxmez/buckshot.html')">Play</button>
-        Note: May not work if it doesn't go to controller then find game
+        <p>Note: May not work; if it doesn't, go to controller then find game</p>
       </div>
 
       <div class="grid-item">
@@ -97,90 +95,94 @@
         <h3>korean fortnite</h3>
         <button type="button" onclick="openEmbed('https://gamesfreez.github.io/Fortnite/')">Play</button>
       </div>
-<div class="grid-item">
-        <img src="../assets/images/baldibasic.png" alt="baldibasic" />
+
+      <div class="grid-item">
+        <img src="../assets/images/baldibasic.png" alt="baldis basic" />
         <h3>baldis basic</h3>
-        <button type="button" onclick="openEmbed('https://play.szvy.win/gsrc/baldis-basics/index.html')">Play</button> may not work
+        <button type="button" onclick="openEmbed('https://play.szvy.win/gsrc/baldis-basics/index.html')">Play</button>
+        <p>Note: May not work</p>
       </div>
+
       <div class="grid-item">
-        <img src="../assets/images/happywheels.png" alt="happywheels" />
+        <img src="../assets/images/happywheels.png" alt="happy wheels" />
         <h3>happy wheels</h3>
-        <button type="button" onclick="openEmbed('https://play.szvy.win/gsrc/happywheels/index.html')">Play</button> may not work
+        <button type="button" onclick="openEmbed('https://play.szvy.win/gsrc/happywheels/index.html')">Play</button>
+        <p>Note: May not work</p>
       </div>
+
       <div class="grid-item">
-        <img src="../assets/images/suikagame.png" alt="suikagame" />
+        <img src="../assets/images/suikagame.png" alt="suika game" />
         <h3>suika game</h3>
         <button type="button" onclick="openEmbed('https://voidnetwork.space/local%20games/watermelongame/index.html')">Play</button>
       </div>
+
       <div class="grid-item">
-        <img src="../assets/images/italianbrainrot.png" alt="italianbrainrot" />
+        <img src="../assets/images/italianbrainrot.png" alt="italian brainrot" />
         <h3>italian brainrot obby</h3>
         <button type="button" onclick="openEmbed('https://voidnetwork.space/local%20games/italian%20Brainrot/g.igroutka.ru/games/8/zPWB0Z3MWEWki3/files/games/h1/italian-brainrot-obby-parkour-v01i/index.html')">Play</button>
       </div>
+
       <div class="grid-item">
-        <img src="../assets/images/gayfunkin.png" alt="gayfunkinshooter" />
+        <img src="../assets/images/gayfunkin.png" alt="gay funkin shooter" />
         <h3>gay funkin shooter</h3>
         <button type="button" onclick="openEmbed('https://html-classic.itch.zone/html/14276916/index.html')">Play</button>
       </div>
+
       <div class="grid-item">
-        <img src="../assets/images/thereisnogame.png" alt="thereisnogame" />
+        <img src="../assets/images/thereisnogame.png" alt="there is no game" />
         <h3>there is no game</h3>
         <button type="button" onclick="openEmbed('https://pisaucer.github.io/boredhtml/games/thereisnogame/repo/alternate/871000/test.html')">Play</button>
       </div>
-
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-     <script>
-     <script>
-(function () {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
 
-    if (style === 'custom' && customURL) {
-      // Hide real cursor
-      document.body.style.cursor = 'none';
+    <script>
+      (function () {
+        try {
+          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+          const style = settings.cursorStyle;
+          const customURL = settings.customCursorURL;
 
-      // Remove any existing custom cursor first
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
+          if (style === 'custom' && customURL) {
+            // Hide real cursor
+            document.body.style.cursor = 'none';
 
-      // Add custom image cursor
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      document.body.appendChild(cursorImg);
+            // Remove any existing custom cursor first
+            const existing = document.getElementById('dna-custom-cursor');
+            if (existing) existing.remove();
 
-      document.addEventListener('mousemove', function (e) {
-        const img = document.getElementById('dna-custom-cursor');
-        if (img) {
-          img.style.left = `${e.clientX}px`;
-          img.style.top = `${e.clientY}px`;
+            // Add custom image cursor
+            const cursorImg = document.createElement('img');
+            cursorImg.src = customURL;
+            cursorImg.id = 'dna-custom-cursor';
+            cursorImg.style.position = 'fixed';
+            cursorImg.style.pointerEvents = 'none';
+            cursorImg.style.zIndex = '9999';
+            cursorImg.style.width = '32px';
+            cursorImg.style.height = '32px';
+            document.body.appendChild(cursorImg);
+
+            document.addEventListener('mousemove', function (e) {
+              const img = document.getElementById('dna-custom-cursor');
+              if (img) {
+                img.style.left = `${e.clientX}px`;
+                img.style.top = `${e.clientY}px`;
+              }
+            });
+          } else if (style) {
+            document.body.style.cursor = style;
+          }
+        } catch (e) {
+          // fail silently
         }
-      });
-    } else if (style) {
-      document.body.style.cursor = style;
-    }
-  } catch (e) {
-    // fail silently
-  }
-})();
-
-</script>
-
+      })();
     </script>
   </footer>
-<script src="cursor.js"></script>
 
+  <script src="cursor.js"></script>
   <script src="../scripts/embed.js"></script>
 </body>
 </html>
