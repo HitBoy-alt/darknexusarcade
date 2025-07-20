@@ -88,7 +88,7 @@
         <option value="not-allowed">Not Allowed</option>
         <option value="custom">Custom URL</option>
       </select>
-      <input type="text" id="custom-cursor-url" placeholder="Enter custom cursor URL or path" style="display:none;" aria-label="Custom Cursor URL" value="https://darknexusarcade.org/assets/cursors/cursor1.png" />
+      <input type="text" id="custom-cursor-url" placeholder="Enter custom cursor URL" style="display:none;" value="https://darknexusarcade.org/assets/cursors/cursor1.png" />
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
@@ -113,100 +113,78 @@
   const cursorSelect = document.getElementById('cursor-style');
   const customInput = document.getElementById('custom-cursor-url');
 
-  let customCursorImage = null;
-
   cursorSelect.addEventListener('change', () => {
-    if (cursorSelect.value === 'custom') {
-      customInput.style.display = 'block';
-      customInput.focus();
-    } else {
-      customInput.style.display = 'none';
-    }
+    customInput.style.display = (cursorSelect.value === 'custom') ? 'block' : 'none';
   });
 
   function applyCursor() {
     const style = cursorSelect.value;
     const customURL = customInput.value.trim() || 'https://darknexusarcade.org/assets/cursors/cursor1.png';
 
-    if (style === 'custom') {
-      enableCustomImageCursor(customURL);
-    } else {
-      disableCustomImageCursor();
-      document.body.style.cursor = style;
-    }
-
-    // Save to localStorage
     const settings = {
       cursorStyle: style,
       customCursorURL: customURL
     };
+
     localStorage.setItem('dna_settings', JSON.stringify(settings));
     alert(`Cursor set to "${style === 'custom' ? customURL : style}"`);
+    location.reload(); // reload to trigger custom cursor script
   }
 
   function resetSettings() {
     localStorage.removeItem('dna_settings');
-    document.body.style.cursor = 'default';
-    cursorSelect.value = 'default';
-    customInput.value = 'https://darknexusarcade.org/assets/cursors/cursor1.png';
-    customInput.style.display = 'none';
-    disableCustomImageCursor();
-    alert('Settings reset to default.');
-  }
-
-  function enableCustomImageCursor(url) {
-    document.body.style.cursor = 'none';
-
-    if (customCursorImage) {
-      customCursorImage.remove();
-    }
-
-    customCursorImage = document.createElement('img');
-    customCursorImage.src = url;
-    customCursorImage.style.position = 'fixed';
-    customCursorImage.style.pointerEvents = 'none';
-    customCursorImage.style.zIndex = '9999';
-    customCursorImage.style.width = '32px';
-    customCursorImage.style.height = '32px';
-    document.body.appendChild(customCursorImage);
-
-    document.addEventListener('mousemove', trackCursor);
-  }
-
-  function disableCustomImageCursor() {
-    document.body.style.cursor = 'default';
-    if (customCursorImage) {
-      customCursorImage.remove();
-      customCursorImage = null;
-    }
-    document.removeEventListener('mousemove', trackCursor);
-  }
-
-  function trackCursor(e) {
-    if (customCursorImage) {
-      customCursorImage.style.left = `${e.clientX}px`;
-      customCursorImage.style.top = `${e.clientY}px`;
-    }
+    location.reload(); // Reset by reloading
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    try {
-      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-      if (settings.cursorStyle) {
-        cursorSelect.value = settings.cursorStyle;
-
-        if (settings.cursorStyle === 'custom' && settings.customCursorURL) {
-          customInput.value = settings.customCursorURL;
-          customInput.style.display = 'block';
-          enableCustomImageCursor(settings.customCursorURL);
-        } else {
-          document.body.style.cursor = settings.cursorStyle;
-        }
+    const settings = JSON.parse(localStorage.getItem('dna_settings') || '{}');
+    if (settings.cursorStyle) {
+      cursorSelect.value = settings.cursorStyle;
+      if (settings.cursorStyle === 'custom') {
+        customInput.value = settings.customCursorURL || '';
+        customInput.style.display = 'block';
       }
-    } catch (e) {
-      // Do nothing
     }
   });
+</script>
+
+<!-- This script should be included on all pages to show custom image cursor -->
+<script>
+(function () {
+  try {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    const style = settings.cursorStyle;
+    const customURL = settings.customCursorURL;
+
+    if (style === 'custom' && customURL) {
+      // Hide real cursor
+      document.body.style.cursor = 'none';
+
+      // Add custom image cursor
+      const cursorImg = document.createElement('img');
+      cursorImg.src = customURL;
+      cursorImg.id = 'dna-custom-cursor';
+      cursorImg.style.position = 'fixed';
+      cursorImg.style.pointerEvents = 'none';
+      cursorImg.style.zIndex = '9999';
+      cursorImg.style.width = '32px';
+      cursorImg.style.height = '32px';
+      document.body.appendChild(cursorImg);
+
+      document.addEventListener('mousemove', function (e) {
+        const img = document.getElementById('dna-custom-cursor');
+        if (img) {
+          img.style.left = `${e.clientX}px`;
+          img.style.top = `${e.clientY}px`;
+        }
+      });
+    } else if (style) {
+      document.body.style.cursor = style;
+    }
+  } catch (e) {
+    // fail silently
+  }
+})();
 </script>
 
 </body>
