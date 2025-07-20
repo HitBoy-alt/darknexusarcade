@@ -101,6 +101,20 @@
   </main>
 
   <footer>
+     <script>
+      (function() {
+        try {
+          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+          if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
+            document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
+          } else if (settings.cursorStyle) {
+            document.body.style.cursor = settings.cursorStyle;
+          }
+        } catch(e) {
+          // silently fail if error
+        }
+      })();
+    </script>
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
 </body>
