@@ -37,10 +37,6 @@
       border-radius: 4px;
     }
 
-    input[type="text"] {
-      display: none;
-    }
-
     button {
       cursor: pointer;
     }
@@ -80,6 +76,30 @@
       color: #eee;
       border-radius: 4px;
     }
+
+    /* Preview container for custom cursor */
+    .preview-container {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #222;
+      border-radius: 8px;
+      text-align: center;
+      color: #eee;
+    }
+
+    .preview-container img {
+      max-width: 150px;
+      max-height: 150px;
+      image-rendering: pixelated;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .preview-info {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
@@ -104,19 +124,6 @@
 <main>
   <div class="settings-container">
 
-    <!-- Tab Cloaking -->
-    <div class="setting-option">
-      <h3>Tab Cloaking</h3>
-      <select id="cloak-option">
-        <option value="none">Disabled</option>
-        <option value="google">Google Docs</option>
-        <option value="wikipedia">Wikipedia</option>
-        <option value="custom">Custom</option>
-      </select>
-      <input type="text" id="custom-cloak-title" placeholder="Custom title" />
-      <button onclick="applyCloak()">Apply</button>
-    </div>
-
     <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
@@ -133,8 +140,16 @@
         </select>
         <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
       </div>
-      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" />
-      <button onclick="applyCursor()">Apply Cursor</button>
+
+      <!-- Custom cursor URL input & preview -->
+      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" style="display:none;" />
+      <button id="apply-cursor-btn" style="display:none; margin-top:0.5rem;">Apply Cursor</button>
+
+      <div class="preview-container" id="preview-container" style="display:none;">
+        <div>Preview:</div>
+        <img id="cursor-preview" src="" alt="Cursor preview" />
+        <div class="preview-info" id="preview-info"></div>
+      </div>
     </div>
 
     <!-- Reset -->
@@ -155,162 +170,166 @@
     alert(message); // Replace with a better toast system if desired
   }
 
-  function doApplyCloak(mode, customTitle = '') {
-    let title = '';
-    let icon = '';
-
-    switch (mode) {
-      case 'google':
-        title = 'Google Docs';
-        icon = 'https://docs.google.com/favicon.ico';
-        break;
-      case 'wikipedia':
-        title = 'Wikipedia';
-        icon = 'https://en.wikipedia.org/static/favicon/wikipedia.ico';
-        break;
-      case 'custom':
-        title = customTitle.trim() || 'Untitled';
-        icon = 'https://google.com/favicon.ico';
-        break;
-      default:
-        title = 'Dark Nexus Arcade';
-        icon = '../assets/icons/favicon.ico';
-    }
-
-    document.title = title;
-    document.querySelectorAll("link[rel*='icon']").forEach(el => el.remove());
-
-    const link = document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = icon;
-    document.head.appendChild(link);
-
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    settings.tabCloak = mode;
-    if (mode === 'custom') {
-      settings.customCloak = customTitle;
-    } else {
-      delete settings.customCloak;
-    }
-    localStorage.setItem('dna_settings', JSON.stringify(settings));
-
-    showToast(`Tab cloaked as "${title}"`, 'success');
+  function resetCursor() {
+    document.body.style.cursor = 'default';
   }
 
-  function applyCloak() {
-    const mode = document.getElementById('cloak-option').value;
-    const customTitle = document.getElementById('custom-cloak-title').value;
-    doApplyCloak(mode, customTitle);
+  function isValidUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;  
+    }
   }
 
-  function applyCursor() {
-    const select = document.getElementById('cursor-style');
-    const customInput = document.getElementById('custom-cursor-url');
-    const selected = select.value;
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+  function applyCursorFromUrl(url) {
+    if (!url || !isValidUrl(url)) {
+      showToast('Please enter a valid URL.', 'error');
+      resetCursor();
+      hidePreview();
+      return;
+    }
 
-    if (selected === 'custom-url') {
-      const url = customInput.value.trim();
-      if (!url) {
-        showToast('Please enter a valid cursor URL.', 'error');
-        return;
+    // Show preview
+    previewImage.src = url;
+    previewContainer.style.display = 'block';
+    previewInfo.textContent = 'Loading preview...';
+
+    previewImage.onload = () => {
+      try {
+        document.body.style.cursor = `url("${url}"), auto`;
+        previewInfo.textContent = 'Cursor applied successfully!';
+      } catch(e) {
+        previewInfo.textContent = 'Failed to apply cursor. Using default cursor.';
+        resetCursor();
       }
-      // Add hotspot coordinates "4 4" for better cursor positioning
-      document.body.style.cursor = `url("${url}") 4 4, auto`;
-      settings.cursorStyle = 'custom-url';
-      settings.customCursorURL = url;
-    } else {
-      document.body.style.cursor = selected;
-      settings.cursorStyle = selected;
-      delete settings.customCursorURL;
-    }
+    };
 
-    localStorage.setItem('dna_settings', JSON.stringify(settings));
-    showToast(`Cursor applied: ${selected}`, 'success');
+    previewImage.onerror = () => {
+      previewInfo.textContent = 'Failed to load image preview. Check URL or CORS policy.';
+      resetCursor();
+    };
+  }
+
+  function hidePreview() {
+    previewContainer.style.display = 'none';
+    previewImage.src = '';
+    previewInfo.textContent = '';
   }
 
   function resetSettings() {
     localStorage.removeItem('dna_settings');
 
-    // Reset tab cloak
-    document.getElementById('cloak-option').value = 'none';
-    const customInput = document.getElementById('custom-cloak-title');
-    customInput.value = '';
-    customInput.style.display = 'none';
-    doApplyCloak('none');
-
     // Reset cursor
     document.getElementById('cursor-style').value = 'default';
-    const customCursorInput = document.getElementById('custom-cursor-url');
-    customCursorInput.value = '';
-    customCursorInput.style.display = 'none';
-    document.body.style.cursor = 'default';
+    document.getElementById('custom-cursor-url').value = '';
+    document.getElementById('custom-cursor-url').style.display = 'none';
+    document.getElementById('apply-cursor-btn').style.display = 'none';
+    hidePreview();
+    resetCursor();
 
     showToast('Settings reset to default.', 'success');
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const cloakSelect = document.getElementById('cloak-option');
-    const customTitleInput = document.getElementById('custom-cloak-title');
-    const cursorSelect = document.getElementById('cursor-style');
-    const customCursorInput = document.getElementById('custom-cursor-url');
+  // Elements references
+  const cursorSelect = document.getElementById('cursor-style');
+  const customCursorInput = document.getElementById('custom-cursor-url');
+  const applyCursorBtn = document.getElementById('apply-cursor-btn');
+  const previewContainer = document.getElementById('preview-container');
+  const previewImage = document.getElementById('cursor-preview');
+  const previewInfo = document.getElementById('preview-info');
 
-    // Toggle custom title field
-    cloakSelect.addEventListener('change', () => {
-      customTitleInput.style.display = cloakSelect.value === 'custom' ? 'block' : 'none';
-    });
-
-    // Toggle custom cursor input
-    cursorSelect.addEventListener('change', () => {
-      customCursorInput.style.display = cursorSelect.value === 'custom-url' ? 'block' : 'none';
-    });
-
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-
-    // Load saved tab cloak
-    if (settings.tabCloak) {
-      cloakSelect.value = settings.tabCloak;
-      if (settings.tabCloak === 'custom' && settings.customCloak) {
-        customTitleInput.value = settings.customCloak;
-        customTitleInput.style.display = 'block';
+  // Show/hide custom URL input and button on select change
+  cursorSelect.addEventListener('change', () => {
+    if (cursorSelect.value === 'custom-url') {
+      customCursorInput.style.display = 'block';
+      applyCursorBtn.style.display = 'block';
+      if (customCursorInput.value.trim()) {
+        previewContainer.style.display = 'block';
+        previewImage.src = customCursorInput.value.trim();
+        previewInfo.textContent = 'Preview loaded. Click "Apply Cursor" to activate.';
+      } else {
+        hidePreview();
       }
-      doApplyCloak(settings.tabCloak, settings.customCloak || '');
     } else {
-      customTitleInput.style.display = 'none';
+      customCursorInput.style.display = 'none';
+      applyCursorBtn.style.display = 'none';
+      hidePreview();
+      // Apply standard cursor immediately
+      document.body.style.cursor = cursorSelect.value;
+      saveSettings(cursorSelect.value);
     }
+  });
 
-    // Load saved cursor
+  // Apply cursor on button click
+  applyCursorBtn.addEventListener('click', () => {
+    const url = customCursorInput.value.trim();
+    if (!url) {
+      showToast('Please enter a cursor URL.', 'error');
+      return;
+    }
+    applyCursorFromUrl(url);
+    saveSettings('custom-url', url);
+  });
+
+  // Optional: live preview as user types
+  customCursorInput.addEventListener('input', () => {
+    const url = customCursorInput.value.trim();
+    if (isValidUrl(url)) {
+      previewImage.src = url;
+      previewContainer.style.display = 'block';
+      previewInfo.textContent = 'Preview loaded. Click "Apply Cursor" to activate.';
+    } else {
+      hidePreview();
+    }
+  });
+
+  function saveSettings(cursorStyle, customCursorURL = null) {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    settings.cursorStyle = cursorStyle;
+    if (cursorStyle === 'custom-url' && customCursorURL) {
+      settings.customCursorURL = customCursorURL;
+    } else {
+      delete settings.customCursorURL;
+    }
+    localStorage.setItem('dna_settings', JSON.stringify(settings));
+  }
+
+  function loadSettings() {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     if (settings.cursorStyle) {
       cursorSelect.value = settings.cursorStyle;
       if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
-        customCursorInput.style.display = 'block';
         customCursorInput.value = settings.customCursorURL;
-        document.body.style.cursor = `url("${settings.customCursorURL}") 4 4, auto`;
+        customCursorInput.style.display = 'block';
+        applyCursorBtn.style.display = 'block';
+        previewContainer.style.display = 'block';
+        previewImage.src = settings.customCursorURL;
+        previewInfo.textContent = 'Preview loaded. Click "Apply Cursor" to activate.';
+        document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
       } else {
         customCursorInput.style.display = 'none';
+        applyCursorBtn.style.display = 'none';
+        previewContainer.style.display = 'none';
         document.body.style.cursor = settings.cursorStyle;
       }
     } else {
-      document.body.style.cursor = 'default';
+      // Default cursor
+      cursorSelect.value = 'default';
       customCursorInput.style.display = 'none';
+      applyCursorBtn.style.display = 'none';
+      previewContainer.style.display = 'none';
+      document.body.style.cursor = 'default';
     }
-  });
-</script>
+  }
 
-<!-- Persistent cursor on page load -->
-<script>
-  (function() {
-    try {
-      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-      if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
-        document.body.style.cursor = `url("${settings.customCursorURL}") 4 4, auto`;
-      } else if (settings.cursorStyle) {
-        document.body.style.cursor = settings.cursorStyle;
-      }
-    } catch(e) {}
-  })();
+  // On page load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSettings();
+  });
 </script>
 
 </body>
 </html>
+
