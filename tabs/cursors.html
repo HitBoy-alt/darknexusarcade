@@ -147,11 +147,11 @@
       // Hide real cursor
       document.body.style.cursor = 'none';
 
-      // Remove existing if present
-      const oldCursor = document.getElementById('dna-custom-cursor');
-      if (oldCursor) oldCursor.remove();
+      // Remove any existing custom cursor first
+      const existing = document.getElementById('dna-custom-cursor');
+      if (existing) existing.remove();
 
-      // Create the custom cursor image
+      // Add custom image cursor
       const cursorImg = document.createElement('img');
       cursorImg.src = customURL;
       cursorImg.id = 'dna-custom-cursor';
@@ -160,10 +160,8 @@
       cursorImg.style.zIndex = '9999';
       cursorImg.style.width = '32px';
       cursorImg.style.height = '32px';
-
       document.body.appendChild(cursorImg);
 
-      // Update position on mouse move
       document.addEventListener('mousemove', function (e) {
         const img = document.getElementById('dna-custom-cursor');
         if (img) {
@@ -175,9 +173,10 @@
       document.body.style.cursor = style;
     }
   } catch (e) {
-    // Silent fail
+    // fail silently
   }
 })();
+
 </script>
 
     </script>
