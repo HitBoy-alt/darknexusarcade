@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Settings | Dark Nexus Arcade</title>
+  <link rel="stylesheet" href="../styles/dark-theme.css" />
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -38,6 +41,42 @@
       cursor: pointer;
     }
 
+    nav {
+      background-color: #111;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #00ffcc;
+    }
+
+    .cursor-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .cursor-controls select,
+    .cursor-controls button {
+      flex: 1;
+      padding: 0.5rem;
+      background: #222;
+      border: 1px solid #555;
+      color: #eee;
+      border-radius: 4px;
+    }
+
     #custom-cursor-url {
       display: none;
     }
@@ -47,6 +86,19 @@
 
 <header>
   <h1>Dark Nexus Arcade - Settings</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../tabs/games.html">Games</a>
+    <a href="../tabs/apps.html">Apps</a>
+    <a href="../tabs/proxies.html">Proxies</a>
+    <a href="../tabs/oss.html">OS's</a>
+    <a href="../tabs/credits.html">Credits</a>
+    <a href="../tabs/partners.html">Partners</a>
+    <a href="../tabs/discord.html">Discord</a>
+    <a href="../tabs/settings.html">Settings</a>
+    <a href="../tabs/suggestions.html">Suggestions</a>
+    <a href="../tabs/bookmarklets.html">Bookmarklets</a>
+  </nav>
 </header>
 
 <main>
@@ -55,16 +107,19 @@
     <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
-      <select id="cursor-style">
-        <option value="default">Default</option>
-        <option value="pointer">Pointer</option>
-        <option value="crosshair">Crosshair</option>
-        <option value="move">Move</option>
-        <option value="text">Text</option>
-        <option value="wait">Wait</option>
-        <option value="not-allowed">Not Allowed</option>
-        <option value="custom-url">Custom URL</option>
-      </select>
+      <div class="cursor-controls">
+        <select id="cursor-style">
+          <option value="default" style="cursor: default;">Default</option>
+          <option value="pointer" style="cursor: pointer;">Pointer</option>
+          <option value="crosshair" style="cursor: crosshair;">Crosshair</option>
+          <option value="move" style="cursor: move;">Move</option>
+          <option value="text" style="cursor: text;">Text</option>
+          <option value="wait" style="cursor: wait;">Wait</option>
+          <option value="not-allowed" style="cursor: not-allowed;">Not Allowed</option>
+          <option value="custom-url">Custom URL</option>
+        </select>
+        <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
+      </div>
       <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" />
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
@@ -83,13 +138,12 @@
 </footer>
 
 <script>
-  // Show or hide the custom cursor URL input
+  // Show or hide custom URL input based on selection
   document.getElementById('cursor-style').addEventListener('change', function() {
-    const customInput = document.getElementById('custom-cursor-url');
     if (this.value === 'custom-url') {
-      customInput.style.display = 'block';
+      document.getElementById('custom-cursor-url').style.display = 'block';
     } else {
-      customInput.style.display = 'none';
+      document.getElementById('custom-cursor-url').style.display = 'none';
     }
   });
 
@@ -105,11 +159,7 @@
         alert('Please enter a valid cursor URL.');
         return;
       }
-
-      // Use hotspot at 0 0 (top-left). You can change to 16 16 if your cursor is 32x32.
-      const cursorCss = `url("${url}") 0 0, auto`;
-      document.body.style.cursor = cursorCss;
-
+      document.body.style.cursor = `url("${url}"), auto`;
       settings.cursorStyle = 'custom-url';
       settings.customCursorURL = url;
     } else {
@@ -125,9 +175,8 @@
   function resetSettings() {
     localStorage.removeItem('dna_settings');
     document.getElementById('cursor-style').value = 'default';
-    const customInput = document.getElementById('custom-cursor-url');
-    customInput.value = '';
-    customInput.style.display = 'none';
+    document.getElementById('custom-cursor-url').value = '';
+    document.getElementById('custom-cursor-url').style.display = 'none';
     document.body.style.cursor = 'default';
     alert('Settings reset to default.');
   }
@@ -143,7 +192,7 @@
       if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
         customCursorInput.style.display = 'block';
         customCursorInput.value = settings.customCursorURL;
-        document.body.style.cursor = `url("${settings.customCursorURL}") 0 0, auto`;
+        document.body.style.cursor = `url("${settings.customCursorURL}"), auto`;
       } else {
         customCursorInput.style.display = 'none';
         document.body.style.cursor = settings.cursorStyle;
