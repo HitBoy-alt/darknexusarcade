@@ -14,20 +14,16 @@
       background: #121212;
       color: #eee;
     }
-
     h1, h3 {
       margin-bottom: 0.5rem;
     }
-
     .settings-container {
-      max-width: 500px;
+      max-width: 400px;
     }
-
     .setting-option {
       margin-bottom: 2rem;
     }
-
-    select, button, input[type="text"], input[type="file"] {
+    select, button {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -35,20 +31,17 @@
       border: 1px solid #555;
       color: #eee;
       border-radius: 4px;
-      box-sizing: border-box;
     }
-
     button {
       cursor: pointer;
     }
-
+    /* Navigation styling */
     nav {
       background-color: #111;
       padding: 10px;
       text-align: center;
       margin-bottom: 2rem;
     }
-
     nav a {
       color: #fff;
       text-decoration: none;
@@ -57,14 +50,8 @@
       font-size: 1rem;
       transition: color 0.3s ease;
     }
-
     nav a:hover {
       color: #00ffcc;
-    }
-
-    #custom-url-container,
-    #file-upload-container {
-      display: none;
     }
   </style>
 </head>
@@ -90,10 +77,10 @@
 <main>
   <div class="settings-container">
 
-    <!-- Cursor Style Dropdown -->
+    <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
-      <select id="cursor-style" onchange="onCursorSelectChange()">
+      <select id="cursor-style" aria-label="Cursor Style">
         <option value="default">Default</option>
         <option value="pointer">Pointer</option>
         <option value="crosshair">Crosshair</option>
@@ -101,42 +88,8 @@
         <option value="text">Text</option>
         <option value="wait">Wait</option>
         <option value="not-allowed">Not Allowed</option>
-        <option value="custom-url">Custom URL</option>
-        <option value="custom-file">Upload Cursor File</option>
       </select>
-    </div>
-
-    <!-- Custom URL input for data images -->
-    <div class="setting-option" id="custom-url-container">
-      <h3>Enter Custom Cursor Data URL</h3>
-      <input
-        type="text"
-        id="custom-cursor-url"
-        placeholder="Paste data:image/png;base64,..."
-        autocomplete="off"
-      />
-      <button onclick="applyCustomUrlCursor()">Apply Custom URL Cursor</button>
-    </div>
-
-    <!-- File upload input -->
-    <div class="setting-option" id="file-upload-container">
-      <h3>Upload Cursor File (.cur, .gif, .png)</h3>
-      <input
-        type="file"
-        id="cursor-file-input"
-        accept=".cur,.gif,.png,image/gif,image/png"
-      />
-      <button onclick="applyCustomFileCursor()">Apply Uploaded Cursor</button>
-    </div>
-
-    <!-- Apply Cursor Button -->
-    <div class="setting-option">
       <button onclick="applyCursor()">Apply Cursor</button>
-    </div>
-
-    <!-- Show Cursors Button -->
-    <div class="setting-option">
-      <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
     </div>
 
     <!-- Reset -->
@@ -144,7 +97,6 @@
       <h3>Reset Settings</h3>
       <button onclick="resetSettings()">Reset to Default</button>
     </div>
-
   </div>
 </main>
 
@@ -153,166 +105,46 @@
 </footer>
 
 <script>
-  function onCursorSelectChange() {
-    const select = document.getElementById('cursor-style');
-    const customContainer = document.getElementById('custom-url-container');
-    const fileUploadContainer = document.getElementById('file-upload-container');
-
-    if (select.value === 'custom-url') {
-      customContainer.style.display = 'block';
-      fileUploadContainer.style.display = 'none';
-    } else if (select.value === 'custom-file') {
-      customContainer.style.display = 'none';
-      fileUploadContainer.style.display = 'block';
-    } else {
-      customContainer.style.display = 'none';
-      fileUploadContainer.style.display = 'none';
-    }
+  function showToast(message, type = 'info') {
+    alert(message); // Replace with a custom UI toast if you want
   }
 
   function applyCursor() {
-    const select = document.getElementById('cursor-style');
-    const selected = select.value;
+    const cursorSelect = document.getElementById('cursor-style');
+    const selected = cursorSelect.value;
 
-    if (selected === 'custom-url') {
-      alert('Please enter a valid data URL and click "Apply Custom URL Cursor"');
-      return;
-    }
-    if (selected === 'custom-file') {
-      alert('Please upload a file and click "Apply Uploaded Cursor"');
-      return;
-    }
+    document.body.style.cursor = selected;
 
-    // Apply named cursor or default
-    document.documentElement.style.cursor = selected === 'default' ? '' : selected;
-    localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'named', value: selected }));
-    alert(`Cursor applied: ${selected}`);
-  }
+    // Save settings
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    settings.cursorStyle = selected;
+    localStorage.setItem('dna_settings', JSON.stringify(settings));
 
-  function applyCustomUrlCursor() {
-    const urlInput = document.getElementById('custom-cursor-url');
-    const url = urlInput.value.trim();
-
-    if (!url.startsWith('data:image/')) {
-      alert('Please enter a valid data image URL starting with "data:image/".');
-      return;
-    }
-
-    // Apply the custom data URL cursor with fallback
-    document.documentElement.style.cursor = `url('${url}'), auto`;
-    localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'custom', dataUrl: url }));
-
-    // Set dropdown back to default so it doesn’t conflict visually
-    const select = document.getElementById('cursor-style');
-    select.value = 'default';
-    document.getElementById('custom-url-container').style.display = 'none';
-    urlInput.value = '';
-
-    alert('Custom data URL cursor applied!');
-  }
-
-  function applyCustomFileCursor() {
-    const fileInput = document.getElementById('cursor-file-input');
-    const file = fileInput.files[0];
-
-    if (!file) {
-      alert('Please select a cursor file first.');
-      return;
-    }
-
-    const validTypes = ['image/png', 'image/gif', 'application/octet-stream']; // .cur is usually octet-stream or unknown
-    if (!validTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.cur')) {
-      alert('Unsupported file type. Please upload a .cur, .gif, or .png file.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-
-      // Apply the custom cursor with fallback
-      document.documentElement.style.cursor = `url('${dataUrl}'), auto`;
-
-      localStorage.setItem('dna_settings_cursor', JSON.stringify({ type: 'custom', dataUrl }));
-
-      // Clear input and reset UI
-      fileInput.value = '';
-      document.getElementById('file-upload-container').style.display = 'none';
-      const select = document.getElementById('cursor-style');
-      select.value = 'default';
-
-      alert('Custom file cursor applied!');
-    };
-    reader.readAsDataURL(file);
+    showToast(`Cursor set to "${selected}"`, 'success');
   }
 
   function resetSettings() {
-    localStorage.removeItem('dna_settings_cursor');
-    const select = document.getElementById('cursor-style');
-    select.value = 'default';
-    document.getElementById('custom-url-container').style.display = 'none';
-    document.getElementById('file-upload-container').style.display = 'none';
-    document.getElementById('custom-cursor-url').value = '';
-    document.getElementById('cursor-file-input').value = '';
-    document.documentElement.style.cursor = '';
-    alert('Settings reset to default.');
+    localStorage.removeItem('dna_settings');
+
+    // Reset cursor to default
+    document.body.style.cursor = 'default';
+    document.getElementById('cursor-style').value = 'default';
+
+    showToast('Settings reset to default.', 'success');
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('dna_settings_cursor');
-    const select = document.getElementById('cursor-style');
-    const customContainer = document.getElementById('custom-url-container');
-    const fileUploadContainer = document.getElementById('file-upload-container');
-    const urlInput = document.getElementById('custom-cursor-url');
+  document.addEventListener('DOMContentLoaded', () => {
+    const cursorSelect = document.getElementById('cursor-style');
 
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (parsed.type === 'custom' && parsed.dataUrl) {
-          document.documentElement.style.cursor = `url('${parsed.dataUrl}'), auto`;
-          // Try to guess if it's from custom URL or file
-          if (parsed.dataUrl.startsWith('data:image/')) {
-            select.value = 'custom-url';
-            customContainer.style.display = 'block';
-            fileUploadContainer.style.display = 'none';
-            urlInput.value = parsed.dataUrl;
-          } else {
-            // Unknown fallback, default to custom-url UI but clear input
-            select.value = 'custom-url';
-            customContainer.style.display = 'block';
-            fileUploadContainer.style.display = 'none';
-            urlInput.value = '';
-          }
-        } else if (parsed.type === 'named' && typeof parsed.value === 'string') {
-          if (parsed.value === 'default') {
-            document.documentElement.style.cursor = '';
-          } else {
-            document.documentElement.style.cursor = parsed.value;
-          }
-          select.value = parsed.value;
-          customContainer.style.display = 'none';
-          fileUploadContainer.style.display = 'none';
-          urlInput.value = '';
-        } else {
-          select.value = 'default';
-          document.documentElement.style.cursor = '';
-          customContainer.style.display = 'none';
-          fileUploadContainer.style.display = 'none';
-          urlInput.value = '';
-        }
-      } catch {
-        select.value = 'default';
-        document.documentElement.style.cursor = '';
-        customContainer.style.display = 'none';
-        fileUploadContainer.style.display = 'none';
-        urlInput.value = '';
+    // Load saved cursor setting
+    try {
+      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+      if (settings.cursorStyle) {
+        cursorSelect.value = settings.cursorStyle;
+        document.body.style.cursor = settings.cursorStyle;
       }
-    } else {
-      select.value = 'default';
-      document.documentElement.style.cursor = '';
-      customContainer.style.display = 'none';
-      fileUploadContainer.style.display = 'none';
-      urlInput.value = '';
+    } catch(e) {
+      // silently fail if error
     }
   });
 </script>
