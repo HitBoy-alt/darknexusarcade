@@ -97,10 +97,11 @@
       <input
         type="text"
         id="custom-cursor-url"
-        placeholder="Enter custom cursor image URL"
+        placeholder="Enter custom cursor image URL (e.g. assets/cursors/cursor1.cur)"
         aria-label="Custom Cursor URL"
       />
       <button onclick="applyCursor()">Apply Cursor</button>
+      <button id="show-cursors-btn" style="margin-top: 1rem;">Show Cursors</button>
     </div>
 
     <!-- Reset -->
@@ -131,10 +132,8 @@
         showToast('Please enter a custom cursor image URL.', 'error');
         return;
       }
-      // Use url() with fallback auto
       document.body.style.cursor = `url("${url}"), auto`;
 
-      // Save settings
       const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
       settings.cursorStyle = 'custom';
       settings.customCursorURL = url;
@@ -142,10 +141,8 @@
 
       showToast(`Custom cursor set to "${url}"`, 'success');
     } else {
-      // Apply standard cursor
       document.body.style.cursor = selected;
 
-      // Save settings
       const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
       settings.cursorStyle = selected;
       delete settings.customCursorURL;
@@ -158,11 +155,11 @@
   function resetSettings() {
     localStorage.removeItem('dna_settings');
 
-    // Reset cursor to default
     document.body.style.cursor = 'default';
     document.getElementById('cursor-style').value = 'default';
-    document.getElementById('custom-cursor-url').value = '';
-    document.getElementById('custom-cursor-url').style.display = 'none';
+    const customInput = document.getElementById('custom-cursor-url');
+    customInput.value = '';
+    customInput.style.display = 'none';
 
     showToast('Settings reset to default.', 'success');
   }
@@ -170,8 +167,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     const cursorSelect = document.getElementById('cursor-style');
     const customInput = document.getElementById('custom-cursor-url');
+    const showCursorsBtn = document.getElementById('show-cursors-btn');
 
-    // Show/hide custom input based on dropdown
     cursorSelect.addEventListener('change', () => {
       if (cursorSelect.value === 'custom') {
         customInput.style.display = 'block';
@@ -180,7 +177,10 @@
       }
     });
 
-    // Load saved cursor setting
+    showCursorsBtn.addEventListener('click', () => {
+      window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank');
+    });
+
     try {
       const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
       if (settings.cursorStyle) {
@@ -197,7 +197,6 @@
         customInput.style.display = 'none';
       }
     } catch(e) {
-      // silently fail if error
       customInput.style.display = 'none';
     }
   });
