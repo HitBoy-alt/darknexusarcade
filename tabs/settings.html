@@ -27,7 +27,7 @@
       margin-bottom: 2rem;
     }
 
-    select, input[type="text"], button {
+    select, button {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -60,31 +60,6 @@
     nav a:hover {
       color: #00ffcc;
     }
-
-    .cursor-controls {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .cursor-controls select,
-    .cursor-controls button {
-      flex: 1;
-      padding: 0.5rem;
-      background: #222;
-      border: 1px solid #555;
-      color: #eee;
-      border-radius: 4px;
-    }
-
-    #custom-cursor-url {
-      display: none;
-    }
-    
-    /* Ensure cursor applies everywhere */
-    html, body, * {
-      cursor: inherit !important;
-    }
   </style>
 </head>
 <body>
@@ -112,20 +87,15 @@
     <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
-      <div class="cursor-controls">
-        <select id="cursor-style">
-          <option value="default">Default</option>
-          <option value="pointer">Pointer</option>
-          <option value="crosshair">Crosshair</option>
-          <option value="move">Move</option>
-          <option value="text">Text</option>
-          <option value="wait">Wait</option>
-          <option value="not-allowed">Not Allowed</option>
-          <option value="custom-url">Custom URL</option>
-        </select>
-        <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
-      </div>
-      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" />
+      <select id="cursor-style">
+        <option value="default">Default</option>
+        <option value="pointer">Pointer</option>
+        <option value="crosshair">Crosshair</option>
+        <option value="move">Move</option>
+        <option value="text">Text</option>
+        <option value="wait">Wait</option>
+        <option value="not-allowed">Not Allowed</option>
+      </select>
       <button onclick="applyCursor()">Apply Cursor</button>
     </div>
 
@@ -143,104 +113,29 @@
 </footer>
 
 <script>
-  // Show or hide custom URL input based on selection
-  document.getElementById('cursor-style').addEventListener('change', function() {
-    document.getElementById('custom-cursor-url').style.display = this.value === 'custom-url' ? 'block' : 'none';
-  });
-
   function applyCursor() {
     const select = document.getElementById('cursor-style');
-    const customInput = document.getElementById('custom-cursor-url');
     const selected = select.value;
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    
-    function applyCursorToDocument(cursorValue) {
-      document.documentElement.style.cursor = cursorValue;
-      return cursorValue;
-    }
-
-    if (selected === 'custom-url') {
-      const url = customInput.value.trim();
-      if (!url) {
-        alert('Please enter a valid cursor URL.');
-        return;
-      }
-      
-      // Test the cursor URL first
-      const testElement = document.createElement('div');
-      testElement.style.cssText = 'position:absolute; left:-100px; width:1px; height:1px;';
-      testElement.style.cursor = `url('${url}'), auto`;
-      document.body.appendChild(testElement);
-      
-      const computedCursor = getComputedStyle(testElement).cursor;
-      document.body.removeChild(testElement);
-      
-      if (computedCursor.includes('url')) {
-        const cursorValue = applyCursorToDocument(`url('${url}'), auto`);
-        settings.cursorStyle = 'custom-url';
-        settings.customCursorURL = url;
-        localStorage.setItem('dna_settings', JSON.stringify(settings));
-        alert('Custom cursor applied successfully!');
-      } else {
-        alert('Could not load custom cursor. The server may block cross-origin requests.');
-      }
-    } else {
-      const cursorValue = applyCursorToDocument(selected);
-      settings.cursorStyle = selected;
-      delete settings.customCursorURL;
-      localStorage.setItem('dna_settings', JSON.stringify(settings));
-      alert(`Cursor applied: ${selected}`);
-    }
+    document.documentElement.style.cursor = selected;
+    localStorage.setItem('dna_settings_cursor', selected);
+    alert(`Cursor applied: ${selected}`);
   }
 
   function resetSettings() {
-    localStorage.removeItem('dna_settings');
+    localStorage.removeItem('dna_settings_cursor');
     document.getElementById('cursor-style').value = 'default';
-    document.getElementById('custom-cursor-url').value = '';
-    document.getElementById('custom-cursor-url').style.display = 'none';
     document.documentElement.style.cursor = '';
     alert('Settings reset to default.');
   }
 
-  // Load saved settings on page load
   window.addEventListener('DOMContentLoaded', () => {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const cursorSelect = document.getElementById('cursor-style');
-    const customCursorInput = document.getElementById('custom-cursor-url');
-
-    if (settings.cursorStyle) {
-      cursorSelect.value = settings.cursorStyle;
-      if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
-        customCursorInput.style.display = 'block';
-        customCursorInput.value = settings.customCursorURL;
-        
-        // Verify the saved cursor still works
-        const testElement = document.createElement('div');
-        testElement.style.cssText = 'position:absolute; left:-100px; width:1px; height:1px;';
-        testElement.style.cursor = `url('${settings.customCursorURL}'), auto`;
-        document.body.appendChild(testElement);
-        
-        const computedCursor = getComputedStyle(testElement).cursor;
-        document.body.removeChild(testElement);
-        
-        if (computedCursor.includes('url')) {
-          document.documentElement.style.cursor = `url('${settings.customCursorURL}'), auto`;
-        } else {
-          // Reset to default if saved cursor fails
-          document.documentElement.style.cursor = '';
-          cursorSelect.value = 'default';
-          customCursorInput.style.display = 'none';
-          delete settings.cursorStyle;
-          delete settings.customCursorURL;
-          localStorage.setItem('dna_settings', JSON.stringify(settings));
-        }
-      } else {
-        customCursorInput.style.display = 'none';
-        document.documentElement.style.cursor = settings.cursorStyle;
-      }
+    const savedCursor = localStorage.getItem('dna_settings_cursor');
+    const select = document.getElementById('cursor-style');
+    if (savedCursor) {
+      select.value = savedCursor;
+      document.documentElement.style.cursor = savedCursor;
     } else {
-      cursorSelect.value = 'default';
-      customCursorInput.style.display = 'none';
+      select.value = 'default';
       document.documentElement.style.cursor = '';
     }
   });
