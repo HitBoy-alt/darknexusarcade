@@ -35,6 +35,7 @@
       max-width: 1000px;
       height: 600px;
       border: none;
+      margin-bottom: 1em;
     }
     .discord-container h2 {
       color: #bf94ff;
@@ -75,77 +76,72 @@
     <div class="discord-container">
       <h2>Join Our Discord Community</h2>
 
-      <!-- Inline Discord Embed --> main server it may not show
+      <!-- Inline Discord Embed -->
       <iframe
         src="https://e.widgetbot.io/channels/1192147953230553229/1192149827073609908"
-        allow="clipboard-write; fullscreen" 
+        allow="clipboard-write; fullscreen"
       ></iframe>
-      darknexusarcade discord server may not show
+
       <iframe
         src="https://e.widgetbot.io/channels/1395812577799573676/1395812578680115334"
-        allow="clipboard-write; fullscreen" 
+        allow="clipboard-write; fullscreen"
       ></iframe>
-    
+
       <script src="cursor.js"></script>
 
-
       <p class="fallback-link">
-        Can't see the chat?
+        Can't see the chat?<br />
         <a href="https://discord.gg/rcRh3rNKt4" target="_blank" rel="noopener noreferrer">
           Click here to join our Discord directly
-          <a href="https://discord.gg/MgBCR4tthD" target="_blank" rel="noopener noreferrer">
-            Click here to join the darknexus server
+        </a><br />
+        <a href="https://discord.gg/MgBCR4tthD" target="_blank" rel="noopener noreferrer">
+          Click here to join the darknexus server
         </a>
       </p>
     </div>
   </main>
 
   <footer>
-     <script>
-     <script>
-(function () {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
-
-    if (style === 'custom' && customURL) {
-      // Hide real cursor
-      document.body.style.cursor = 'none';
-
-      // Remove any existing custom cursor first
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
-
-      // Add custom image cursor
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      document.body.appendChild(cursorImg);
-
-      document.addEventListener('mousemove', function (e) {
-        const img = document.getElementById('dna-custom-cursor');
-        if (img) {
-          img.style.left = `${e.clientX}px`;
-          img.style.top = `${e.clientY}px`;
-        }
-      });
-    } else if (style) {
-      document.body.style.cursor = style;
-    }
-  } catch (e) {
-    // fail silently
-  }
-})();
-</script>
-
-    </script>
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+
+    <script>
+      (function () {
+        try {
+          const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+          const style = settings.cursorStyle;
+          const customURL = settings.customCursorURL;
+
+          if (style === 'custom' && customURL) {
+            document.body.style.cursor = 'none';
+
+            const existing = document.getElementById('dna-custom-cursor');
+            if (existing) existing.remove();
+
+            const cursorImg = document.createElement('img');
+            cursorImg.src = customURL;
+            cursorImg.id = 'dna-custom-cursor';
+            cursorImg.style.position = 'fixed';
+            cursorImg.style.pointerEvents = 'none';
+            cursorImg.style.zIndex = '9999';
+            cursorImg.style.width = '32px';
+            cursorImg.style.height = '32px';
+            document.body.appendChild(cursorImg);
+
+            document.addEventListener('mousemove', function (e) {
+              const img = document.getElementById('dna-custom-cursor');
+              if (img) {
+                img.style.left = `${e.clientX}px`;
+                img.style.top = `${e.clientY}px`;
+              }
+            });
+          } else if (style) {
+            document.body.style.cursor = style;
+          }
+        } catch (e) {
+          // fail silently
+        }
+      })();
+    </script>
   </footer>
 </body>
 </html>
