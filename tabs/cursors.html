@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>cursors | Dark Nexus Arcade</title> 
+  <title>Cursors | Dark Nexus Arcade</title> 
   <link rel="stylesheet" href="../styles/dark-theme.css" />
   <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
@@ -14,7 +14,7 @@
       background: #121212;
       color: #eee;
     }
-    h1, h3 {
+    h1, h2, h3 {
       margin-bottom: 0.5rem;
     }
     .settings-container {
@@ -73,7 +73,7 @@
       width: 32px;
       height: 32px;
       margin-bottom: 1rem;
-      cursor: url('https://darknexusarcade.org/assets/cursors/cursor1.png'), auto;
+      display: inline-block;
     }
     .copy-btn {
       margin-top: 0.5rem;
@@ -93,7 +93,7 @@
 <body>
 
 <header>
-  <h1>Dark Nexus Arcade - Settings</h1>
+  <h1>Dark Nexus Arcade - Cursors</h1>
   <nav>
     <a href="../index.html">Home</a>
     <a href="../tabs/games.html">Games</a>
@@ -126,6 +126,7 @@
   </div>
 </section>
 
+<!-- Copy to clipboard functionality -->
 <script>
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
@@ -135,51 +136,46 @@
     });
   }
 </script>
-   <script>
-     <script>
-(function () {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
 
-    if (style === 'custom' && customURL) {
-      // Hide real cursor
-      document.body.style.cursor = 'none';
+<!-- Persistent cursor settings -->
+<script>
+  (function () {
+    try {
+      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+      const style = settings.cursorStyle;
+      const customURL = settings.customCursorURL;
 
-      // Remove any existing custom cursor first
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
+      if (style === 'custom' && customURL) {
+        document.body.style.cursor = 'none';
 
-      // Add custom image cursor
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      document.body.appendChild(cursorImg);
+        const existing = document.getElementById('dna-custom-cursor');
+        if (existing) existing.remove();
 
-      document.addEventListener('mousemove', function (e) {
-        const img = document.getElementById('dna-custom-cursor');
-        if (img) {
-          img.style.left = `${e.clientX}px`;
-          img.style.top = `${e.clientY}px`;
-        }
-      });
-    } else if (style) {
-      document.body.style.cursor = style;
+        const cursorImg = document.createElement('img');
+        cursorImg.src = customURL;
+        cursorImg.id = 'dna-custom-cursor';
+        cursorImg.style.position = 'fixed';
+        cursorImg.style.pointerEvents = 'none';
+        cursorImg.style.zIndex = '9999';
+        cursorImg.style.width = '32px';
+        cursorImg.style.height = '32px';
+        document.body.appendChild(cursorImg);
+
+        document.addEventListener('mousemove', function (e) {
+          const img = document.getElementById('dna-custom-cursor');
+          if (img) {
+            img.style.left = `${e.clientX}px`;
+            img.style.top = `${e.clientY}px`;
+          }
+        });
+      } else if (style) {
+        document.body.style.cursor = style;
+      }
+    } catch (e) {
+      // Fail silently
     }
-  } catch (e) {
-    // fail silently
-  }
-})();
-
+  })();
 </script>
-
-    </script>
 
 </body>
 </html>
