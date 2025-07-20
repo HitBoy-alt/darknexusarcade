@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Custom Cursor Test</title>
+  <title>Settings | Dark Nexus Arcade</title>
+  <link rel="stylesheet" href="../styles/dark-theme.css" />
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,35 +20,45 @@
     }
 
     .settings-container {
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 500px;
     }
 
     .setting-option {
       margin-bottom: 2rem;
-      padding: 1rem;
-      background: #222;
-      border-radius: 8px;
     }
 
     select, input[type="text"], button {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.5rem;
       margin-top: 0.5rem;
-      background: #333;
+      background: #222;
       border: 1px solid #555;
       color: #eee;
       border-radius: 4px;
-      font-size: 1rem;
     }
 
     button {
       cursor: pointer;
-      transition: background 0.2s;
     }
 
-    button:hover {
-      background: #444;
+    nav {
+      background-color: #111;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #00ffcc;
     }
 
     .cursor-controls {
@@ -57,59 +70,46 @@
     .cursor-controls select,
     .cursor-controls button {
       flex: 1;
+      padding: 0.5rem;
+      background: #222;
+      border: 1px solid #555;
+      color: #eee;
+      border-radius: 4px;
     }
 
     #custom-cursor-url {
       display: none;
-      margin-top: 0.5rem;
     }
-
-    .cursor-preview {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #333;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    /* Apply cursor to all elements */
+    
+    /* Ensure cursor applies everywhere */
     html, body, * {
       cursor: inherit !important;
-    }
-
-    /* Status messages */
-    .status {
-      margin-top: 1rem;
-      padding: 0.5rem;
-      border-radius: 4px;
-      display: none;
-    }
-
-    .success {
-      background: #2d572c;
-      display: block;
-    }
-
-    .error {
-      background: #572d2c;
-      display: block;
-    }
-
-    .test-area {
-      margin-top: 2rem;
-      padding: 2rem;
-      background: #252525;
-      border: 1px dashed #555;
-      text-align: center;
     }
   </style>
 </head>
 <body>
 
+<header>
+  <h1>Dark Nexus Arcade - Settings</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../tabs/games.html">Games</a>
+    <a href="../tabs/apps.html">Apps</a>
+    <a href="../tabs/proxies.html">Proxies</a>
+    <a href="../tabs/oss.html">OS's</a>
+    <a href="../tabs/credits.html">Credits</a>
+    <a href="../tabs/partners.html">Partners</a>
+    <a href="../tabs/discord.html">Discord</a>
+    <a href="../tabs/settings.html">Settings</a>
+    <a href="../tabs/suggestions.html">Suggestions</a>
+    <a href="../tabs/bookmarklets.html">Bookmarklets</a>
+  </nav>
+</header>
+
 <main>
   <div class="settings-container">
-    <h1>Custom Cursor Tester</h1>
-    
+
+    <!-- Cursor Style -->
     <div class="setting-option">
       <h3>Cursor Style</h3>
       <div class="cursor-controls">
@@ -123,182 +123,91 @@
           <option value="not-allowed">Not Allowed</option>
           <option value="custom-url">Custom URL</option>
         </select>
+        <button onclick="window.open('https://darknexusarcade.org/tabs/cursors.html', '_blank')">Show Cursors</button>
       </div>
-      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" value="https://files.catbox.moe/ytpwh4.cur" />
+      <input type="text" id="custom-cursor-url" placeholder="Enter cursor URL (.cur, .png, or .gif)" />
       <button onclick="applyCursor()">Apply Cursor</button>
-      <button onclick="testCursorUrls()">Test Example URLs</button>
-      
-      <div id="status-message" class="status"></div>
-      
-      <div class="cursor-preview">
-        <p>Hover over this area to test your cursor</p>
-      </div>
     </div>
 
-    <div class="test-area">
-      <h3>Cursor Test Area</h3>
-      <p>Hover over these elements to test your cursor:</p>
-      <button>Test Button</button>
-      <a href="#" style="color: #00ffcc;">Test Link</a>
-      <input type="text" placeholder="Test Input">
+    <!-- Reset -->
+    <div class="setting-option">
+      <h3>Reset Settings</h3>
+      <button onclick="resetSettings()">Reset to Default</button>
     </div>
+
   </div>
 </main>
 
+<footer>
+  <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+</footer>
+
 <script>
-  // Show/hide custom URL input
+  // Show or hide custom URL input based on selection
   document.getElementById('cursor-style').addEventListener('change', function() {
-    const customInput = document.getElementById('custom-cursor-url');
-    customInput.style.display = this.value === 'custom-url' ? 'block' : 'none';
+    document.getElementById('custom-cursor-url').style.display = this.value === 'custom-url' ? 'block' : 'none';
   });
 
-  // Test example cursor URLs
-  function testCursorUrls() {
-    const urls = [
-      'https://files.catbox.moe/ytpwh4.cur',
-      'https://files.catbox.moe/ytpwh4.png',
-      'https://files.catbox.moe/ytpwh4.gif'
-    ];
-    
+  function applyCursor() {
     const select = document.getElementById('cursor-style');
     const customInput = document.getElementById('custom-cursor-url');
+    const selected = select.value;
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     
-    select.value = 'custom-url';
-    customInput.style.display = 'block';
-    
-    let currentIndex = 0;
-    
-    function testNextUrl() {
-      if (currentIndex >= urls.length) {
-        showStatus('Cursor URL testing complete', 'success');
+    function applyCursorToDocument(cursorValue) {
+      document.documentElement.style.cursor = cursorValue;
+      return cursorValue;
+    }
+
+    if (selected === 'custom-url') {
+      const url = customInput.value.trim();
+      if (!url) {
+        alert('Please enter a valid cursor URL.');
         return;
       }
       
-      const url = urls[currentIndex];
-      customInput.value = url;
-      showStatus(`Testing cursor: ${url}`, 'success');
+      // Test the cursor URL first
+      const testElement = document.createElement('div');
+      testElement.style.cssText = 'position:absolute; left:-100px; width:1px; height:1px;';
+      testElement.style.cursor = `url('${url}'), auto`;
+      document.body.appendChild(testElement);
       
-      applyCursor(true).then(() => {
-        currentIndex++;
-        setTimeout(testNextUrl, 2000);
-      }).catch(() => {
-        currentIndex++;
-        setTimeout(testNextUrl, 2000);
-      });
-    }
-    
-    testNextUrl();
-  }
-
-  // Improved cursor application with Promise
-  function applyCursor(silent = false) {
-    return new Promise((resolve, reject) => {
-      const select = document.getElementById('cursor-style');
-      const customInput = document.getElementById('custom-cursor-url');
-      const selected = select.value;
-      const statusEl = document.getElementById('status-message');
+      const computedCursor = getComputedStyle(testElement).cursor;
+      document.body.removeChild(testElement);
       
-      let url = '';
-      
-      if (selected === 'custom-url') {
-        url = customInput.value.trim();
-        
-        // Fix common URL issues
-        if (url.startsWith('https:/') && !url.startsWith('https://')) {
-          url = url.replace('https:/', 'https://');
-        }
-        if (url.startsWith('http:/') && !url.startsWith('http://')) {
-          url = url.replace('http:/', 'http://');
-        }
-        
-        if (!url) {
-          showStatus('Please enter a valid cursor URL', 'error');
-          if (!silent) alert('Please enter a valid cursor URL.');
-          return reject();
-        }
-        
-        // Verify the URL has a valid extension
-        const validExtensions = ['.cur', '.png', '.gif', '.svg', '.jpg', '.jpeg'];
-        const hasValidExtension = validExtensions.some(ext => url.toLowerCase().endsWith(ext));
-        
-        if (!hasValidExtension) {
-          showStatus('URL must end with .cur, .png, or .gif', 'error');
-          if (!silent) alert('Cursor URL must end with .cur, .png, or .gif');
-          return reject();
-        }
-      }
-      
-      function applyCursorStyle(cursorValue) {
-        document.body.style.cursor = cursorValue;
-        if (!silent) {
-          showStatus(`Cursor applied: ${selected}${url ? ` (${url})` : ''}`, 'success');
-          alert(`Cursor applied successfully!`);
-        }
-        resolve();
-      }
-      
-      if (selected === 'custom-url') {
-        // First test if the image loads
-        const testImage = new Image();
-        testImage.onload = function() {
-          // Then test if the cursor can be applied
-          const testElement = document.createElement('div');
-          testElement.style.cssText = 'position:absolute; left:-100px; top:-100px; width:10px; height:10px;';
-          testElement.style.cursor = `url('${url}'), auto`;
-          document.body.appendChild(testElement);
-          
-          const computedCursor = getComputedStyle(testElement).cursor;
-          document.body.removeChild(testElement);
-          
-          if (computedCursor.includes('url')) {
-            applyCursorStyle(`url('${url}'), auto`);
-            
-            // Save to localStorage
-            const settings = JSON.parse(localStorage.getItem('cursor_settings')) || {};
-            settings.cursorStyle = 'custom-url';
-            settings.customCursorURL = url;
-            localStorage.setItem('cursor_settings', JSON.stringify(settings));
-          } else {
-            showStatus('Server blocked cursor due to CORS policy', 'error');
-            if (!silent) alert('The server may be blocking cursor usage due to CORS policy. Try hosting the file on your own domain.');
-            reject();
-          }
-        };
-        
-        testImage.onerror = function() {
-          showStatus('Failed to load cursor image', 'error');
-          if (!silent) alert('Failed to load the cursor image. Please check:\n1. The URL is correct\n2. The file exists\n3. The server allows access');
-          reject();
-        };
-        
-        testImage.src = url;
+      if (computedCursor.includes('url')) {
+        const cursorValue = applyCursorToDocument(`url('${url}'), auto`);
+        settings.cursorStyle = 'custom-url';
+        settings.customCursorURL = url;
+        localStorage.setItem('dna_settings', JSON.stringify(settings));
+        alert('Custom cursor applied successfully!');
       } else {
-        applyCursorStyle(selected);
-        
-        // Save to localStorage
-        const settings = JSON.parse(localStorage.getItem('cursor_settings')) || {};
-        settings.cursorStyle = selected;
-        delete settings.customCursorURL;
-        localStorage.setItem('cursor_settings', JSON.stringify(settings));
+        alert('Could not load custom cursor. The server may block cross-origin requests.');
       }
-    });
+    } else {
+      const cursorValue = applyCursorToDocument(selected);
+      settings.cursorStyle = selected;
+      delete settings.customCursorURL;
+      localStorage.setItem('dna_settings', JSON.stringify(settings));
+      alert(`Cursor applied: ${selected}`);
+    }
   }
 
-  function showStatus(message, type) {
-    const statusEl = document.getElementById('status-message');
-    statusEl.textContent = message;
-    statusEl.className = 'status ' + type;
-    setTimeout(() => {
-      statusEl.className = 'status';
-    }, 5000);
+  function resetSettings() {
+    localStorage.removeItem('dna_settings');
+    document.getElementById('cursor-style').value = 'default';
+    document.getElementById('custom-cursor-url').value = '';
+    document.getElementById('custom-cursor-url').style.display = 'none';
+    document.documentElement.style.cursor = '';
+    alert('Settings reset to default.');
   }
 
-  // Load saved cursor on page load
+  // Load saved settings on page load
   window.addEventListener('DOMContentLoaded', () => {
-    const settings = JSON.parse(localStorage.getItem('cursor_settings')) || {};
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
     const cursorSelect = document.getElementById('cursor-style');
     const customCursorInput = document.getElementById('custom-cursor-url');
-    
+
     if (settings.cursorStyle) {
       cursorSelect.value = settings.cursorStyle;
       if (settings.cursorStyle === 'custom-url' && settings.customCursorURL) {
@@ -306,24 +215,33 @@
         customCursorInput.value = settings.customCursorURL;
         
         // Verify the saved cursor still works
-        const testImage = new Image();
-        testImage.onload = function() {
-          document.body.style.cursor = `url('${settings.customCursorURL}'), auto`;
-        };
-        testImage.onerror = function() {
+        const testElement = document.createElement('div');
+        testElement.style.cssText = 'position:absolute; left:-100px; width:1px; height:1px;';
+        testElement.style.cursor = `url('${settings.customCursorURL}'), auto`;
+        document.body.appendChild(testElement);
+        
+        const computedCursor = getComputedStyle(testElement).cursor;
+        document.body.removeChild(testElement);
+        
+        if (computedCursor.includes('url')) {
+          document.documentElement.style.cursor = `url('${settings.customCursorURL}'), auto`;
+        } else {
           // Reset to default if saved cursor fails
-          document.body.style.cursor = 'default';
+          document.documentElement.style.cursor = '';
           cursorSelect.value = 'default';
           customCursorInput.style.display = 'none';
           delete settings.cursorStyle;
           delete settings.customCursorURL;
-          localStorage.setItem('cursor_settings', JSON.stringify(settings));
-        };
-        testImage.src = settings.customCursorURL;
+          localStorage.setItem('dna_settings', JSON.stringify(settings));
+        }
       } else {
         customCursorInput.style.display = 'none';
-        document.body.style.cursor = settings.cursorStyle;
+        document.documentElement.style.cursor = settings.cursorStyle;
       }
+    } else {
+      cursorSelect.value = 'default';
+      customCursorInput.style.display = 'none';
+      document.documentElement.style.cursor = '';
     }
   });
 </script>
