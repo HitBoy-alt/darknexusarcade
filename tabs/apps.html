@@ -190,27 +190,27 @@
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
     </footer>
     
-    <script src="cursor.js"></script>
+ 
+    <script>
+         <script src="cursor.js"></script>
     <script src="../scripts/embed.js"></script>
     <script>
-       <script>
-   <script>
     (function () {
         try {
             const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
             const style = settings.cursorStyle;
             const customURL = settings.customCursorURL;
 
-            // Updated validator to allow relative URLs too
             function isValidCursorURL(url) {
                 return typeof url === 'string' && url.trim() !== '';
             }
 
+            // Remove existing custom cursor if any
+            const oldCursor = document.getElementById('dna-custom-cursor');
+            if (oldCursor) oldCursor.remove();
+
             if (style === 'custom' && isValidCursorURL(customURL)) {
                 document.body.style.cursor = 'none';
-
-                const existing = document.getElementById('dna-custom-cursor');
-                if (existing) existing.remove();
 
                 const cursorImg = document.createElement('img');
                 cursorImg.src = customURL;
@@ -223,23 +223,17 @@
                 document.body.appendChild(cursorImg);
 
                 document.addEventListener('mousemove', function (e) {
-                    const img = document.getElementById('dna-custom-cursor');
-                    if (img) {
-                        img.style.left = `${e.clientX}px`;
-                        img.style.top = `${e.clientY}px`;
-                    }
+                    cursorImg.style.left = `${e.clientX}px`;
+                    cursorImg.style.top = `${e.clientY}px`;
                 });
-            } else if (style) {
-                document.body.style.cursor = style;
+            } else {
+                // Show default cursor
+                document.body.style.cursor = style || 'auto';
             }
         } catch (e) {
             console.error("Cursor setup error:", e);
         }
-    })();
-</script>
-
-</script>
-
+    })()
     </script>
 </body>
 </html>
