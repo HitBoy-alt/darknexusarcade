@@ -5,17 +5,12 @@
             const style = settings.cursorStyle;
             const customURL = settings.customCursorURL;
 
-            function isValidURL(url) {
-                try {
-                    new URL(url);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
+            // Updated validator to allow relative URLs too
+            function isValidCursorURL(url) {
+                return typeof url === 'string' && url.trim() !== '';
             }
 
-            if (style === 'custom' && isValidURL(customURL)) {
-                // Hide default cursor
+            if (style === 'custom' && isValidCursorURL(customURL)) {
                 document.body.style.cursor = 'none';
 
                 const existing = document.getElementById('dna-custom-cursor');
@@ -39,11 +34,9 @@
                     }
                 });
             } else if (style) {
-                // Set default cursor style
                 document.body.style.cursor = style;
             }
         } catch (e) {
-            // Fail silently
             console.error("Cursor setup error:", e);
         }
     })();
