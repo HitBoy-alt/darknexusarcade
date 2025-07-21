@@ -97,32 +97,25 @@
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
 
-  <script src="cursor.js"></script>
-
-  <!-- Cursor Persist Logic -->
-  <script>
-   <script>
+    <script src="cursor.js"></script>
+    <script src="../scripts/embed.js"></script>
+    <script>
     (function () {
         try {
             const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
             const style = settings.cursorStyle;
             const customURL = settings.customCursorURL;
 
-            function isValidURL(url) {
-                try {
-                    new URL(url);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
+            function isValidCursorURL(url) {
+                return typeof url === 'string' && url.trim() !== '';
             }
 
-            if (style === 'custom' && isValidURL(customURL)) {
-                // Hide default cursor
-                document.body.style.cursor = 'none';
+            // Remove existing custom cursor if any
+            const oldCursor = document.getElementById('dna-custom-cursor');
+            if (oldCursor) oldCursor.remove();
 
-                const existing = document.getElementById('dna-custom-cursor');
-                if (existing) existing.remove();
+            if (style === 'custom' && isValidCursorURL(customURL)) {
+                document.body.style.cursor = 'none';
 
                 const cursorImg = document.createElement('img');
                 cursorImg.src = customURL;
@@ -135,23 +128,18 @@
                 document.body.appendChild(cursorImg);
 
                 document.addEventListener('mousemove', function (e) {
-                    const img = document.getElementById('dna-custom-cursor');
-                    if (img) {
-                        img.style.left = `${e.clientX}px`;
-                        img.style.top = `${e.clientY}px`;
-                    }
+                    cursorImg.style.left = `${e.clientX}px`;
+                    cursorImg.style.top = `${e.clientY}px`;
                 });
-            } else if (style) {
-                // Set default cursor style
-                document.body.style.cursor = style;
+            } else {
+                // Show default cursor
+                document.body.style.cursor = style || 'auto';
             }
         } catch (e) {
-            // Fail silently
             console.error("Cursor setup error:", e);
         }
     })();
-</script>
-
-  </script>
+    </script>
 </body>
 </html>
+
