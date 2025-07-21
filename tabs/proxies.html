@@ -9,22 +9,33 @@
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <style>
-      nav {
-          background-color: #111;
-          padding: 10px;
-          text-align: center;
-      }
-      nav a {
-          color: #fff;
-          text-decoration: none;
-          margin: 0 12px;
-          font-weight: bold;
-          font-size: 1rem;
-          transition: color 0.3s ease;
-      }
-      nav a:hover {
-          color: #00ffcc;
-      }
+        /* Custom cursor styles */
+        #dna-custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 32px;
+            height: 32px;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        nav {
+            background-color: #111;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #00ffcc;
+        }
     </style>
 </head>
 <body>
@@ -78,61 +89,75 @@
         </div>
     </main>
 
-   <footer>
-    <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-</footer>
+    <footer>
+        <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
+    </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  try {
-    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-    const style = settings.cursorStyle;
-    const customURL = settings.customCursorURL;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+                const style = settings.cursorStyle;
+                const customURL = settings.customCursorURL;
 
-    function isValidURL(url) {
-      try {
-        new URL(url);
-        return true;
-      } catch {
-        return false;
-      }
-    }
+                function isValidURL(url) {
+                    try {
+                        new URL(url);
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                }
 
-    if (style === 'custom' && isValidURL(customURL)) {
-      // Hide the default cursor
-      document.body.style.cursor = 'none';
+                // Remove existing cursor elements if they exist
+                const oldCursor = document.getElementById('dna-custom-cursor');
+                if (oldCursor) oldCursor.remove();
+                
+                const oldStyle = document.getElementById('dna-cursor-style');
+                if (oldStyle) oldStyle.remove();
 
-      // Remove any existing custom cursor
-      const existing = document.getElementById('dna-custom-cursor');
-      if (existing) existing.remove();
+                const styleTag = document.createElement('style');
+                styleTag.id = 'dna-cursor-style';
+                document.head.appendChild(styleTag);
 
-      // Create the custom cursor image
-      const cursorImg = document.createElement('img');
-      cursorImg.src = customURL;
-      cursorImg.id = 'dna-custom-cursor';
-      cursorImg.style.position = 'fixed';
-      cursorImg.style.pointerEvents = 'none';
-      cursorImg.style.zIndex = '9999';
-      cursorImg.style.width = '32px';
-      cursorImg.style.height = '32px';
-      cursorImg.style.transition = 'transform 0.1s ease-out';
-      cursorImg.style.transform = 'translate(-50%, -50%)'; // center the cursor on pointer
+                if (style === 'custom' && isValidURL(customURL)) {
+                    // Hide default cursor
+                    styleTag.textContent = 'body, body * { cursor: none !important; }';
+                    
+                    // Create custom cursor
+                    const cursorImg = document.createElement('img');
+                    cursorImg.src = customURL;
+                    cursorImg.id = 'dna-custom-cursor';
+                    cursorImg.style.display = 'block';
+                    document.body.appendChild(cursorImg);
 
-      document.body.appendChild(cursorImg);
+                    // Track mouse movement
+                    document.addEventListener('mousemove', (e) => {
+                        cursorImg.style.left = `${e.clientX}px`;
+                        cursorImg.style.top = `${e.clientY}px`;
+                    });
 
-      // Update position on mousemove
-      document.addEventListener('mousemove', (e) => {
-        cursorImg.style.left = `${e.clientX}px`;
-        cursorImg.style.top = `${e.clientY}px`;
-      });
-    } else if (style) {
-      // Use default cursor style if not custom
-      document.body.style.cursor = style;
-    }
-  } catch (e) {
-    console.error('Cursor setup error:', e);
-  }
-});
-</script>
+                    // Hide when mouse leaves window
+                    document.addEventListener('mouseleave', () => {
+                        cursorImg.style.display = 'none';
+                    });
+
+                    // Show when mouse enters window
+                    document.addEventListener('mouseenter', () => {
+                        cursorImg.style.display = 'block';
+                    });
+                } else if (style) {
+                    // Apply selected cursor style
+                    styleTag.textContent = `body, body * { cursor: ${style} !important; }`;
+                }
+            } catch (e) {
+                console.error("Cursor setup error:", e);
+            }
+        });
+
+        function openEmbed(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 </body>
 </html>
