@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="../styles/main.css" />
   <link rel="icon" href="../assets/icons/favicon.ico" />
   <style>
+    /* Custom cursor styles */
+    #dna-custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: 32px;
+      height: 32px;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
     /* Basic navigation styling */
     nav {
       background-color: #111;
@@ -137,63 +148,76 @@
   </main>
 
   <footer>
-  <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
-</footer>
-
-<script>
-  (function () {
-    try {
-      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-      const style = settings.cursorStyle;
-      const customURL = settings.customCursorURL;
-
-      function isValidURL(url) {
-        try {
-          new URL(url);
-          return true;
-        } catch (_) {
-          return false;
-        }
-      }
-
-      if (style === 'custom' && isValidURL(customURL)) {
-        // Hide default cursor
-        document.body.style.cursor = 'none';
-
-        const existing = document.getElementById('dna-custom-cursor');
-        if (existing) existing.remove();
-
-        const cursorImg = document.createElement('img');
-        cursorImg.src = customURL;
-        cursorImg.id = 'dna-custom-cursor';
-        cursorImg.style.position = 'fixed';
-        cursorImg.style.pointerEvents = 'none';
-        cursorImg.style.zIndex = '9999';
-        cursorImg.style.width = '32px';
-        cursorImg.style.height = '32px';
-        document.body.appendChild(cursorImg);
-
-        document.addEventListener('mousemove', function (e) {
-          const img = document.getElementById('dna-custom-cursor');
-          if (img) {
-            img.style.left = `${e.clientX}px`;
-            img.style.top = `${e.clientY}px`;
-          }
-        });
-      } else if (style) {
-        // Set default cursor style
-        document.body.style.cursor = style;
-      }
-    } catch (e) {
-      // Fail silently
-      console.error("Cursor setup error:", e);
-    }
-  })();
-</script>
-
-<script src="cursor.js"></script>
-<script src="../scripts/embed.js"></script>
-
+    <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+        const style = settings.cursorStyle;
+        const customURL = settings.customCursorURL;
+
+        function isValidURL(url) {
+          try {
+            new URL(url);
+            return true;
+          } catch {
+            return false;
+          }
+        }
+
+        // Remove existing cursor elements
+        const oldCursor = document.getElementById('dna-custom-cursor');
+        if (oldCursor) oldCursor.remove();
+        
+        const oldStyle = document.getElementById('dna-cursor-style');
+        if (oldStyle) oldStyle.remove();
+
+        const styleTag = document.createElement('style');
+        styleTag.id = 'dna-cursor-style';
+        document.head.appendChild(styleTag);
+
+        if (style === 'custom' && isValidURL(customURL)) {
+          // Hide default cursor
+          styleTag.textContent = 'body, body * { cursor: none !important; }';
+          
+          // Create custom cursor
+          const cursorImg = document.createElement('img');
+          cursorImg.src = customURL;
+          cursorImg.id = 'dna-custom-cursor';
+          cursorImg.style.display = 'block';
+          document.body.appendChild(cursorImg);
+
+          // Track mouse movement
+          document.addEventListener('mousemove', function(e) {
+            cursorImg.style.left = `${e.clientX}px`;
+            cursorImg.style.top = `${e.clientY}px`;
+          });
+
+          // Hide when mouse leaves window
+          document.addEventListener('mouseleave', function() {
+            cursorImg.style.display = 'none';
+          });
+
+          // Show when mouse enters window
+          document.addEventListener('mouseenter', function() {
+            cursorImg.style.display = 'block';
+          });
+        } else if (style) {
+          // Apply selected cursor style
+          styleTag.textContent = `body, body * { cursor: ${style} !important; }`;
+        }
+      } catch (e) {
+        console.error("Cursor setup error:", e);
+      }
+    });
+
+    function openEmbed(url) {
+      window.open(url, '_blank');
+    }
+  </script>
+  
+  <script src="../scripts/embed.js"></script>
 </body>
 </html>
