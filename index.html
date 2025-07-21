@@ -214,24 +214,7 @@
 
   <!-- Custom cursor script -->
   <script>
-    function copyToClipboard(el) {
-      const code = el.textContent.trim();
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      el.querySelector(".copy-notice").textContent = "Copied!";
-      setTimeout(() => {
-        el.querySelector(".copy-notice").textContent = "Click to copy";
-      }, 2000);
-    }
-  </script>
-  <script src="cursor.js"></script>
-<script src="../scripts/embed.js"></script>
-<script>
-(function () {
+   (function () {
     try {
         const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
         const style = settings.cursorStyle;
