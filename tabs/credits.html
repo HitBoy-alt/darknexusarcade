@@ -97,49 +97,57 @@
     <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
   </footer>
 
-    <script src="cursor.js"></script>
-    <script src="../scripts/embed.js"></script>
-    <script>
-    (function () {
-        try {
-            const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-            const style = settings.cursorStyle;
-            const customURL = settings.customCursorURL;
+   <script src="cursor.js"></script>
+<script src="../scripts/embed.js"></script>
+<script>
+(function () {
+    try {
+        const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+        const style = settings.cursorStyle;
+        const customURL = settings.customCursorURL;
 
-            function isValidCursorURL(url) {
-                return typeof url === 'string' && url.trim() !== '';
-            }
-
-            // Remove existing custom cursor if any
-            const oldCursor = document.getElementById('dna-custom-cursor');
-            if (oldCursor) oldCursor.remove();
-
-            if (style === 'custom' && isValidCursorURL(customURL)) {
-                document.body.style.cursor = 'none';
-
-                const cursorImg = document.createElement('img');
-                cursorImg.src = customURL;
-                cursorImg.id = 'dna-custom-cursor';
-                cursorImg.style.position = 'fixed';
-                cursorImg.style.pointerEvents = 'none';
-                cursorImg.style.zIndex = '9999';
-                cursorImg.style.width = '32px';
-                cursorImg.style.height = '32px';
-                document.body.appendChild(cursorImg);
-
-                document.addEventListener('mousemove', function (e) {
-                    cursorImg.style.left = `${e.clientX}px`;
-                    cursorImg.style.top = `${e.clientY}px`;
-                });
-            } else {
-                // Show default cursor
-                document.body.style.cursor = style || 'auto';
-            }
-        } catch (e) {
-            console.error("Cursor setup error:", e);
+        function isValidCursorURL(url) {
+            return typeof url === 'string' && url.trim() !== '';
         }
-    })();
-    </script>
+
+        // Remove old cursor and styles if they exist
+        document.getElementById('dna-custom-cursor')?.remove();
+        document.getElementById('dna-cursor-style')?.remove();
+
+        const styleTag = document.createElement('style');
+        styleTag.id = 'dna-cursor-style';
+
+        if (style === 'custom' && isValidCursorURL(customURL)) {
+            // Hide the system cursor everywhere
+            styleTag.innerHTML = `* { cursor: none !important; }`;
+            document.head.appendChild(styleTag);
+
+            // Add custom cursor image
+            const cursorImg = document.createElement('img');
+            cursorImg.src = customURL;
+            cursorImg.id = 'dna-custom-cursor';
+            cursorImg.style.position = 'fixed';
+            cursorImg.style.pointerEvents = 'none';
+            cursorImg.style.zIndex = '9999';
+            cursorImg.style.width = '32px';
+            cursorImg.style.height = '32px';
+            cursorImg.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(cursorImg);
+
+            document.addEventListener('mousemove', (e) => {
+                cursorImg.style.left = `${e.clientX}px`;
+                cursorImg.style.top = `${e.clientY}px`;
+            });
+        } else {
+            // Use default cursor or fallback
+            styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
+            document.head.appendChild(styleTag);
+        }
+    } catch (e) {
+        console.error("Cursor setup error:", e);
+    }
+})();
+</script>
 </body>
 </html>
 
