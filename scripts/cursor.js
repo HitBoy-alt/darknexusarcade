@@ -1,35 +1,50 @@
-(function () {
-  // Create custom cursor element
-  const customCursor = document.createElement('div');
-  customCursor.id = 'custom-cursor';
-  document.body.appendChild(customCursor);
+<script>
+    (function () {
+        try {
+            const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+            const style = settings.cursorStyle;
+            const customURL = settings.customCursorURL;
 
-  // Apply styles to the custom cursor
-  const style = document.createElement('style');
-  style.innerHTML = `
-    #custom-cursor {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      pointer-events: none;
-      z-index: 9999;
-      background: url('your-cursor-image.png') no-repeat center center;
-      background-size: contain;
-    }
-    * {
-      cursor: none !important;
-    }
-  `;
-  document.head.appendChild(style);
+            function isValidURL(url) {
+                try {
+                    new URL(url);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
 
-  // Move custom cursor with the mouse
-  window.addEventListener('mousemove', (e) => {
-    customCursor.style.left = `${e.clientX}px`;
-    customCursor.style.top = `${e.clientY}px`;
-  });
+            if (style === 'custom' && isValidURL(customURL)) {
+                // Hide default cursor
+                document.body.style.cursor = 'none';
 
-  // Force-hide system cursor repeatedly to override other scripts
-  setInterval(() => {
-    document.body.style.cursor = 'none';
-  }, 10);
-})();
+                const existing = document.getElementById('dna-custom-cursor');
+                if (existing) existing.remove();
+
+                const cursorImg = document.createElement('img');
+                cursorImg.src = customURL;
+                cursorImg.id = 'dna-custom-cursor';
+                cursorImg.style.position = 'fixed';
+                cursorImg.style.pointerEvents = 'none';
+                cursorImg.style.zIndex = '9999';
+                cursorImg.style.width = '32px';
+                cursorImg.style.height = '32px';
+                document.body.appendChild(cursorImg);
+
+                document.addEventListener('mousemove', function (e) {
+                    const img = document.getElementById('dna-custom-cursor');
+                    if (img) {
+                        img.style.left = `${e.clientX}px`;
+                        img.style.top = `${e.clientY}px`;
+                    }
+                });
+            } else if (style) {
+                // Set default cursor style
+                document.body.style.cursor = style;
+            }
+        } catch (e) {
+            // Fail silently
+            console.error("Cursor setup error:", e);
+        }
+    })();
+</script>
