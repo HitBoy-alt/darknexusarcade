@@ -137,60 +137,58 @@
   }
 </script>
 <script src="cursor.js"></script>
-<!-- Persistent cursor settings -->
+
 <script>
- <script>
-    (function () {
-        try {
-            const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-            const style = settings.cursorStyle;
-            const customURL = settings.customCursorURL;
+(function () {
+  try {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    const style = settings.cursorStyle;
+    const customURL = settings.customCursorURL;
 
-            function isValidURL(url) {
-                try {
-                    new URL(url);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
-            }
+    function isValidURL(url) {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
 
-            if (style === 'custom' && isValidURL(customURL)) {
-                // Hide default cursor
-                document.body.style.cursor = 'none';
+    // Remove old cursor img and style if they exist
+    document.getElementById('dna-custom-cursor')?.remove();
+    document.getElementById('dna-cursor-style')?.remove();
 
-                const existing = document.getElementById('dna-custom-cursor');
-                if (existing) existing.remove();
+    const styleTag = document.createElement('style');
+    styleTag.id = 'dna-cursor-style';
+    document.head.appendChild(styleTag);
 
-                const cursorImg = document.createElement('img');
-                cursorImg.src = customURL;
-                cursorImg.id = 'dna-custom-cursor';
-                cursorImg.style.position = 'fixed';
-                cursorImg.style.pointerEvents = 'none';
-                cursorImg.style.zIndex = '9999';
-                cursorImg.style.width = '32px';
-                cursorImg.style.height = '32px';
-                document.body.appendChild(cursorImg);
+    if (style === 'custom' && isValidURL(customURL)) {
+      // Hide system cursor globally
+      styleTag.innerHTML = `* { cursor: none !important; }`;
 
-                document.addEventListener('mousemove', function (e) {
-                    const img = document.getElementById('dna-custom-cursor');
-                    if (img) {
-                        img.style.left = `${e.clientX}px`;
-                        img.style.top = `${e.clientY}px`;
-                    }
-                });
-            } else if (style) {
-                // Set default cursor style
-                document.body.style.cursor = style;
-            }
-        } catch (e) {
-            // Fail silently
-            console.error("Cursor setup error:", e);
-        }
-    })();
+      const cursorImg = document.createElement('img');
+      cursorImg.src = customURL;
+      cursorImg.id = 'dna-custom-cursor';
+      cursorImg.style.position = 'fixed';
+      cursorImg.style.pointerEvents = 'none';
+      cursorImg.style.zIndex = '9999';
+      cursorImg.style.width = '32px';
+      cursorImg.style.height = '32px';
+      cursorImg.style.transform = 'translate(-50%, -50%)';
+      document.body.appendChild(cursorImg);
+
+      document.addEventListener('mousemove', (e) => {
+        cursorImg.style.left = `${e.clientX}px`;
+        cursorImg.style.top = `${e.clientY}px`;
+      });
+    } else if (style) {
+      // Use named CSS cursor (e.g., "crosshair", "pointer", etc.)
+      styleTag.innerHTML = `* { cursor: ${style} !important; }`;
+    }
+  } catch (e) {
+    console.error("Cursor setup error:", e);
+  }
+})();
 </script>
-
-</script>
-
 </body>
 </html>
