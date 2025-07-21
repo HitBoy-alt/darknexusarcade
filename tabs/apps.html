@@ -186,14 +186,13 @@
         </div>
     </main>
 
-    <footer>
+        <footer>
         <p>&copy; 2025 Dark Nexus Arcade | All Rights Reserved</p>
     </footer>
-    
- 
-    <script>
-         <script src="cursor.js"></script>
+
+    <script src="cursor.js"></script>
     <script src="../scripts/embed.js"></script>
+
     <script>
     (function () {
         try {
@@ -205,13 +204,22 @@
                 return typeof url === 'string' && url.trim() !== '';
             }
 
-            // Remove existing custom cursor if any
+            // Remove previous custom cursor if exists
             const oldCursor = document.getElementById('dna-custom-cursor');
             if (oldCursor) oldCursor.remove();
 
-            if (style === 'custom' && isValidCursorURL(customURL)) {
-                document.body.style.cursor = 'none';
+            // Remove old dynamic styles if exist
+            const oldStyle = document.getElementById('dna-cursor-style');
+            if (oldStyle) oldStyle.remove();
 
+            if (style === 'custom' && isValidCursorURL(customURL)) {
+                // Hide system cursor on everything
+                const styleTag = document.createElement('style');
+                styleTag.id = 'dna-cursor-style';
+                styleTag.innerHTML = `* { cursor: none !important; }`;
+                document.head.appendChild(styleTag);
+
+                // Create and position the custom cursor image
                 const cursorImg = document.createElement('img');
                 cursorImg.src = customURL;
                 cursorImg.id = 'dna-custom-cursor';
@@ -220,20 +228,25 @@
                 cursorImg.style.zIndex = '9999';
                 cursorImg.style.width = '32px';
                 cursorImg.style.height = '32px';
+                cursorImg.style.transform = 'translate(-50%, -50%)'; // optional: center on mouse
                 document.body.appendChild(cursorImg);
 
-                document.addEventListener('mousemove', function (e) {
+                document.addEventListener('mousemove', (e) => {
                     cursorImg.style.left = `${e.clientX}px`;
                     cursorImg.style.top = `${e.clientY}px`;
                 });
             } else {
-                // Show default cursor
-                document.body.style.cursor = style || 'auto';
+                // Restore normal cursor across the page
+                const styleTag = document.createElement('style');
+                styleTag.id = 'dna-cursor-style';
+                styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
+                document.head.appendChild(styleTag);
             }
         } catch (e) {
             console.error("Cursor setup error:", e);
         }
-    })()
+    })();
     </script>
 </body>
 </html>
+
