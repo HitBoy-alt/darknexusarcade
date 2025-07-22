@@ -53,13 +53,18 @@
       padding: 1rem;
       border-radius: 6px;
       text-align: center;
+      transition: transform 0.2s ease;
     }
 
-    .cursor-preview {
+    .cursor-item:hover {
+      transform: scale(1.05);
+    }
+
+    .cursor-preview img {
       width: 32px;
       height: 32px;
+      image-rendering: pixelated;
       margin-bottom: 1rem;
-      display: inline-block;
     }
 
     .copy-btn {
@@ -81,132 +86,155 @@
 </head>
 <body>
 
-  <header>
-    <h1>Dark Nexus Arcade - Cursors</h1>
-    <nav>
-      <a href="https://darknexusarcade.org/index.html">Home</a>
-      <a href="https://darknexusarcade.org/tabs/games.html">Games</a>
-      <a href="https://darknexusarcade.org/tabs/apps.html">Apps</a>
-      <a href="https://darknexusarcade.org/tabs/proxies.html">Proxies</a>
-      <a href="https://darknexusarcade.org/tabs/oss.html">OS's</a>
-      <a href="https://darknexusarcade.org/tabs/credits.html">Credits</a>
-      <a href="https://darknexusarcade.org/tabs/partners.html">Partners</a>
-      <a href="https://darknexusarcade.org/tabs/discord.html">Discord</a>
-      <a href="https://darknexusarcade.org/tabs/settings.html">Settings</a>
-      <a href="https://darknexusarcade.org/tabs/suggestions.html">Suggestions</a>
-      <a href="https://darknexusarcade.org/tabs/bookmarklets.html">Bookmarklets</a>
-    </nav>
-  </header>
+<header>
+  <h1>Dark Nexus Arcade - Cursors</h1>
+  <nav>
+    <a href="https://darknexusarcade.org/index.html">Home</a>
+    <a href="https://darknexusarcade.org/tabs/games.html">Games</a>
+    <a href="https://darknexusarcade.org/tabs/apps.html">Apps</a>
+    <a href="https://darknexusarcade.org/tabs/proxies.html">Proxies</a>
+    <a href="https://darknexusarcade.org/tabs/oss.html">OS's</a>
+    <a href="https://darknexusarcade.org/tabs/credits.html">Credits</a>
+    <a href="https://darknexusarcade.org/tabs/partners.html">Partners</a>
+    <a href="https://darknexusarcade.org/tabs/discord.html">Discord</a>
+    <a href="https://darknexusarcade.org/tabs/settings.html">Settings</a>
+    <a href="https://darknexusarcade.org/tabs/suggestions.html">Suggestions</a>
+    <a href="https://darknexusarcade.org/tabs/bookmarklets.html">Bookmarklets</a>
+  </nav>
+</header>
 
-  <section>
-    <h2>Cursor Gallery</h2>
-    <p>Submit cursors through suggestions or use a custom URL in settings.</p>
-    <div class="cursor-gallery">
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor1.png'), auto;"></div>
-        <p>Cursor 1</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor1.png')">Copy URL</button>
+<section>
+  <h2>Cursor Gallery</h2>
+  <p>Submit cursors through suggestions or use a custom URL in settings.</p>
+  <div class="cursor-gallery">
+    
+    <!-- Cursor 1 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor1.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor1.png" alt="Cursor 1">
       </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor2.png'), auto;"></div>
-        <p>Cursor 2</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor2.png')">Copy URL</button>
-      </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor3.png'), auto;"></div>
-        <p>Cursor 3</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor3.png')">Copy URL</button>
-      </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor4.png'), auto;"></div>
-        <p>Cursor 4</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor4.png')">Copy URL</button>
-      </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor5.png'), auto;"></div>
-        <p>Cursor 5</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor5.png')">Copy URL</button>
-      </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor6.png'), auto;"></div>
-        <p>Cursor 6</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor6.png')">Copy URL</button>
-      </div>
-
-      <div class="cursor-item">
-        <div class="cursor-preview" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor7.png'), auto;"></div>
-        <p>Cursor 7</p>
-        <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor7.png')">Copy URL</button>
-      </div>
+      <p>Cursor 1</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor1.png')">Copy URL</button>
     </div>
-  </section>
 
-  <script>
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard:\n" + text);
-      }).catch(err => {
-        console.error("Failed to copy: ", err);
+    <!-- Cursor 2 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor2.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor2.png" alt="Cursor 2">
+      </div>
+      <p>Cursor 2</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor2.png')">Copy URL</button>
+    </div>
+
+    <!-- Cursor 3 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor3.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor3.png" alt="Cursor 3">
+      </div>
+      <p>Cursor 3</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor3.png')">Copy URL</button>
+    </div>
+
+    <!-- Cursor 4 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor4.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor4.png" alt="Cursor 4">
+      </div>
+      <p>Cursor 4</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor4.png')">Copy URL</button>
+    </div>
+
+    <!-- Cursor 5 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor5.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor5.png" alt="Cursor 5">
+      </div>
+      <p>Cursor 5</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor5.png')">Copy URL</button>
+    </div>
+
+    <!-- Cursor 6 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor6.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor6.png" alt="Cursor 6">
+      </div>
+      <p>Cursor 6</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor6.png')">Copy URL</button>
+    </div>
+
+    <!-- Cursor 7 -->
+    <div class="cursor-item" style="cursor: url('https://darknexusarcade.org/assets/cursors/cursor7.png'), auto;">
+      <div class="cursor-preview">
+        <img src="https://darknexusarcade.org/assets/cursors/cursor7.png" alt="Cursor 7">
+      </div>
+      <p>Cursor 7</p>
+      <button class="copy-btn" onclick="copyToClipboard('https://darknexusarcade.org/assets/cursors/cursor7.png')">Copy URL</button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied to clipboard:\n" + text);
+    }).catch(err => {
+      console.error("Failed to copy: ", err);
+    });
+  }
+</script>
+
+<script src="cursor.js"></script>
+
+<script>
+(function () {
+  try {
+    const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+    const style = settings.pngsorStyle;
+    const customURL = settings.customCursorURL;
+
+    function isValidURL(url) {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    document.getElementById('dna-custom-cursor')?.remove();
+    document.getElementById('dna-cursor-style')?.remove();
+
+    const styleTag = document.createElement('style');
+    styleTag.id = 'dna-cursor-style';
+    document.head.appendChild(styleTag);
+
+    if (style === 'custom' && isValidURL(customURL)) {
+      styleTag.innerHTML = `* { cursor: none !important; }`;
+
+      const cursorImg = document.createElement('img');
+      cursorImg.src = customURL;
+      cursorImg.id = 'dna-custom-cursor';
+      cursorImg.style.position = 'fixed';
+      cursorImg.style.pointerEvents = 'none';
+      cursorImg.style.zIndex = '9999';
+      cursorImg.style.width = '32px';
+      cursorImg.style.height = '32px';
+      cursorImg.style.transform = 'translate(-50%, -50%)';
+      document.body.appendChild(cursorImg);
+
+      document.addEventListener('mousemove', (e) => {
+        cursorImg.style.left = `${e.clientX}px`;
+        cursorImg.style.top = `${e.clientY}px`;
       });
+    } else if (style) {
+      styleTag.innerHTML = `* { cursor: ${style} !important; }`;
     }
-  </script>
-
-  <script src="cursor.js"></script>
-
-  <script>
-  (function () {
-    try {
-      const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-      const style = settings.pngsorStyle;
-      const customURL = settings.customCursorURL;
-
-      function isValidURL(url) {
-        try {
-          new URL(url);
-          return true;
-        } catch (_) {
-          return false;
-        }
-      }
-
-      document.getElementById('dna-custom-cursor')?.remove();
-      document.getElementById('dna-cursor-style')?.remove();
-
-      const styleTag = document.createElement('style');
-      styleTag.id = 'dna-cursor-style';
-      document.head.appendChild(styleTag);
-
-      if (style === 'custom' && isValidURL(customURL)) {
-        styleTag.innerHTML = `* { cursor: none !important; }`;
-
-        const cursorImg = document.createElement('img');
-        cursorImg.src = customURL;
-        cursorImg.id = 'dna-custom-cursor';
-        cursorImg.style.position = 'fixed';
-        cursorImg.style.pointerEvents = 'none';
-        cursorImg.style.zIndex = '9999';
-        cursorImg.style.width = '32px';
-        cursorImg.style.height = '32px';
-        cursorImg.style.transform = 'translate(-50%, -50%)';
-        document.body.appendChild(cursorImg);
-
-        document.addEventListener('mousemove', (e) => {
-          cursorImg.style.left = `${e.clientX}px`;
-          cursorImg.style.top = `${e.clientY}px`;
-        });
-      } else if (style) {
-        styleTag.innerHTML = `* { cursor: ${style} !important; }`;
-      }
-    } catch (e) {
-      console.error("Cursor setup error:", e);
-    }
-  })();
-  </script>
+  } catch (e) {
+    console.error("Cursor setup error:", e);
+  }
+})();
+</script>
 
 </body>
 </html>
