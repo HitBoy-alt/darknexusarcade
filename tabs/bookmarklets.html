@@ -154,6 +154,19 @@
       <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
     </div>
 
+    <!-- Dino Game Hacks -->
+    <div class="bookmarklet-card">
+      <h3>Dino Game Hacks</h3>
+      <div class="code-display" onclick="copyToClipboard(this)">
+        javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();
+        <span class="copy-notice">Click to copy</span>
+      </div>
+      <a class="bubble-link" draggable="true"
+         href="javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();">
+        dino game hacks</a>
+      <p>Infinite health and super speed Dino Game hack with UI settings.</p>
+    </div>
+
   </div>
 
   <footer>
@@ -176,23 +189,21 @@
     }
   </script>
   <script src="cursor.js"></script>
-<script src="../scripts/embed.js"></script>
-<script>
-(function () {
-    try {
+  <script src="../scripts/embed.js"></script>
+  <script>
+    (function () {
+      try {
         const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
         const style = settings.cursorStyle;
         const customURL = settings.customCursorURL;
 
         function isValidCursorURL(url) {
-            return typeof url === 'string' && url.trim() !== '';
+          return typeof url === 'string' && url.trim() !== '';
         }
 
-        // Remove previous cursor image if exists
         const oldCursor = document.getElementById('dna-custom-cursor');
         if (oldCursor) oldCursor.remove();
 
-        // Remove old style tag if any
         const oldStyle = document.getElementById('dna-cursor-style');
         if (oldStyle) oldStyle.remove();
 
@@ -200,34 +211,32 @@
         styleTag.id = 'dna-cursor-style';
 
         if (style === 'custom' && isValidCursorURL(customURL)) {
-            styleTag.innerHTML = `* { cursor: none !important; }`;
-            document.head.appendChild(styleTag);
+          styleTag.innerHTML = `* { cursor: none !important; }`;
+          document.head.appendChild(styleTag);
 
-            const cursorImg = document.createElement('img');
-            cursorImg.src = customURL;
-            cursorImg.id = 'dna-custom-cursor';
-            cursorImg.style.position = 'fixed';
-            cursorImg.style.pointerEvents = 'none';
-            cursorImg.style.zIndex = '9999';
-            cursorImg.style.width = '32px';
-            cursorImg.style.height = '32px';
-            cursorImg.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(cursorImg);
+          const cursorImg = document.createElement('img');
+          cursorImg.src = customURL;
+          cursorImg.id = 'dna-custom-cursor';
+          cursorImg.style.position = 'fixed';
+          cursorImg.style.pointerEvents = 'none';
+          cursorImg.style.zIndex = '9999';
+          cursorImg.style.width = '32px';
+          cursorImg.style.height = '32px';
+          cursorImg.style.transform = 'translate(-50%, -50%)';
+          document.body.appendChild(cursorImg);
 
-            document.addEventListener('mousemove', (e) => {
-                cursorImg.style.left = `${e.clientX}px`;
-                cursorImg.style.top = `${e.clientY}px`;
-            });
+          document.addEventListener('mousemove', (e) => {
+            cursorImg.style.left = `${e.clientX}px`;
+            cursorImg.style.top = `${e.clientY}px`;
+          });
         } else {
-            // fallback to default or chosen style
-            styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
-            document.head.appendChild(styleTag);
+          styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
+          document.head.appendChild(styleTag);
         }
-    } catch (e) {
+      } catch (e) {
         console.error("Cursor setup error:", e);
-    }
-})();
-</script>
+      }
+    })();
+  </script>
 </body>
 </html>
-
