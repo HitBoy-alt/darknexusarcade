@@ -1,242 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bookmarklets | Dark Nexus Arcade</title>
-  <link rel="icon" href="../assets/icons/favicon.ico" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #0a0a0a;
-      color: #f0f0f0;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bookmarklets | Dark Nexus Arcade</title>
+<link rel="icon" href="../assets/icons/favicon.ico" />
+<style>
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background-color: #0a0a0a;
+color: #f0f0f0;
+}
 
-    nav {
-      background-color: #111;
-      padding: 10px;
-      text-align: center;
-      margin-top: 20px;
-    }
+nav {
+background-color: #111;
+padding: 10px;
+text-align: center;
+margin-top: 20px;
+}
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 12px;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: color 0.3s ease;
-    }
+nav a {
+color: #fff;
+text-decoration: none;
+margin: 0 12px;
+font-weight: bold;
+font-size: 1rem;
+transition: color 0.3s ease;
+}
 
-    nav a:hover {
-      color: #00ffcc;
-    }
+nav a:hover {
+color: #00ffcc;
+}
 
-    h1 {
-      text-align: center;
-      padding: 1em 0;
-      color: #bf94ff;
-    }
+h1 {
+text-align: center;
+padding: 1em 0;
+color: #bf94ff;
+}
 
-    .bookmarklets-container {
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2em;
-    }
+.bookmarklets-container {
+display: flex;
+flex-direction: column;
+gap: 2em;
+max-width: 800px;
+margin: 0 auto;
+padding: 2em;
+}
 
-    .bookmarklet-card {
-      background-color: #131313;
-      padding: 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(98, 0, 255, 0.2);
-    }
+.bookmarklet-card {
+background-color: #131313;
+padding: 1.5em;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(98, 0, 255, 0.2);
+}
 
-    .code-display {
-      background-color: #1a1a2e;
-      color: #bf94ff;
-      padding: 0.75em;
-      border-radius: 5px;
-      font-family: monospace;
-      cursor: pointer;
-      margin-bottom: 0.5em;
-      position: relative;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+.code-display {
+background-color: #1a1a2e;
+color: #bf94ff;
+padding: 0.75em;
+border-radius: 5px;
+font-family: monospace;
+cursor: pointer;
+margin-bottom: 0.5em;
+position: relative;
+overflow-x: auto;
+white-space: pre-wrap;
+word-break: break-word;
+}
 
-    .copy-notice {
-      font-size: 0.8em;
-      color: #aaa;
-      display: block;
-      margin-top: 4px;
-    }
+.copy-notice {
+font-size: 0.8em;
+color: #aaa;
+display: block;
+margin-top: 4px;
+}
 
-    .bubble-link {
-      display: inline-block;
-      background-color: #2c3e50;
-      color: white;
-      padding: 0.4em 1em;
-      border-radius: 9999px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.9em;
-      margin-top: 0.5em;
-      cursor: grab;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
+.bubble-link {
+display: inline-block;
+background-color: #2c3e50;
+color: white;
+padding: 0.4em 1em;
+border-radius: 9999px;
+text-decoration: none;
+font-weight: bold;
+font-size: 0.9em;
+margin-top: 0.5em;
+cursor: grab;
+transition: background-color 0.3s ease;
+user-select: none;
+}
 
-    .bubble-link:hover {
-      background-color: #34495e;
-    }
+.bubble-link:hover {
+background-color: #34495e;
+}
 
-    .bubble-link:active {
-      cursor: grabbing;
-    }
+.bubble-link:active {
+cursor: grabbing;
+}
 
-    footer {
-      text-align: center;
-      margin-top: 4em;
-      padding: 1em;
-      color: #777;
-    }
-  </style>
+footer {
+text-align: center;
+margin-top: 4em;
+padding: 1em;
+color: #777;
+}
+</style>
 </head>
 <body>
 
-  <!-- Nav Tabs -->
-  <nav>
-    <a href="../index.html">Home</a>
-    <a href="../tabs/games.html">Games</a>
-    <a href="../tabs/apps.html">Apps</a>
-    <a href="../tabs/proxies.html">Proxies</a>
-    <a href="../tabs/oss.html">OS's</a>
-    <a href="../tabs/credits.html">Credits</a>
-    <a href="../tabs/partners.html">Partners</a>
-    <a href="../tabs/discord.html">Discord</a>
-    <a href="../tabs/settings.html">Settings</a>
-    <a href="../tabs/suggestions.html">Suggestions</a>
-    <a href="../tabs/bookmarklets.html">Bookmarklets</a>
-  </nav>
+<!-- Nav Tabs -->
+<nav>
+<a href="../index.html">Home</a>
+<a href="../tabs/games.html">Games</a>
+<a href="../tabs/apps.html">Apps</a>
+<a href="../tabs/proxies.html">Proxies</a>
+<a href="../tabs/oss.html">OS's</a>
+<a href="../tabs/credits.html">Credits</a>
+<a href="../tabs/partners.html">Partners</a>
+<a href="../tabs/discord.html">Discord</a>
+<a href="../tabs/settings.html">Settings</a>
+<a href="../tabs/suggestions.html">Suggestions</a>
+<a href="../tabs/bookmarklets.html">Bookmarklets</a>
+</nav>
 
-  <h1>Dark Nexus Arcade - Bookmarklets</h1>
+<h1>Dark Nexus Arcade - Bookmarklets</h1>
 
-  <div class="bookmarklets-container">
+<div class="bookmarklets-container">
 
-    <!-- Mini YouTube Player -->
-    <div class="bookmarklet-card">
-      <h3>miniyoutubeplayerv2</h3>
-      <div class="code-display" onclick="copyToClipboard(this)">
-        javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();
-        <span class="copy-notice">Click to copy</span>
-      </div>
-      <a class="bubble-link" draggable="true" 
-         href="javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();">
-         miniyoutubeplayerv2</a>
-      <p>Open the current YouTube video in Picture-in-Picture mode.</p>
-    </div>
+<!-- Mini YouTube Player -->
+<div class="bookmarklet-card">
+<h3>miniyoutubeplayerv2</h3> <span class="bubble-text">click code below to copy</span>
+<div class="code-display" onclick="copyToClipboard(this)">
+javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();
+</div>
+<a class="bubble-link" draggable="true"
+href="javascript:(function(){var v=document.querySelector('video');if(v){v.requestPictureInPicture();}else{alert('❗ No video found on this page. Go to a YouTube video first.');}})();">
+miniyoutubeplayerv2</a>
+<p>Open the current YouTube video in Picture-in-Picture mode.</p>
+</div>
 
-    <!-- Sniper -->
-    <div class="bookmarklet-card">
-      <h3>Sniper</h3>
-      <div class="code-display" onclick="copyToClipboard(this)">
-        javascript:for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
-        <span class="copy-notice">Click to copy</span>
-      </div>
-      <a class="bubble-link" draggable="true" 
-         href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}">
-         Sniper</a>
-      <p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
-    </div>
+<!-- Sniper -->
+<div class="bookmarklet-card">
+<h3>Sniper</h3> <span class="bubble-text">click code below to copy</span>
+<div class="code-display" onclick="copyToClipboard(this)">
+javascript:for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i&lt;(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}
+</div>
+<a class="bubble-link" draggable="true" 
+href="javascript:for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='none';}function handler(e){e=e||window.event;var target=e.target||e.srcElement;target.style.display='none';document.removeEventListener('click',handler,false);cursor('default');for(var i=0;i<(document.getElementsByTagName('a')).length;i++){(document.getElementsByTagName('a')[i]).style.pointerEvents='initial';}}document.addEventListener('click',handler,false);cursor('crosshair');function cursor(cur){document.body.style.cursor=cur;}">
+Sniper</a>
+<p>Click any element to make it disappear. Useful for cleaning up cluttered pages.</p>
+</div>
 
-    <!-- Dino Game Hacks -->
-    <div class="bookmarklet-card">
-      <h3>Dino Game Hacks</h3>
-      <div class="code-display" onclick="copyToClipboard(this)">
-        javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();
-        <span class="copy-notice">Click to copy</span>
-      </div>
-      <a class="bubble-link" draggable="true"
-         href="javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();">
-        dino game hacks</a>
-      <p>Infinite health and super speed Dino Game hack with UI settings.</p>
-    </div>
+<!-- Dino Game Hacks -->
+<div class="bookmarklet-card">
+<h3>Dino Game Hacks</h3> <span class="bubble-text">click code below to copy</span>
+<div class="code-display" onclick="copyToClipboard(this)">
+javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();
+</div>
+<a class="bubble-link" draggable="true"
+href="javascript:(function(){const p=document.createElement('div');p.style=`position:fixed;top:10px;right:10px;padding:15px;background:linear-gradient(135deg,#2e003e,#000428,#004e92);color:#fff;border-radius:10px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.5);font-family:sans-serif;`;document.body.appendChild(p);const title=document.createElement('div');title.innerText='Dino Settings';title.style.fontWeight='bold';title.style.marginBottom='8px';p.appendChild(title);const xBtn=document.createElement('button');xBtn.innerText='✖';xBtn.style=`position:absolute;top:5px;right:5px;background:#800080;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;`;xBtn.onclick=()=>p.remove();p.appendChild(xBtn);const speedLabel=document.createElement('label');speedLabel.innerText='Speed (1-99999): ';p.appendChild(speedLabel);const speedInput=document.createElement('input');speedInput.type='number';speedInput.min='1';speedInput.max='99999';speedInput.value='5';speedInput.style='width:70px;margin-right:5px;';p.appendChild(speedInput);const collisionLabel=document.createElement('label');collisionLabel.innerText=' Collision (true/false): ';p.appendChild(collisionLabel);const collisionInput=document.createElement('input');collisionInput.type='text';collisionInput.value='true';collisionInput.style='width:50px;margin-right:5px;';p.appendChild(collisionInput);const applyBtn=document.createElement('button');applyBtn.innerText='Apply';applyBtn.style='background:#4b0082;color:#fff;border:none;border-radius:4px;padding:3px 8px;margin-left:5px;cursor:pointer;';p.appendChild(applyBtn);const r=window.Runner?window.Runner.prototype:null;if(!r){alert('Game not found!');return;}const origUpdate=r.update;r.update=function(){origUpdate.call(this);this.currentSpeed=parseInt(speedInput.value)||5;this.obstacleSpeed=this.currentSpeed;if(this.tRex){this.tRex.xSpeed=10+(this.currentSpeed*0.5);this.tRex.jumpSpeed=15+(this.currentSpeed*0.01);}if(this.obstacles&&collisionInput.value.toLowerCase()!=='false'){this.obstacles.forEach(o=>{o.x-=this.obstacleSpeed;});}r.checkCollision=()=>collisionInput.value.toLowerCase()==='true';r.gameOver=function(){if(collisionInput.value.toLowerCase()==='true'){console.log('Game Over triggered');}};};applyBtn.onclick=()=>alert('Settings applied!');})();">
+dino game hacks</a>
+<p>Infinite health and super speed Dino Game hack with UI settings.</p>
+</div>
 
-  </div>
+</div>
 
-  <footer>
-    &copy; 2025 Dark Nexus Arcade | All Rights Reserved
-  </footer>
+<footer>
+&copy; 2025 Dark Nexus Arcade | All Rights Reserved
+</footer>
 
-  <script>
-    function copyToClipboard(el) {
-      const code = el.textContent.trim();
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      el.querySelector(".copy-notice").textContent = "Copied!";
-      setTimeout(() => {
-        el.querySelector(".copy-notice").textContent = "Click to copy";
-      }, 2000);
-    }
-  </script>
-  <script src="cursor.js"></script>
-  <script src="../scripts/embed.js"></script>
-  <script>
-    (function () {
-      try {
-        const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
-        const style = settings.cursorStyle;
-        const customURL = settings.customCursorURL;
+<script>
+function copyToClipboard(el) {
+const code = el.textContent.trim();
+const textarea = document.createElement("textarea");
+textarea.value = code;
+document.body.appendChild(textarea);
+textarea.select();
+document.execCommand("copy");
+document.body.removeChild(textarea);
+el.querySelector(".copy-notice").textContent = "Copied!";
+setTimeout(() => {
+el.querySelector(".copy-notice").textContent = "Click to copy";
+}, 2000);
+}
+</script>
+<script src="cursor.js"></script>
+<script src="../scripts/embed.js"></script>
+<script>
+(function () {
+try {
+const settings = JSON.parse(localStorage.getItem('dna_settings')) || {};
+const style = settings.cursorStyle;
+const customURL = settings.customCursorURL;
 
-        function isValidCursorURL(url) {
-          return typeof url === 'string' && url.trim() !== '';
-        }
+function isValidCursorURL(url) {
+return typeof url === 'string' && url.trim() !== '';
+}
 
-        const oldCursor = document.getElementById('dna-custom-cursor');
-        if (oldCursor) oldCursor.remove();
+const oldCursor = document.getElementById('dna-custom-cursor');
+if (oldCursor) oldCursor.remove();
 
-        const oldStyle = document.getElementById('dna-cursor-style');
-        if (oldStyle) oldStyle.remove();
+const oldStyle = document.getElementById('dna-cursor-style');
+if (oldStyle) oldStyle.remove();
 
-        const styleTag = document.createElement('style');
-        styleTag.id = 'dna-cursor-style';
+const styleTag = document.createElement('style');
+styleTag.id = 'dna-cursor-style';
 
-        if (style === 'custom' && isValidCursorURL(customURL)) {
-          styleTag.innerHTML = `* { cursor: none !important; }`;
-          document.head.appendChild(styleTag);
+if (style === 'custom' && isValidCursorURL(customURL)) {
+styleTag.innerHTML = `* { cursor: none !important; }`;
+document.head.appendChild(styleTag);
 
-          const cursorImg = document.createElement('img');
-          cursorImg.src = customURL;
-          cursorImg.id = 'dna-custom-cursor';
-          cursorImg.style.position = 'fixed';
-          cursorImg.style.pointerEvents = 'none';
-          cursorImg.style.zIndex = '9999';
-          cursorImg.style.width = '32px';
-          cursorImg.style.height = '32px';
-          cursorImg.style.transform = 'translate(-50%, -50%)';
-          document.body.appendChild(cursorImg);
+const cursorImg = document.createElement('img');
+cursorImg.src = customURL;
+cursorImg.id = 'dna-custom-cursor';
+cursorImg.style.position = 'fixed';
+cursorImg.style.pointerEvents = 'none';
+cursorImg.style.zIndex = '9999';
+cursorImg.style.width = '32px';
+cursorImg.style.height = '32px';
+cursorImg.style.transform = 'translate(-50%, -50%)';
+document.body.appendChild(cursorImg);
 
-          document.addEventListener('mousemove', (e) => {
-            cursorImg.style.left = `${e.clientX}px`;
-            cursorImg.style.top = `${e.clientY}px`;
-          });
-        } else {
-          styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
-          document.head.appendChild(styleTag);
-        }
-      } catch (e) {
-        console.error("Cursor setup error:", e);
-      }
-    })();
-  </script>
+document.addEventListener('mousemove', (e) => {
+cursorImg.style.left = `${e.clientX}px`;
+cursorImg.style.top = `${e.clientY}px`;
+});
+} else {
+styleTag.innerHTML = `* { cursor: ${style || 'auto'} !important; }`;
+document.head.appendChild(styleTag);
+}
+} catch (e) {
+console.error("Cursor setup error:", e);
+}
+})();
+</script>
 </body>
 </html>
