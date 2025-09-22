@@ -6,25 +6,67 @@
   <title>HitBoy Proxy Embed</title>
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      width: 100vw;
+      margin: 0; height: 100%;
+      background: #2a005f; /* purple loading background */
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
-      background: #000;
-      color: purple;
-      font-family: 'Segoe UI', sans-serif;
-      display: grid;
-      place-items: center;
+    }
+    #loading {
+      position: absolute;
+      font-size: 1.5em;
+      text-shadow: 0 0 5px white;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div id="loader">Loading HitBoy Proxy...</div>
+  <div id="loading">Loading proxy...</div>
+  <iframe id="proxyFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
 
-  <!-- IMPORTANT: correct order -->
-  <script src="hitboy/config.js"></script>
-  <script src="register-sw.js"></script>
-  <script src="embed.js"></script>
+  <script>
+    (() => {
+      const loading = document.getElementById("loading");
+      const iframe = document.getElementById("proxyFrame");
+
+      // Your proxy prefix where your service worker or backend is listening
+      const proxyPrefix = "/hitboy/";
+
+      function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      let targetUrl = location.hash.slice(1);
+
+      if (!targetUrl || !isValidUrl(targetUrl)) {
+        loading.textContent = "Invalid or missing URL in the hash. Use embed.html#https://example.com";
+        return;
+      }
+
+      // Build proxied URL with query param to avoid path issues
+      const proxiedUrl = proxyPrefix + "?url=" + encodeURIComponent(targetUrl);
+
+      // Load iframe
+      iframe.src = proxiedUrl;
+
+      iframe.onload = () => {
+        loading.style.display = "none";
+        iframe.style.display = "block";
+      };
+    })();
+  </script>
 </body>
 </html>
