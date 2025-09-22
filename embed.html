@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HitBoy Proxy Embed</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden;
-    background: #000;
-    color: purple; /* changed text color to purple */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: grid;
-    place-items: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HitBoy Proxy Embed</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background: #000;
+      color: purple;
+      font-family: 'Segoe UI', sans-serif;
+      display: grid;
+      place-items: center;
+    }
+  </style>
 </head>
 <body>
   <div id="loader">Loading HitBoy Proxy...</div>
 
-  <!-- Load register-sw.js FIRST so registerSW() is available -->
-  <script src="register-sw.js"></script>
+  <!-- IMPORTANT: correct order -->
   <script src="hitboy/config.js"></script>
+  <script src="register-sw.js"></script>
   <script src="embed.js"></script>
 </body>
 </html>
