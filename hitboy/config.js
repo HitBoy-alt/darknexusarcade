@@ -24,7 +24,7 @@ const Ultraviolet = {
 };
 
 self.__uv$config = {
-  prefix: "/hitboy/hitboy/",
+  prefix: "/hitboy/",
   bare: "/bare/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
