@@ -1,19 +1,19 @@
-// Ultraviolet codec XOR encode/decode (minimal version)
+// Simple XOR codec for encoding/decoding URLs
 const Ultraviolet = {
   codec: {
     xor: {
-      encode(url) {
-        const key = 7; // simple XOR key
-        let result = "";
-        for (let i = 0; i < url.length; i++) {
-          result += String.fromCharCode(url.charCodeAt(i) ^ key);
+      encode(input) {
+        const key = 7;
+        let result = '';
+        for (let i = 0; i < input.length; i++) {
+          result += String.fromCharCode(input.charCodeAt(i) ^ key);
         }
         return encodeURIComponent(btoa(result));
       },
       decode(encoded) {
         const key = 7;
         const decoded = atob(decodeURIComponent(encoded));
-        let result = "";
+        let result = '';
         for (let i = 0; i < decoded.length; i++) {
           result += String.fromCharCode(decoded.charCodeAt(i) ^ key);
         }
